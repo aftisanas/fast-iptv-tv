@@ -298,7 +298,7 @@ export const FAQ_ITEMS = [
       "No. A full VPN is built into every plan at no extra cost. It adds no measurable latency and requires no separate app. Privacy is included, not sold as an add-on.",
   },
   {
-    question: "Why choose cheap-iptv.tv over other IPTV providers?",
+    question: "Why choose cheap-iptv over other IPTV providers?",
     answer:
       "37,000 channels, 198,000 films, 4K UHD, VPN, five screens, 60-second activation and 24/7 UK support — all from a single low monthly rate. No other IPTV provider in Britain matches this combination at this price point.",
   },
@@ -310,7 +310,7 @@ export const CHANNEL_CATEGORIES = [
     count: "5,500+",
     icon: "Trophy" as const,
     channels:
-      "Sky Sports Main Event through Arena, TNT Sports, Premier Sports, Eurosport and every racing channel. Every Premier League match, Champions League night and Six Nations weekend streams live in HD or 4K — all inside the cheapest IPTV UK package.",
+      "Enjoy full access to live sports coverage including football, racing, and international competitions. Watch every big match and event in HD or 4K — all included in one affordable IPTV package.",
   },
   {
     name: "British IPTV Entertainment — Premium & Complete Line-Up",
@@ -338,7 +338,7 @@ export const CHANNEL_CATEGORIES = [
     count: "1,200+",
     icon: "Newspaper" as const,
     channels:
-      "BBC News, Sky News, GB News, CNN International, Al Jazeera and Bloomberg run live in a dedicated news category. Stay current on every story as it breaks.",
+      "All major global and local news streams are available in a dedicated category, covering politics, business, and world events. Stay up to date with every story as it happens, anytime.",
   },
   {
     name: "International — 40+ Language Packs Included",
