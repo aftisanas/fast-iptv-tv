@@ -26,17 +26,17 @@ export default function FAQSection() {
             Frequently Asked Questions
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            British IPTV &mdash; Frequently{" "}
-            <span className="gradient-text">Asked Questions</span>
+            IPTV Subscription{" "}
+            <span className="gradient-text">FAQ</span>
           </h2>
           <p className="text-lg text-muted">
-            Essential information to{" "}
+            Everything to{" "}
             <Link href="/blog" className="text-violet-600 hover:text-violet-700 underline-offset-2 hover:underline">
               review
             </Link>{" "}
-            before choosing a{" "}
+            before starting your{" "}
             <SectionLink href="/#pricing" className="text-violet-600 hover:text-violet-700 underline-offset-2 hover:underline">
-              British IPTV subscription
+              IPTV subscription
             </SectionLink>.
           </p>
         </motion.div>

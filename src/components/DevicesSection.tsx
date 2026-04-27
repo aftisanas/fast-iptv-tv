@@ -20,16 +20,16 @@ export default function DevicesSection() {
           className="text-center mb-16"
         >
           <span className="inline-block rounded-full bg-cyan-50 border border-cyan-200 px-4 py-1.5 text-sm font-medium text-cyan-700 mb-4">
-            One Subscription · Five Concurrent Streams
+            One Login · Every Screen In The House
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            British IPTV On Every Screen &mdash;{" "}
-            <span className="gradient-text">The IPTV Service For All Devices</span>
+            Watch Your IPTV Subscription{" "}
+            <span className="gradient-text">On Any Device</span>
           </h2>
           <p className="mx-auto max-w-xl text-lg text-muted">
-            One subscription, five concurrent streams, zero extra hardware. Works on every mainstream platform UK households already own. Compatible with{" "}
+            Our IPTV subscription runs on every screen in the house. One login works across mobile, TV, tablet and computer — included with every{" "}
             <SectionLink href="/#pricing" className="text-violet-600 hover:text-violet-700 underline-offset-2 hover:underline">
-              every IPTV UK plan
+              IPTV plan
             </SectionLink>.
           </p>
         </motion.div>

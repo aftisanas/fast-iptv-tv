@@ -106,14 +106,14 @@ export default function PricingSection() {
         >
           <span className="inline-flex items-center gap-2 rounded-full bg-violet-50 border border-violet-200 px-5 py-2 text-sm font-semibold text-violet-700 mb-5">
             <Gem className="h-4 w-4" />
-            One Service · Four Terms · Identical Channels
+            Premium IPTV Pricing · One Plan, Four Terms
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-5">
-            British IPTV Plans &mdash;{" "}
-            <span className="gradient-text">Cheap IPTV Subscriptions To Premium IPTV</span>
+            Premium IPTV Pricing That{" "}
+            <span className="gradient-text">Fits Your Budget</span>
           </h2>
           <p className="mx-auto max-w-2xl text-base text-muted leading-relaxed">
-            One service, four terms. Channels, 4K and VPN stay identical on every tier. The only variable is commitment length — and savings.
+            Every plan gives you the full premium IPTV package. Pick the term that fits — the longer you go, the lower the monthly rate.
           </p>
         </motion.div>
 

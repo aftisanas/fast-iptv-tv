@@ -18,7 +18,7 @@ export default function Footer() {
               <div className="relative h-12 w-12 shrink-0">
                 <Image
                   src="/cheap-iptv.webp"
-                  alt="British IPTV 4K logo"
+                  alt="IPTV Subscription UK 4K logo"
                   fill
                   sizes="48px"
                   loading="lazy"
@@ -26,11 +26,11 @@ export default function Footer() {
                 />
               </div>
               <span className="text-lg font-bold text-foreground">
-                British<span className="gradient-text"> IPTV </span>4K
+                IPTV<span className="gradient-text"> Subscription </span>UK
               </span>
             </Link>
             <p className="text-sm text-muted leading-relaxed mb-6">
-              The British IPTV service trusted by 50,000 UK households. 37,000 live channels, 198,000 films and series, native 4K UHD and built-in VPN — from £12.99/month.
+              Premium IPTV subscription for UK homes. 37,000 live channels, 198,000 films and series in 4K UHD with built-in VPN, instant activation and 24/7 UK support — from £12.99.
             </p>
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-sm text-muted">
@@ -88,7 +88,7 @@ export default function Footer() {
         <div className="border-t border-violet-100/50 py-6">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-xs text-muted text-center sm:text-left">
-              © {new Date().getFullYear()} british-iptv-4k.com — British IPTV | Premium IPTV UK | Best IPTV Provider | Buy IPTV UK
+              © {new Date().getFullYear()} iptv-subscription-uk-4k.com — Premium IPTV Subscription UK | Best IPTV UK 4K Service | British IPTV Provider
             </p>
             <p className="text-xs text-gray-500 text-center sm:text-right max-w-md">
               {SITE_NAME} is not affiliated with any television networks or content providers.

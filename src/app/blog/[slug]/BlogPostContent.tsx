@@ -141,7 +141,7 @@ export default function BlogPostContent({ post, content }: BlogPostContentProps)
               Ready to Start Streaming?
             </h3>
             <p className="text-muted mb-6">
-              Get started with British IPTV 4K today. Plans from £12.99/month with a 30-day money-back guarantee.
+              Get started with IPTV Subscription UK 4K today. Plans from £12.99/month with a 30-day money-back guarantee.
             </p>
             <SectionLink
               href="/#pricing"

@@ -1,7 +1,7 @@
 {
-  "name": "British IPTV 4K",
-  "short_name": "British IPTV",
-  "description": "British IPTV subscription — 37,000 channels, 4K UHD, built-in VPN, five screens, from £12.99.",
+  "name": "IPTV Subscription UK 4K",
+  "short_name": "IPTV Subscription UK",
+  "description": "Premium IPTV subscription for UK homes — 37,000 channels, 198,000 films in 4K UHD, built-in VPN, instant activation. From 12.99.",
   "scope": "/",
   "start_url": "/",
   "display": "standalone",

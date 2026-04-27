@@ -20,18 +20,17 @@ export default function ChannelsSection() {
           className="text-center mb-16"
         >
           <span className="inline-block rounded-full bg-violet-50 border border-violet-200 px-4 py-1.5 text-sm font-medium text-violet-700 mb-4">
-            37,000 IPTV UK Feeds · One Subscription
+            Six Categories · One IPTV UK Service
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            Inside The British IPTV Channel Vault —{" "}
-            <span className="gradient-text">37,000 IPTV UK Feeds</span>
+            37,000+ Channels On{" "}
+            <span className="gradient-text">One IPTV UK Service</span>
           </h2>
           <p className="mx-auto max-w-2xl text-lg text-muted">
-            Every genre a UK household tunes into, sorted by the categories our subscribers browse most. A single{" "}
+            Browse six tidy categories to find what to watch next. Every pack is included in every{" "}
             <SectionLink href="/#pricing" className="text-violet-600 hover:text-violet-700 underline-offset-2 hover:underline">
-              British IPTV plan
-            </SectionLink>{" "}
-            opens every category below at once.
+              IPTV subscription plan
+            </SectionLink>.
           </p>
         </motion.div>
 

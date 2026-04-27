@@ -70,10 +70,10 @@ export default function HeroSection() {
           transition={{ duration: 0.7, delay: 0.1 }}
           className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-bold tracking-tight leading-[1.1] mb-2"
         >
-          <span className="text-white">British IPTV 2026 — Premium IPTV</span>
+          <span className="text-white">IPTV Subscription UK —</span>
           <br />
-          <span className="text-white">Subscription Built </span>
-          <span className="gradient-text-hero">For UK Homes</span>
+          <span className="text-white">37,000 Channels in </span>
+          <span className="gradient-text-hero">4K UHD</span>
         </motion.h1>
 
         {/* Subtitle */}
@@ -83,7 +83,7 @@ export default function HeroSection() {
           transition={{ duration: 0.7, delay: 0.18 }}
           className="text-base sm:text-lg text-gray-300/90 max-w-3xl mb-3 px-2 sm:px-0"
         >
-          A premium IPTV service routed through UK servers, delivering 37,000 live channels and 198,000 on-demand titles in 4K UHD to every screen in your home. Over 50,000 British viewers stream here — rated 4.9/5.
+          Stream the best IPTV UK service from £12.99/month. Get 37,000 live channels, 198,000 films and instant setup on any device. Premium IPTV in 4K UHD with a built-in VPN and 99.9% uptime — joined by 50,000 UK viewers.
         </motion.p>
 
         {/* Promo banner — replaces hero device image */}
@@ -108,7 +108,7 @@ export default function HeroSection() {
             className="group relative flex items-center gap-2.5 rounded-2xl bg-gradient-to-r from-violet-600 via-purple-600 to-cyan-500 px-7 py-3.5 text-sm sm:text-base font-semibold text-white shadow-lg shadow-purple-900/40 transition-all hover:shadow-2xl hover:shadow-purple-500/40 active:scale-[0.98] w-full sm:w-auto justify-center"
           >
             <Play className="h-5 w-5 fill-current" />
-            <span>Get Your British IPTV Plan — From £12.99</span>
+            <span>Get My IPTV Subscription — From £12.99</span>
             <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             <div className="absolute inset-0 rounded-2xl bg-white/10 opacity-0 transition-opacity group-hover:opacity-100" />
           </SectionLink>
@@ -117,7 +117,7 @@ export default function HeroSection() {
             className="group flex items-center gap-2.5 rounded-2xl border border-white/15 bg-white/[0.06] backdrop-blur-sm px-7 py-3.5 text-sm sm:text-base font-semibold text-white transition-all hover:border-purple-400/30 hover:bg-white/10 w-full sm:w-auto justify-center"
           >
             <MessageCircle className="h-5 w-5 text-cyan-400" />
-            <span>See All IPTV UK Plans</span>
+            <span>View Pricing</span>
           </SectionLink>
         </motion.div>
       </div>

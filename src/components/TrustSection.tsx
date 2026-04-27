@@ -7,27 +7,27 @@ import Link from "next/link";
 const trustItems = [
   {
     icon: Shield,
-    title: "30-Day Money-Back Guarantee On Every IPTV Subscription",
+    title: "30-Day Money-Back Guarantee",
     description:
-      "Not satisfied? Contact support within 30 days and every penny returns the same day. No forms, no retention calls, no fine print.",
+      "Try the full service for 30 days. Ask for a refund by live chat and we send it the same day.",
   },
   {
     icon: Wifi,
-    title: "99.9% Uptime On Strong IPTV Infrastructure",
+    title: "99.9% Uptime, Watched 24/7",
     description:
-      "Our public status page tracks performance minute by minute. If uptime dips below 99.9% in any calendar month, service credits apply automatically.",
+      "Our ops team watches every server around the clock. Outages reroute in under ten seconds.",
   },
   {
     icon: Lock,
-    title: "Built-In VPN — Premium IPTV Privacy At No Extra Cost",
+    title: "Bank-Grade Security With Built-In VPN",
     description:
-      "The VPN encrypts every stream from the moment you press play. No bandwidth cap, no logs and no separate subscription — privacy ships as standard.",
+      "We run TLS 1.3 on checkout and a free VPN in the app. Your viewing stays private and your card stays safe.",
   },
   {
     icon: ServerCog,
-    title: "UK-Based Support — The IPTV Service That Never Sleeps",
+    title: "Instant Activation, No Wait",
     description:
-      "A named British team answers live chat, WhatsApp and email 24/7. Average response times are published weekly so you can check before you commit.",
+      "Your login fires on the moment you pay. Open the email, copy the code and press play.",
   },
 ];
 
@@ -44,16 +44,16 @@ export default function TrustSection() {
           className="text-center mb-16"
         >
           <span className="inline-block rounded-full bg-emerald-50 border border-emerald-200 px-4 py-1.5 text-sm font-medium text-emerald-700 mb-4">
-            Four Guarantees You Can Verify
+            Four-Part Strong IPTV Promise
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            The British IPTV Promise &mdash; Four Guarantees{" "}
-            <span className="gradient-text">You Can Verify</span>
+            Our Strong IPTV Promise{" "}
+            <span className="gradient-text">To British IPTV Fans</span>
           </h2>
           <p className="mx-auto max-w-xl text-lg text-muted">
-            Every claim below is published, measured and backed by a full{" "}
+            We back every plan with a four-part promise. If any part fails, your{" "}
             <Link href="/refund" className="text-violet-600 hover:text-violet-700 underline-offset-2 hover:underline">
-              same-day refund
+              money comes back
             </Link>.
           </p>
         </motion.div>

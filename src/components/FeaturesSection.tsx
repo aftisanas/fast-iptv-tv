@@ -26,16 +26,16 @@ export default function FeaturesSection() {
           className="text-center lg:mb-12 mb-10"
         >
           <span className="inline-block rounded-full bg-violet-50 border border-violet-200 px-4 py-1.5 text-sm font-medium text-violet-700 mb-4">
-            Built For The UK · Everything Included
+            Built For UK Homes · Everything Included
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            What Makes This The Definitive{" "}
-            <span className="gradient-text">British IPTV Service</span>
+            Features Of Our IPTV Subscription{" "}
+            <span className="gradient-text">For UK Homes</span>
           </h2>
           <p className="mx-auto max-w-2xl text-lg text-muted">
-            Eight hallmarks define this IPTV provider and separate it from every other option in the UK market. Each one is measured, transparent and covered by our{" "}
+            Every plan ships with the tools you need to watch more and wait less. Here is what you get on day one with every{" "}
             <SectionLink href="/#pricing" className="text-violet-600 hover:text-violet-700 underline-offset-2 hover:underline">
-              30-day refund pledge
+              IPTV subscription
             </SectionLink>.
           </p>
         </motion.div>

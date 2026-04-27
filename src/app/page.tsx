@@ -49,14 +49,14 @@ export default function HomePage() {
                 "@type": "Organization",
                 "@id": organizationId,
                 name: SITE_NAME,
-                alternateName: "British IPTV",
+                alternateName: "IPTV Subscription UK",
                 url: SITE_URL,
                 logo: {
                   "@type": "ImageObject",
                   url: logoUrl,
                 },
                 description:
-                  "British IPTV service for UK homes — 37,000 live channels, 198,000 films and series, native 4K UHD streaming and built-in VPN, from £12.99.",
+                  "Premium IPTV subscription for UK homes — 37,000 live channels, 198,000 films in 4K UHD, built-in VPN, 99.9% uptime and instant activation. From £25.99.",
                 areaServed: { "@type": "Country", name: "United Kingdom" },
                 contactPoint: {
                   "@type": "ContactPoint",
@@ -80,7 +80,7 @@ export default function HomePage() {
                 "@type": "WebPage",
                 "@id": webpageId,
                 url: SITE_URL,
-                name: "British IPTV 2026 | Premium IPTV UK Service From £12.99/mo",
+                name: "IPTV Subscription UK | 37,000 Channels in 4K UHD",
                 inLanguage: "en-GB",
                 isPartOf: {
                   "@id": websiteId,
@@ -92,7 +92,7 @@ export default function HomePage() {
                   "@id": breadcrumbId,
                 },
                 description:
-                  "British IPTV built for UK homes — 37,000 channels, 198,000 films and series, native 4K UHD, built-in VPN, five screens and a 30-day money-back guarantee.",
+                  "Get the best IPTV subscription in the UK. 37,000 channels, 198,000 films in 4K, built-in VPN, 99.9% uptime and a 30-day money-back guarantee.",
               },
               {
                 "@type": "BreadcrumbList",
@@ -107,7 +107,7 @@ export default function HomePage() {
                   {
                     "@type": "ListItem",
                     position: 2,
-                    name: "British IPTV",
+                    name: "IPTV Subscription UK",
                     item: `${SITE_URL}/#features`,
                   },
                 ],
@@ -123,15 +123,15 @@ export default function HomePage() {
             "@context": "https://schema.org",
             "@type": "Product",
             "@id": productId,
-            name: "British IPTV Subscription",
+            name: "IPTV Subscription UK",
             url: SITE_URL,
             image: [logoUrl],
             description:
-              "British IPTV subscription with 37,000+ live channels, 198,000+ on-demand films and series, native 4K UHD, five simultaneous screens and built-in VPN — from £12.99.",
+              "Premium IPTV subscription with 37,000+ live channels, 198,000+ on-demand films and series in 4K UHD, five simultaneous screens, built-in VPN and 99.9% uptime — from £25.99.",
             brand: { "@type": "Brand", name: SITE_NAME },
             offers: PRICING_PLANS.map((plan) => ({
               "@type": "Offer",
-              name: `${plan.name} British IPTV Plan`,
+              name: `${plan.name} IPTV Subscription`,
               price: plan.price.toFixed(2),
               priceCurrency: "GBP",
               availability: "https://schema.org/InStock",
