@@ -29,15 +29,15 @@ export default function FeaturesSection() {
             Speed-First · Measured · Published
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            Eight Speed Benchmarks That Make This{" "}
-            <span className="gradient-text">The Fastest IPTV Service</span>
+            Why Our Fast IPTV UK Subscription {" "}
+            <span className="gradient-text">Beats Every Competitor</span>
           </h2>
           <p className="mx-auto max-w-2xl text-lg text-muted">
             Every feature below is built around one principle: speed. From activation to channel switching to support response, this{" "}
             <SectionLink href="/#pricing" className="text-violet-600 hover:text-violet-700 underline-offset-2 hover:underline">
               IPTV provider
             </SectionLink>{" "}
-            measures and publishes performance data that most competitors hide.
+            measures and publishes performance data that most competitors hide. Our fastiptv platform is engineered for every iptv subscription in uk, delivering UK-optimised servers that stay rock-solid during live Premier League matches and peak evening hours.
           </p>
         </motion.div>
 

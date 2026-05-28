@@ -27,7 +27,7 @@ export default function DevicesSection() {
             <span className="gradient-text">The IPTV Service Built For All Devices</span>
           </h2>
           <p className="mx-auto max-w-xl text-lg text-muted">
-            One subscription, five concurrent streams, zero extra hardware. The same speed on every platform — included with every{" "}
+            One subscription, multi-device connections available, zero extra hardware. The same speed on every platform — included with every{" "}
             <SectionLink href="/#pricing" className="text-violet-600 hover:text-violet-700 underline-offset-2 hover:underline">
               fast IPTV plan
             </SectionLink>.

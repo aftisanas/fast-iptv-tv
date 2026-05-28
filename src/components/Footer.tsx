@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Mail, MapPin } from "lucide-react";
+import { Mail } from "lucide-react";
 import { NAV_LINKS, LEGAL_LINKS, SITE_NAME, CONTACT_EMAIL } from "@/lib/constants";
 import SectionLink from "@/components/SectionLink";
 
@@ -30,16 +30,12 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-sm text-muted leading-relaxed mb-6">
-              The fast IPTV service 50,000 UK homes trust. 60-second activation, zero-buffer 4K streaming, 37,000 channels and a built-in VPN — from £25.99.
+              The fast IPTV service 50,000 UK homes trust. 60-second activation, zero-buffer 4K streaming, 37,000 channels and a secure proxy option — from £25.99.
             </p>
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-sm text-muted">
                 <Mail className="h-4 w-4 text-violet-500/60" />
                 <span>{CONTACT_EMAIL}</span>
-              </div>
-              <div className="flex items-center gap-2 text-sm text-muted">
-                <MapPin className="h-4 w-4 text-violet-500/60" />
-                <span>London, United Kingdom</span>
               </div>
             </div>
           </div>
@@ -88,7 +84,7 @@ export default function Footer() {
         <div className="border-t border-violet-100/50 py-6">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-xs text-muted text-center sm:text-left">
-              © {new Date().getFullYear()} fast-iptv.tv — Fast IPTV | Fastest IPTV UK | Premium IPTV Service | Buy IPTV UK
+              © {new Date().getFullYear()} Fast IPTV UK. All rights reserved. | Best Fast IPTV Service | #1 IPTV Subscription UK
             </p>
             <p className="text-xs text-gray-500 text-center sm:text-right max-w-md">
               {SITE_NAME} is not affiliated with any television networks or content providers.

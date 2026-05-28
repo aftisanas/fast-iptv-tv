@@ -5,19 +5,22 @@ import { Clock, ArrowLeft, Tag } from "lucide-react";
 import Link from "next/link";
 import SectionLink from "@/components/SectionLink";
 
-interface BlogPostContentProps {
-  post: {
-    slug: string;
-    title: string;
-    excerpt: string;
-    date: string;
-    readTime: string;
-    category: string;
-  };
-  content: string[];
+interface BlogPostMeta {
+  slug: string;
+  title: string;
+  excerpt: string;
+  date: string;
+  readTime: string;
+  category: string;
 }
 
-export default function BlogPostContent({ post, content }: BlogPostContentProps) {
+interface BlogPostContentProps {
+  post: BlogPostMeta;
+  content: string[];
+  relatedPosts: BlogPostMeta[];
+}
+
+export default function BlogPostContent({ post, content, relatedPosts }: BlogPostContentProps) {
   return (
     <div className="pt-20">
       <article className="py-16 lg:py-24">
@@ -130,6 +133,39 @@ export default function BlogPostContent({ post, content }: BlogPostContentProps)
             })}
           </motion.div>
 
+          {/* Related guides — internal links so every post is reachable
+              from every other post (crawl path + link equity) */}
+          {relatedPosts.length > 0 && (
+            <motion.nav
+              aria-label="Related Fast IPTV guides"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="mt-16 border-t border-violet-100/60 pt-10"
+            >
+              <h2 className="text-xl font-bold text-foreground mb-5">
+                More Fast IPTV UK guides
+              </h2>
+              <ul className="grid sm:grid-cols-2 gap-4">
+                {relatedPosts.map((rp) => (
+                  <li key={rp.slug}>
+                    <Link
+                      href={`/blog/${rp.slug}`}
+                      className="group block rounded-xl border border-violet-100/60 bg-white p-5 transition-all hover:border-violet-200 hover:shadow-sm"
+                    >
+                      <span className="text-xs font-medium text-primary">
+                        {rp.category}
+                      </span>
+                      <span className="mt-1 block text-sm font-semibold text-foreground group-hover:text-violet-700">
+                        {rp.title}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </motion.nav>
+          )}
+
           {/* CTA */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -141,7 +177,7 @@ export default function BlogPostContent({ post, content }: BlogPostContentProps)
               Ready to Start Streaming?
             </h3>
             <p className="text-muted mb-6">
-              Get started with Fast IPTV today. Plans from £12.99/month with a 30-day money-back guarantee.
+              Get started with Fast IPTV today. Plans from £4.17/month with a 30-day money-back guarantee.
             </p>
             <SectionLink
               href="/#pricing"

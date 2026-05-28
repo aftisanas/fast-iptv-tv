@@ -11,7 +11,9 @@ function AnimatedNumber({ value }: { value: string }) {
   const numericStr = numericMatch ? numericMatch[0] : "";
   const prefix = numericStr ? value.slice(0, value.indexOf(numericStr)) : "";
   const suffix = numericStr ? value.slice(value.indexOf(numericStr) + numericStr.length) : "";
-  const [displayed, setDisplayed] = useState(numericStr ? `${prefix}0${suffix}` : value);
+  // SSR and first client render show the real final value (so it is in the
+  // static HTML for SEO and no-JS users). The count-up below is cosmetic only.
+  const [displayed, setDisplayed] = useState(value);
 
   useEffect(() => {
     if (!inView || !numericStr) {

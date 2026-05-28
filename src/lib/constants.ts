@@ -56,21 +56,21 @@ export const FEATURES = [
     icon: "LayoutGrid" as const,
   },
   {
-    title: "Cheap IPTV Subscription — Speed From £25.99/Month",
+    title: "Cheap IPTV Subscription — Speed From £4.17/Month",
     description:
-      "Full access to 37,000 channels, 4K and VPN from £25.99. The cheapest path into the fastest IPTV service in Britain. Compare that to Sky at £75+ for fewer channels and slower EPG navigation.",
+      "Full access to 37,000 channels, 4K and the secure proxy option from £4.17/month on the annual plan. The cheapest path into the fastest IPTV service in Britain. Compare that to Sky at £75+ for fewer channels and slower EPG navigation.",
     icon: "Clock" as const,
   },
   {
-    title: "Buy IPTV With Built-In VPN — Fast And Private",
+    title: "Buy IPTV UK With A Secure Proxy Option — Fast And Private",
     description:
-      "A full VPN tunnel wraps every stream at zero extra cost. The encryption adds no measurable latency — tested and published monthly. Privacy at full speed, not as a paid add-on.",
+      "An optional secure proxy layer wraps every stream at zero extra cost. The encryption adds no measurable latency — tested and published monthly. Privacy at full speed, not as a paid add-on.",
     icon: "Shield" as const,
   },
   {
     title: "24/7 UK Support — The IPTV Service That Replies In Minutes",
     description:
-      "A named British team answers live chat, WhatsApp and email around the clock. Average first response: under four minutes. When something goes wrong, speed of resolution matters as much as speed of streaming.",
+      "A named British team answers live chat and email around the clock. Average first response: under four minutes. When something goes wrong, speed of resolution matters as much as speed of streaming.",
     icon: "Smartphone" as const,
   },
 ] as const;
@@ -81,9 +81,9 @@ export const PRICING_PLANS = [
     tier: "Quick Start",
     name: "3 Months",
     subtitle: "Three months of the fastest IPTV in the UK",
-    price: 38.97,
-    originalPrice: 59.99,
-    perMonth: 12.99,
+    price: 25.99,
+    originalPrice: 39.99,
+    perMonth: 8.66,
     period: "3 months",
     devices: 5,
     badge: "Quick Start",
@@ -94,9 +94,9 @@ export const PRICING_PLANS = [
       "198,000+ films, series and documentaries on demand",
       "Full EPG with 7-day catch-up TV",
       "HD, Full HD and native 4K UHD streaming",
-      "Five simultaneous screens on one account",
+      "Extra connection options available as add-ons",
       "24/7 dedicated UK support",
-      "Built-in VPN included at no extra cost",
+      "Secure proxy option included at no extra cost",
       "30-day money-back guarantee",
       "60-second activation by email",
     ],
@@ -108,81 +108,81 @@ export const PRICING_PLANS = [
     tier: "Half-Year Value",
     name: "6 Months",
     subtitle: "Six months of uninterrupted high-speed streaming",
-    price: 65.94,
-    originalPrice: 119.99,
-    perMonth: 10.99,
+    price: 35.99,
+    originalPrice: 59.99,
+    perMonth: 6.0,
     period: "6 months",
     devices: 5,
     badge: "Half-Year Value",
-    discount: "-45%",
+    discount: "-40%",
     accentColor: "violet",
     features: [
       "37,000+ live channels with full UK coverage",
       "198,000+ films, series and documentaries on demand",
       "Full EPG with 7-day catch-up TV",
       "HD, Full HD and native 4K UHD streaming",
-      "Five simultaneous screens on one account",
+      "Extra connection options available as add-ons",
       "24/7 dedicated UK support",
-      "Built-in VPN included at no extra cost",
+      "Secure proxy option included at no extra cost",
       "30-day money-back guarantee",
       "60-second activation by email",
     ],
     popular: false,
-    savings: "Save 45%",
+    savings: "Save 40%",
   },
   {
     id: "gold",
     tier: "Annual",
     name: "12 Months",
     subtitle: "A full year of the best fast IPTV UK value",
-    price: 93.48,
-    originalPrice: 155.88,
-    perMonth: 7.79,
+    price: 49.99,
+    originalPrice: 89.99,
+    perMonth: 4.17,
     period: "year",
     devices: 5,
-    badge: "Most Popular — Save 40%",
-    discount: "-40%",
+    badge: "Most Popular — Save 44%",
+    discount: "-44%",
     accentColor: "blue",
     features: [
       "37,000+ live channels with full UK coverage",
       "198,000+ films, series and documentaries on demand",
       "Full EPG with 7-day catch-up TV",
       "HD, Full HD and native 4K UHD streaming",
-      "Five simultaneous screens on one account",
+      "Extra connection options available as add-ons",
       "24/7 dedicated UK support",
-      "Built-in VPN included at no extra cost",
+      "Secure proxy option included at no extra cost",
       "30-day money-back guarantee",
       "60-second activation by email",
     ],
     popular: true,
-    savings: "Save 40%",
+    savings: "Save 44%",
   },
   {
     id: "diamond",
     tier: "Elite",
     name: "24 Months",
     subtitle: "Two years locked at the lowest rate — full speed guaranteed",
-    price: 140.4,
-    originalPrice: 311.76,
-    perMonth: 5.85,
+    price: 79.99,
+    originalPrice: 159.99,
+    perMonth: 3.33,
     period: "2 years",
     devices: 5,
-    badge: "Elite — Save 55%",
-    discount: "-55%",
+    badge: "Elite — Save 50%",
+    discount: "-50%",
     accentColor: "violet",
     features: [
       "37,000+ live channels with full UK coverage",
       "198,000+ films, series and documentaries on demand",
       "Full EPG with 7-day catch-up TV",
       "HD, Full HD and native 4K UHD streaming",
-      "Five simultaneous screens on one account",
+      "Extra connection options available as add-ons",
       "24/7 dedicated UK support",
-      "Built-in VPN included at no extra cost",
+      "Secure proxy option included at no extra cost",
       "30-day money-back guarantee",
       "60-second activation by email",
     ],
     popular: false,
-    savings: "Save 55%",
+    savings: "Save 50%",
   },
 ] as const;
 
@@ -214,7 +214,7 @@ export const TESTIMONIALS = [
   {
     name: "Sarah T.",
     location: "Norwich",
-    text: "Five screens running 4K at the same time and not a single buffer. The servers behind this are clearly built for speed. The cheapest subscription I have found that does not lag.",
+    text: "Multiple connections running 4K at the same time and not a single buffer. The servers behind this are clearly built for speed. The cheapest subscription I have found that does not lag.",
     rating: 5,
     avatar: "ST",
     since: "December 2025",
@@ -230,7 +230,7 @@ export const TESTIMONIALS = [
   {
     name: "Halima A.",
     location: "Bradford",
-    text: "I wanted Arabic and British channels on one subscription. Setup was absurdly quick and the stream quality is better than my old satellite. VPN included sealed the deal.",
+    text: "I wanted Arabic and British channels on one subscription. Setup was absurdly quick and the stream quality is better than my old satellite. Secure proxy included sealed the deal.",
     rating: 5,
     avatar: "HA",
     since: "October 2025",
@@ -255,53 +255,52 @@ export const FAQ_ITEMS = [
   {
     question: "How fast is activation after I buy IPTV?",
     answer:
-      "Under sixty seconds. Your M3U credentials and app login arrive by email the instant payment clears. No human review, no office-hours queue. The fastest delivery in UK IPTV.",
+      "Under 60 seconds. Your credentials arrive by email before the Stripe or PayPal confirmation page finishes loading.",
   },
   {
     question: "Is this the fastest IPTV in the UK?",
     answer:
-      "Based on activation speed, channel switch time and sport delay, yes. We publish all three benchmarks and invite any competitor to match them. No other UK provider has done so.",
+      "Yes — independent timing tests place our activation, channel-switching and live-sport delay among the lowest of any UK-based IPTV service. Our status page publishes the numbers.",
   },
   {
     question: "Does fast IPTV sacrifice quality for speed?",
     answer:
-      "No. Every plan includes native 4K UHD on channels that broadcast in the format. Adaptive bitrate holds the picture steady when broadband dips. Speed and quality run in parallel.",
+      "No. Native 4K UHD is included on every plan with adaptive bitrate that protects the picture when broadband dips. Speed and quality run on the same infrastructure.",
   },
   {
     question: "Which devices give the fastest IPTV experience?",
     answer:
-      "Amazon Firestick 4K Max and Nvidia Shield deliver the quickest channel switches. TiviMate and IPTV Smarters Pro are the two apps optimised for speed. All six supported players work on one login.",
+      "Amazon Fire TV Stick 4K Max, Apple TV 4K, Formuler Z11 Pro and modern Samsung/LG Smart TVs deliver the lowest channel-switch times. iOS, Android, Windows and macOS apps run at full speed on any 25 Mbps connection.",
   },
-
   {
-    question: "Does the VPN slow down fast IPTV streaming?",
+    question: "Does the secure proxy option slow down fast IPTV streaming?",
     answer:
-      "No. Our built-in VPN adds no measurable latency. We test and publish VPN overhead figures monthly. Privacy runs at the same speed as unencrypted streams.",
+      "No. Our secure proxy adds no measurable latency. Channel switching, sport delay and 4K bitrate remain identical with the proxy on or off — tested monthly.",
   },
   {
     question: "What internet speed do I need?",
     answer:
-      "25 Mbps for clean 4K. 10 Mbps for HD. Anti-Freeze technology adapts mid-stream so the picture stays stable even on slower rural broadband.",
+      "25 Mbps for stable 4K UHD on a single device, 50 Mbps for multiple concurrent 4K streams. HD streams run comfortably on 10 Mbps.",
   },
   {
-    question: "How many screens can stream at once?",
+    question: "Can I stream on more than one device at the same time?",
     answer:
-      "Five simultaneous screens on every plan. The server load-balances across connections so each screen receives the same speed regardless of how many are active.",
+      "Yes — extra connection options are available as add-ons on every plan. Contact us before purchase or upgrade in your dashboard after activation.",
   },
   {
     question: "Is there a contract or cancellation fee?",
     answer:
-      "No contract and no fee. Every plan includes a 30-day money-back guarantee. Request a refund and every penny returns same-day.",
+      "No contract, no cancellation fee. Every plan is a one-time payment with a 30-day money-back guarantee — refunded same-day.",
   },
   {
     question: "How fast does support respond?",
     answer:
-      "Under four minutes on live chat, 24/7. A named UK team handles WhatsApp and email around the clock. Published weekly so you can verify the speed before you subscribe.",
+      "Average first response under four minutes on live chat and email, 24 hours a day, from a named British team.",
   },
   {
     question: "Why is fast-iptv.tv cheaper than Sky?",
     answer:
-      "No satellite infrastructure, no engineers, no long contracts. A lean digital operation delivers 37,000 channels from £25.99 for 3 months. Sky charges £75+ for fewer channels and slower EPG navigation.",
+      "We deliver more channels (37,000+ vs Sky's ~270), native 4K on every plan and no equipment, dish or engineer visit — roughly one-tenth the monthly price of Sky's flagship Q bundle.",
   },
 ] as const;
 
@@ -328,14 +327,14 @@ export const CHANNEL_CATEGORIES = [
       "Sky Cinema, Film4, Paramount+ and international premieres. Titles load in under three seconds on a 25 Mbps connection. The on-demand library that matches the speed of the live feeds.",
   },
   {
-    name: "strong IPTV News & Current Affairs",
+    name: "UK & International News On Fast IPTV",
     count: "1,200+",
     icon: "Newspaper" as const,
     channels:
       "Follow global and local news as it happens with continuous coverage and real-time updates. Stay connected to the latest developments with reliable streams available around the clock.",
   },
   {
-    name: "best iptv Kids & Family Channels",
+    name: "Kids & Family Channels On Fast IPTV",
     count: "800+",
     icon: "Baby" as const,
     channels:

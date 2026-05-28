@@ -23,34 +23,18 @@ const outfit = Outfit({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Fast IPTV 2026 | Fastest UK IPTV Service From £25.99",
+    default: "Fast IPTV UK 2026 | #1 Fastest IPTV Subscription — 60s Activation",
     template: "%s | Fast IPTV",
   },
   description:
-    "Fast IPTV built for speed. 37,000 channels, 4K UHD, 60-second activation, strong UK servers, built-in VPN. The fastest IPTV subscription in Britain. £25.99.",
-  keywords: [
-    "fast iptv",
-    "fast iptv uk",
-    "fastest iptv",
-    "iptv subscription",
-    "iptv uk",
-    "best iptv uk",
-    "iptv providers",
-    "iptv service",
-    "iptv reviews",
-    "buy iptv",
-    "british iptv",
-    "strong iptv",
-    "premium iptv",
-    "cheap iptv subscription",
-  ],
+    "Fast IPTV UK 2026: the fastest IPTV subscription in Britain. 37,000 channels, 4K UHD, sub-3s sport delay, 60-second activation. Live in two minutes — from £25.99.",
   authors: [{ name: "Fast IPTV" }],
   creator: "Fast IPTV",
   applicationName: "Fast IPTV",
   alternates: {
-    canonical: "/",
+    canonical: SITE_URL,
     languages: {
-      "en-GB": "/",
+      "en-GB": SITE_URL,
     },
   },
   manifest: "/favicon_io/site.webmanifest",
@@ -72,15 +56,15 @@ export const metadata: Metadata = {
     locale: "en_GB",
     siteName: "Fast IPTV",
     url: SITE_URL,
-    title: "Fast IPTV UK 2026 — Speed-First Streaming For British Homes",
+    title: "Fast IPTV UK 2026 | #1 Fastest IPTV Subscription — 60s Activation",
     description:
-      "The fast IPTV service 50,000 UK homes trust. 60-second activation, zero-buffer 4K, 37,000 channels, premium quality. Buy IPTV that never keeps you waiting.",
+      "Fast IPTV UK 2026: the fastest IPTV subscription in Britain. 37,000 channels, 4K UHD, sub-3s sport delay, 60-second activation. Live in two minutes — from £25.99.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Fast IPTV UK 2026 — Speed-First Streaming For British Homes",
+    title: "Fast IPTV UK 2026 | #1 Fastest IPTV Subscription — 60s Activation",
     description:
-      "The fast IPTV service 50,000 UK homes trust. 60-second activation, zero-buffer 4K, 37,000 channels, premium quality. Buy IPTV that never keeps you waiting.",
+      "Fast IPTV UK 2026: the fastest IPTV subscription in Britain. 37,000 channels, 4K UHD, sub-3s sport delay, 60-second activation. Live in two minutes — from £25.99.",
   },
   robots: {
     index: true,

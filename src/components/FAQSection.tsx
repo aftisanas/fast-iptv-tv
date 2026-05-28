@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 import SectionLink from "./SectionLink";
@@ -23,10 +23,10 @@ export default function FAQSection() {
           className="text-center mb-16"
         >
           <span className="inline-block rounded-full bg-violet-50 border border-violet-200 px-4 py-1.5 text-sm font-medium text-violet-700 mb-4">
-            Frequently Asked Questions
+            Fast IPTV UK · Frequently Asked Questions
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            Fast IPTV &mdash; Frequently{" "}
+            Fast IPTV UK &mdash; Frequently{" "}
             <span className="gradient-text">Asked Questions</span>
           </h2>
           <p className="text-lg text-muted">
@@ -78,24 +78,38 @@ export default function FAQSection() {
                   />
                 </button>
 
-                <AnimatePresence>
-                  {isOpen && (
-                    <motion.div
-                      id={`faq-panel-${i}`}
-                      role="region"
-                      aria-labelledby={`faq-trigger-${i}`}
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: "easeInOut" }}
-                      className="overflow-hidden"
-                    >
-                      <div className="px-5 py-4 text-sm text-muted leading-relaxed">
-                        {item.answer}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                {/* Panel is always rendered (kept in initial HTML for SEO —
+                    full Q&A text and the internal Sky link must be crawlable);
+                    collapsed visually via animated height. */}
+                <motion.div
+                  id={`faq-panel-${i}`}
+                  role="region"
+                  aria-labelledby={`faq-trigger-${i}`}
+                  aria-hidden={!isOpen}
+                  initial={false}
+                  animate={{
+                    height: isOpen ? "auto" : 0,
+                    opacity: isOpen ? 1 : 0,
+                  }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  className="overflow-hidden"
+                >
+                  <div className="px-5 py-4 text-sm text-muted leading-relaxed">
+                    {item.answer}
+                    {item.question === "Why is fast-iptv.tv cheaper than Sky?" && (
+                      <>
+                        {" "}
+                        <Link
+                          href="/blog/iptv-vs-sky-comparison"
+                          className="text-violet-600 hover:text-violet-700 underline-offset-2 hover:underline"
+                        >
+                          see our full IPTV vs Sky comparison
+                        </Link>
+                        .
+                      </>
+                    )}
+                  </div>
+                </motion.div>
               </motion.div>
             );
           })}

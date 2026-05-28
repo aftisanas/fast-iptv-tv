@@ -19,15 +19,15 @@ const trustItems = [
   },
   {
     icon: Lock,
-    title: "Built-In VPN — Premium IPTV Privacy At Full Speed",
+    title: "Secure Proxy Option — Premium IPTV Privacy At Full Speed",
     description:
-      "The VPN encrypts every stream with no measurable latency penalty. No bandwidth cap, no logs, no separate subscription. Speed and privacy in one package.",
+      "Our secure proxy layer encrypts every stream with no measurable latency penalty. No bandwidth cap, no logs, no separate subscription. Speed and privacy in one package.",
   },
   {
     icon: ServerCog,
     title: "UK-Based Support — The IPTV Service That Resolves Fast",
     description:
-      "A named British team answers live chat, WhatsApp and email 24/7. Average first response under four minutes. Speed of resolution is as important as speed of streaming.",
+      "A named British team answers live chat and email 24/7. Average first response under four minutes. Speed of resolution is as important as speed of streaming.",
   },
 ];
 

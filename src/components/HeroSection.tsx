@@ -68,12 +68,9 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-bold tracking-tight leading-[1.1] mb-2"
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-bold tracking-tight leading-[1.1] mb-2 text-white"
         >
-          <span className="text-white">Fast IPTV UK — The Fastest</span>
-          <br />
-          <span className="text-white">IPTV UK Service, Live In </span>
-          <span className="gradient-text-hero">60 Seconds</span>
+          Fast IPTV UK — The Fastest IPTV UK Subscription, Live In 60 Seconds
         </motion.h1>
 
         {/* Subtitle */}
@@ -83,7 +80,11 @@ export default function HeroSection() {
           transition={{ duration: 0.7, delay: 0.18 }}
           className="text-base sm:text-lg text-gray-300/90 max-w-3xl mb-3 px-2 sm:px-0"
         >
-          Speed kills buffering. Pay now, stream 37,000 channels in 4K within sixty seconds. The fastest IPTV activation in the UK, verified by 50,000 subscribers who rate the service 4.9/5 — strong UK servers, built-in VPN, zero-buffer playback.
+         Stream 37,000+ live channels and 198,000+ films in stunning 4K. Our fast IPTV UK service delivers zero buffering, instant activation, and a 30-day money-back guarantee. The{" "}
+          <SectionLink href="/#features" className="text-cyan-300 hover:text-cyan-200 underline-offset-2 hover:underline">
+            fastest IPTV
+          </SectionLink>{" "}
+          subscription UK has to offer.
         </motion.p>
 
         {/* Promo banner — replaces hero device image */}
@@ -108,7 +109,7 @@ export default function HeroSection() {
             className="group relative flex items-center gap-2.5 rounded-2xl bg-gradient-to-r from-violet-600 via-purple-600 to-cyan-500 px-7 py-3.5 text-sm sm:text-base font-semibold text-white shadow-lg shadow-purple-900/40 transition-all hover:shadow-2xl hover:shadow-purple-500/40 active:scale-[0.98] w-full sm:w-auto justify-center"
           >
             <Play className="h-5 w-5 fill-current" />
-            <span>Get Fast IPTV Now — From £25.99</span>
+            <span>Get Fast IPTV Now — From £4.17/mo</span>
             <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             <div className="absolute inset-0 rounded-2xl bg-white/10 opacity-0 transition-opacity group-hover:opacity-100" />
           </SectionLink>

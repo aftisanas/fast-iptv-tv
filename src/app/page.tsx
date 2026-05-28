@@ -8,25 +8,123 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import FAQSection from "@/components/FAQSection";
 import TrustSection from "@/components/TrustSection";
 import CTASection from "@/components/CTASection";
-import {
-  CONTACT_EMAIL,
-  FAQ_ITEMS,
-  PRICING_PLANS,
-  SITE_NAME,
-  SITE_URL,
-  TESTIMONIALS,
-} from "@/lib/constants";
+import { FAQ_ITEMS, PRICING_PLANS, SITE_NAME, SITE_URL } from "@/lib/constants";
 
 export default function HomePage() {
   const organizationId = `${SITE_URL}/#organization`;
   const websiteId = `${SITE_URL}/#website`;
-  const webpageId = `${SITE_URL}/#webpage`;
+  const serviceId = `${SITE_URL}/#service`;
   const productId = `${SITE_URL}/#product`;
   const breadcrumbId = `${SITE_URL}/#breadcrumb`;
+  const faqId = `${SITE_URL}/#faq`;
   const logoUrl = `${SITE_URL}/fast-iptv.webp`;
+
+  const prices = PRICING_PLANS.map((p) => p.price);
+  const lowPrice = Math.min(...prices).toFixed(2);
+  const highPrice = Math.max(...prices).toFixed(2);
+
+  const graph = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": organizationId,
+        name: SITE_NAME,
+        alternateName: "Fast IPTV UK",
+        url: SITE_URL,
+        logo: {
+          "@type": "ImageObject",
+          url: logoUrl,
+          width: 512,
+          height: 512,
+        },
+      },
+      {
+        "@type": "WebSite",
+        "@id": websiteId,
+        url: SITE_URL,
+        name: SITE_NAME,
+        publisher: { "@id": organizationId },
+        inLanguage: "en-GB",
+      },
+      {
+        "@type": "Service",
+        "@id": serviceId,
+        serviceType: "Fast IPTV UK Subscription",
+        name: "Fast IPTV UK Subscription",
+        provider: { "@id": organizationId },
+        areaServed: { "@type": "Country", name: "United Kingdom" },
+        description:
+          "The fastest IPTV UK subscription: 37,000 live channels, 198,000 films and series, native 4K UHD, secure proxy option, extra connection options, 60-second activation, sub-3-second live sport delay and a 30-day money-back guarantee.",
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: "Fast IPTV UK Plans",
+          itemListElement: PRICING_PLANS.map((plan) => ({
+            "@type": "Offer",
+            name: `${plan.name} Plan`,
+            price: plan.price.toFixed(2),
+            priceCurrency: "GBP",
+            url: `${SITE_URL}/#pricing`,
+            availability: "https://schema.org/InStock",
+          })),
+        },
+      },
+      {
+        "@type": "Product",
+        "@id": productId,
+        name: "Fast IPTV UK Subscription",
+        brand: { "@id": organizationId },
+        description:
+          "Fast IPTV UK subscription with 37,000 live channels, native 4K UHD, sub-3-second live sport delay, secure proxy option and extra connection options.",
+        image: logoUrl,
+        offers: {
+          "@type": "AggregateOffer",
+          lowPrice,
+          highPrice,
+          priceCurrency: "GBP",
+          offerCount: PRICING_PLANS.length,
+          availability: "https://schema.org/InStock",
+          url: `${SITE_URL}/#pricing`,
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": breadcrumbId,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: SITE_URL,
+          },
+        ],
+      },
+      {
+        "@type": "FAQPage",
+        "@id": faqId,
+        mainEntity: FAQ_ITEMS.map((item) => ({
+          "@type": "Question",
+          name: item.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: item.answer,
+          },
+        })),
+      },
+    ],
+  };
 
   return (
     <>
+      {/* LCP: preload the brand mark used in the fixed header */}
+      <link
+        rel="preload"
+        as="image"
+        href="/fast-iptv.webp"
+        type="image/webp"
+        fetchPriority="high"
+      />
+
       <HeroSection />
       <StatsBar />
       <FeaturesSection />
@@ -38,151 +136,10 @@ export default function HomePage() {
       <TrustSection />
       <CTASection />
 
-      {/* JSON-LD Structured Data */}
+      {/* JSON-LD Structured Data — single @graph */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@graph": [
-              {
-                "@type": "Organization",
-                "@id": organizationId,
-                name: SITE_NAME,
-                alternateName: "Fast IPTV UK",
-                url: SITE_URL,
-                logo: {
-                  "@type": "ImageObject",
-                  url: logoUrl,
-                },
-                description:
-                  "Fast IPTV built for speed — 37,000 channels, 4K UHD, 60-second activation, strong UK servers and a built-in VPN. The fastest IPTV subscription in Britain. From £25.99.",
-                areaServed: { "@type": "Country", name: "United Kingdom" },
-                contactPoint: {
-                  "@type": "ContactPoint",
-                  contactType: "customer service",
-                  availableLanguage: "English",
-                  areaServed: "GB",
-                  email: CONTACT_EMAIL,
-                },
-              },
-              {
-                "@type": "WebSite",
-                "@id": websiteId,
-                name: SITE_NAME,
-                url: SITE_URL,
-                inLanguage: "en-GB",
-                publisher: {
-                  "@id": organizationId,
-                },
-              },
-              {
-                "@type": "WebPage",
-                "@id": webpageId,
-                url: SITE_URL,
-                name: "Fast IPTV 2026 | Fastest UK IPTV Service From £25.99",
-                inLanguage: "en-GB",
-                isPartOf: {
-                  "@id": websiteId,
-                },
-                about: {
-                  "@id": organizationId,
-                },
-                breadcrumb: {
-                  "@id": breadcrumbId,
-                },
-                description:
-                  "Fast IPTV built for speed. 37,000 channels, 4K UHD, 60-second activation, strong UK servers, built-in VPN and a 30-day money-back guarantee.",
-              },
-              {
-                "@type": "BreadcrumbList",
-                "@id": breadcrumbId,
-                itemListElement: [
-                  {
-                    "@type": "ListItem",
-                    position: 1,
-                    name: "Home",
-                    item: SITE_URL,
-                  },
-                  {
-                    "@type": "ListItem",
-                    position: 2,
-                    name: "Fast IPTV",
-                    item: `${SITE_URL}/#features`,
-                  },
-                ],
-              },
-            ],
-          }),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Product",
-            "@id": productId,
-            name: "Fast IPTV Subscription",
-            url: SITE_URL,
-            image: [logoUrl],
-            description:
-              "Fast IPTV subscription with 60-second activation, 37,000+ live channels, 198,000+ on-demand films and series in 4K UHD, five simultaneous screens and a built-in VPN — from £25.99.",
-            brand: { "@type": "Brand", name: SITE_NAME },
-            offers: PRICING_PLANS.map((plan) => ({
-              "@type": "Offer",
-              name: `${plan.name} Fast IPTV Plan`,
-              price: plan.price.toFixed(2),
-              priceCurrency: "GBP",
-              availability: "https://schema.org/InStock",
-              itemCondition: "https://schema.org/NewCondition",
-              url: `${SITE_URL}/#pricing`,
-            })),
-            aggregateRating: {
-              "@type": "AggregateRating",
-              ratingValue: "4.9",
-              reviewCount: "50000",
-              bestRating: "5",
-            },
-          }),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            mainEntity: FAQ_ITEMS.map((item) => ({
-              "@type": "Question",
-              name: item.question,
-              acceptedAnswer: {
-                "@type": "Answer",
-                text: item.answer,
-              },
-            })),
-          }),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@graph": TESTIMONIALS.map((t, i) => ({
-              "@type": "Review",
-              "@id": `${SITE_URL}/#review-${i + 1}`,
-              itemReviewed: { "@id": productId },
-              author: { "@type": "Person", name: `${t.name} — ${t.location}` },
-              reviewRating: {
-                "@type": "Rating",
-                ratingValue: t.rating.toString(),
-                bestRating: "5",
-              },
-              reviewBody: t.text,
-            })),
-          }),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(graph) }}
       />
     </>
   );
