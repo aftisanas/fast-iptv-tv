@@ -79,7 +79,7 @@ export default function FAQSection() {
                 </button>
 
                 {/* Panel is always rendered (kept in initial HTML for SEO —
-                    full Q&A text and the internal Sky link must be crawlable);
+                    full Q&A text and the internal comparison link must be crawlable);
                     collapsed visually via animated height. */}
                 <motion.div
                   id={`faq-panel-${i}`}
@@ -96,14 +96,14 @@ export default function FAQSection() {
                 >
                   <div className="px-5 py-4 text-sm text-muted leading-relaxed">
                     {item.answer}
-                    {item.question === "Why is fast-iptv.tv cheaper than Sky?" && (
+                    {item.question === "How does fast-iptv.tv compare to traditional pay-TV?" && (
                       <>
                         {" "}
                         <Link
-                          href="/blog/iptv-vs-sky-comparison"
+                          href="/blog/iptv-vs-traditional-tv"
                           className="text-violet-600 hover:text-violet-700 underline-offset-2 hover:underline"
                         >
-                          see our full IPTV vs Sky comparison
+                          see our full IPTV vs traditional TV comparison
                         </Link>
                         .
                       </>

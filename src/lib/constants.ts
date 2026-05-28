@@ -34,7 +34,7 @@ export const FEATURES = [
   {
     title: "Strong IPTV Servers — Zero-Buffer 4K On UK Infrastructure",
     description:
-      "Every stream originates from high-capacity data centres on British soil. Low-latency routing means Premier League goals land on your screen in near real-time. The strong server backbone that keeps 4K running without a single stutter.",
+      "Every stream originates from high-capacity data centres on British soil. Low-latency routing means live football goals land on your screen in near real-time. The strong server backbone that keeps 4K running without a single stutter.",
     icon: "Monitor" as const,
   },
   {
@@ -52,13 +52,13 @@ export const FEATURES = [
   {
     title: "Best IPTV UK For Live Sport — Near-Zero Delay",
     description:
-      "Sport is where speed matters most. Our feeds run with sub-three-second delay on football, rugby, cricket and F1. Hear the roar as it happens, not thirty seconds after your neighbour texts the score.",
+      "Sport is where speed matters most. Our feeds run with sub-three-second delay on football, rugby, cricket and motorsport. Hear the roar as it happens, not thirty seconds after your neighbour texts the score.",
     icon: "LayoutGrid" as const,
   },
   {
-    title: "Cheap IPTV Subscription — Speed From £4.17/Month",
+    title: "High-Speed IPTV Subscription — Full Access From £4.17/Month",
     description:
-      "Full access to 37,000 channels, 4K and the secure proxy option from £4.17/month on the annual plan. The cheapest path into the fastest IPTV service in Britain. Compare that to Sky at £75+ for fewer channels and slower EPG navigation.",
+      "Full access to 37,000 channels, 4K and the secure proxy option from £4.17/month on the annual plan. The fastest IPTV service in Britain, engineered for speed first. Compare that to traditional pay-TV at £75+ for fewer channels and slower EPG navigation.",
     icon: "Clock" as const,
   },
   {
@@ -198,7 +198,7 @@ export const TESTIMONIALS = [
   {
     name: "Laura F.",
     location: "Oxford",
-    text: "The Premier League feed is practically real-time. My neighbour on Sky texted me about a goal and I had already seen it. That sub-three-second delay is genuine.",
+    text: "The live football feed is practically real-time. My neighbour on traditional pay-TV texted me about a goal and I had already seen it. That sub-three-second delay is genuine.",
     rating: 5,
     avatar: "LF",
     since: "February 2026",
@@ -214,7 +214,7 @@ export const TESTIMONIALS = [
   {
     name: "Sarah T.",
     location: "Norwich",
-    text: "Multiple connections running 4K at the same time and not a single buffer. The servers behind this are clearly built for speed. The cheapest subscription I have found that does not lag.",
+    text: "Multiple connections running 4K at the same time and not a single buffer. The servers behind this are clearly built for speed. The most stable high-speed subscription I have found that does not lag.",
     rating: 5,
     avatar: "ST",
     since: "December 2025",
@@ -298,9 +298,9 @@ export const FAQ_ITEMS = [
       "Average first response under four minutes on live chat and email, 24 hours a day, from a named British team.",
   },
   {
-    question: "Why is fast-iptv.tv cheaper than Sky?",
+    question: "How does fast-iptv.tv compare to traditional pay-TV?",
     answer:
-      "We deliver more channels (37,000+ vs Sky's ~270), native 4K on every plan and no equipment, dish or engineer visit — roughly one-tenth the monthly price of Sky's flagship Q bundle.",
+      "We deliver more channels (37,000+ vs a typical pay-TV line-up of ~270), native 4K on every plan and no equipment, dish or engineer visit — at a fraction of the monthly price of a flagship premium pay-TV bundle.",
   },
 ] as const;
 
@@ -324,7 +324,7 @@ export const CHANNEL_CATEGORIES = [
     count: "198,000+",
     icon: "Film" as const,
     channels:
-      "Sky Cinema, Film4, Paramount+ and international premieres. Titles load in under three seconds on a 25 Mbps connection. The on-demand library that matches the speed of the live feeds.",
+      "Premium movie channels, mainstream platform originals and international premieres. Titles load in under three seconds on a 25 Mbps connection. The on-demand library that matches the speed of the live feeds.",
   },
   {
     name: "UK & International News On Fast IPTV",
@@ -369,19 +369,19 @@ export const BLOG_POSTS = [
     category: "Tutorial",
   },
   {
-    slug: "iptv-vs-sky-comparison",
-    title: "Fast IPTV vs Sky — Which Service Is Better For UK Viewers In 2026?",
+    slug: "iptv-vs-traditional-tv",
+    title: "Fast IPTV vs Traditional UK TV — Which Is Better For Viewers In 2026?",
     excerpt:
-      "An honest comparison of fast IPTV and Sky TV for UK households. Costs, channel availability, picture quality, flexibility and value — everything needed to make the switch.",
+      "An honest comparison of fast IPTV and traditional UK TV packages. Speed, channel availability, picture quality, flexibility and value — everything needed to decide.",
     date: "2026-03-15",
     readTime: "8 min read",
     category: "Comparison",
   },
   {
-    slug: "premier-league-streaming-guide",
-    title: "Watch Every Premier League Match — Fast IPTV Streaming Guide",
+    slug: "live-uk-sports-streaming-guide",
+    title: "Watch Live UK Sports — Fast IPTV Streaming Guide",
     excerpt:
-      "Every Premier League match, plus Championship, La Liga, Serie A and more — all in stunning HD and 4K quality through a single fast IPTV subscription with sub-3-second delay.",
+      "Top-tier UK football, domestic cup ties, European nights and combat sports — all in stunning HD and 4K quality through a single fast IPTV subscription with sub-3-second delay.",
     date: "2026-03-10",
     readTime: "5 min read",
     category: "Sports",
