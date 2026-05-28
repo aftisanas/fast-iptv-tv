@@ -12,6 +12,20 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ["lucide-react", "framer-motion"],
   },
+  async redirects() {
+    return [
+      {
+        source: '/blog/iptv-vs-sky-comparison',
+        destination: '/blog/iptv-vs-traditional-tv',
+        permanent: true,
+      },
+      {
+        source: '/blog/premier-league-streaming-guide',
+        destination: '/blog/live-uk-sports-streaming-guide',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

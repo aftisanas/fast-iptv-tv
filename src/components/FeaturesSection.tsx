@@ -37,7 +37,7 @@ export default function FeaturesSection() {
             <SectionLink href="/#pricing" className="text-violet-600 hover:text-violet-700 underline-offset-2 hover:underline">
               IPTV provider
             </SectionLink>{" "}
-            measures and publishes performance data that most competitors hide. Our fastiptv platform is engineered for every iptv subscription in uk, delivering UK-optimised servers that stay rock-solid during live Premier League matches and peak evening hours.
+            measures and publishes performance data that most competitors hide. Our fastiptv platform is engineered for every iptv subscription in uk, delivering UK-optimised servers that stay rock-solid during live football matches and peak evening hours.
           </p>
         </motion.div>
 
