@@ -6,8 +6,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // Homepage <loc> must match the canonical exactly (no trailing slash).
   // /tutorials is intentionally excluded — it is noindex post-purchase content.
+  const subPagesUpdated = new Date("2026-05-31");
+
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: SITE_URL, lastModified: new Date("2026-05-19"), changeFrequency: "weekly", priority: 1 },
+    { url: `${SITE_URL}/4k-iptv-uk`, lastModified: subPagesUpdated, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${SITE_URL}/iptv-for-firestick`, lastModified: subPagesUpdated, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${SITE_URL}/iptv-buffering-fix`, lastModified: subPagesUpdated, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${SITE_URL}/iptv-smarters-pro-setup`, lastModified: subPagesUpdated, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${SITE_URL}/is-iptv-legal-uk`, lastModified: subPagesUpdated, changeFrequency: "monthly", priority: 0.7 },
     { url: `${SITE_URL}/blog`, lastModified: now, changeFrequency: "weekly", priority: 0.7 },
     { url: `${SITE_URL}/contact`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
     { url: `${SITE_URL}/refund`, lastModified: now, changeFrequency: "yearly", priority: 0.4 },

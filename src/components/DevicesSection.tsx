@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { Tv, Smartphone, Monitor, Flame, Box, Airplay } from "lucide-react";
 import SectionLink from "./SectionLink";
 import { DEVICES } from "@/lib/constants";
@@ -30,7 +31,10 @@ export default function DevicesSection() {
             One subscription, multi-device connections available, zero extra hardware. The same speed on every platform — included with every{" "}
             <SectionLink href="/#pricing" className="text-violet-600 hover:text-violet-700 underline-offset-2 hover:underline">
               fast IPTV plan
-            </SectionLink>.
+            </SectionLink>. Setting up on a streaming stick? See our{" "}
+            <Link href="/iptv-for-firestick" className="text-violet-600 hover:text-violet-700 underline-offset-2 hover:underline">
+              IPTV for Firestick setup guide
+            </Link>.
           </p>
         </motion.div>
 

@@ -1,6 +1,6 @@
 export const SITE_NAME = "Fast IPTV";
 export const SITE_URL = "https://fast-iptv.tv";
-export const CONTACT_EMAIL = "support@fast-iptv.tv";
+export const CONTACT_EMAIL = "contact@buy-iptv-uk.com";
 
 export const NAV_LINKS = [
   { label: "Home", href: "/" },
@@ -15,6 +15,14 @@ export const LEGAL_LINKS = [
   { label: "Privacy Policy", href: "/privacy" },
   { label: "DMCA Policy", href: "/dmca" },
   { label: "Refund Policy", href: "/refund" },
+] as const;
+
+export const GUIDES_LINKS = [
+  { label: "4K IPTV UK", href: "/4k-iptv-uk" },
+  { label: "IPTV for Firestick", href: "/iptv-for-firestick" },
+  { label: "IPTV Buffering Fix", href: "/iptv-buffering-fix" },
+  { label: "IPTV Smarters Pro Setup", href: "/iptv-smarters-pro-setup" },
+  { label: "Is IPTV Legal in the UK?", href: "/is-iptv-legal-uk" },
 ] as const;
 
 export const STATS = [

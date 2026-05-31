@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import HeroSection from "@/components/HeroSection";
 import StatsBar from "@/components/StatsBar";
 import FeaturesSection from "@/components/FeaturesSection";
@@ -9,6 +10,12 @@ import FAQSection from "@/components/FAQSection";
 import TrustSection from "@/components/TrustSection";
 import CTASection from "@/components/CTASection";
 import { FAQ_ITEMS, PRICING_PLANS, SITE_NAME, SITE_URL } from "@/lib/constants";
+
+export const metadata: Metadata = {
+  title: { absolute: "Fast IPTV UK — Low-Latency, Anti-Freeze Streaming" },
+  description:
+    "Fast IPTV is a UK-edge IPTV service tuned for speed, low latency, and stable HD / 4K UHD playback across Firestick, Android, Smart TV and iOS.",
+};
 
 export default function HomePage() {
   const organizationId = `${SITE_URL}/#organization`;
