@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { Tv, Trophy, Film, Baby, Newspaper, Globe } from "lucide-react";
 import SectionLink from "./SectionLink";
 import { CHANNEL_CATEGORIES } from "@/lib/constants";
@@ -30,7 +31,10 @@ export default function ChannelsSection() {
             Speed without content is pointless. Here is what loads the moment you press play — every category included in every{" "}
             <SectionLink href="/#pricing" className="text-violet-600 hover:text-violet-700 underline-offset-2 hover:underline">
               fast IPTV plan
-            </SectionLink>.
+            </SectionLink>. For native UHD playback and bandwidth requirements, read our guide to{" "}
+            <Link href="/4k-iptv-uk" className="text-violet-600 hover:text-violet-700 underline-offset-2 hover:underline">
+              4K IPTV UK streams
+            </Link>.
           </p>
         </motion.div>
 

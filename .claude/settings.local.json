@@ -1,7 +1,13 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npm install *)"
+      "Bash(npm install *)",
+      "Bash(ls D:\\\\\\\\iptv-lp\\\\\\\\fast-iptv-clean -1)",
+      "Bash(ls D:\\\\\\\\iptv-lp\\\\\\\\fast-iptv-clean/src/app/blog/)",
+      "Bash(ls D:\\\\\\\\iptv-lp\\\\\\\\fast-iptv-clean/src/app/terms/)",
+      "Bash(npm run *)",
+      "Bash(node *)",
+      "Bash(git restore *)"
     ]
   }
 }

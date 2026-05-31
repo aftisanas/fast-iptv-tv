@@ -37,7 +37,11 @@ export default function FAQSection() {
             before starting your{" "}
             <SectionLink href="/#pricing" className="text-violet-600 hover:text-violet-700 underline-offset-2 hover:underline">
               fast IPTV subscription
-            </SectionLink>.
+            </SectionLink>. Already streaming and seeing playback issues? See our{" "}
+            <Link href="/iptv-buffering-fix" className="text-violet-600 hover:text-violet-700 underline-offset-2 hover:underline">
+              IPTV buffering fix
+            </Link>{" "}
+            guide.
           </p>
         </motion.div>
 
