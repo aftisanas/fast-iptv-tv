@@ -66,7 +66,7 @@ export const FEATURES = [
   {
     title: "High-Speed IPTV Subscription — Full Access From £4.17/Month",
     description:
-      "Full access to 37,000 channels, 4K and the secure proxy option from £4.17/month on the annual plan. The fastest IPTV service in Britain, engineered for speed first. Compare that to traditional pay-TV at £75+ for fewer channels and slower EPG navigation.",
+      "Full access to 37,000 channels, 4K and the secure proxy option from £4.17/month on the annual plan. Built for speed-first UK streaming. Compare that to traditional pay-TV at £75+ for fewer channels and slower EPG navigation.",
     icon: "Clock" as const,
   },
   {
@@ -88,7 +88,7 @@ export const PRICING_PLANS = [
     id: "bronze",
     tier: "Quick Start",
     name: "3 Months",
-    subtitle: "Three months of the fastest IPTV in the UK",
+    subtitle: "Three months of fast IPTV UK streaming",
     price: 25.99,
     originalPrice: 39.99,
     perMonth: 8.66,
@@ -266,7 +266,7 @@ export const FAQ_ITEMS = [
       "Under 60 seconds. Your credentials arrive by email before the Stripe or PayPal confirmation page finishes loading.",
   },
   {
-    question: "Is this the fastest IPTV in the UK?",
+    question: "What makes Fast IPTV a speed-focused service?",
     answer:
       "Fast IPTV is engineered with speed as a primary design goal — UK-focused infrastructure, automatic post-payment activation, and fast channel-switching on modern player apps. We won't claim a ranking against every UK provider, but speed is what this service is built around.",
   },
@@ -276,7 +276,7 @@ export const FAQ_ITEMS = [
       "No. Native 4K UHD is included on every plan with adaptive bitrate that protects the picture when broadband dips. Speed and quality run on the same infrastructure.",
   },
   {
-    question: "Which devices give the fastest IPTV experience?",
+    question: "Which devices work best with Fast IPTV?",
     answer:
       "Amazon Fire TV Stick 4K Max, Apple TV 4K, Formuler Z11 Pro and modern Samsung/LG Smart TVs deliver the lowest channel-switch times. iOS, Android, Windows and macOS apps run at full speed on any 25 Mbps connection.",
   },
