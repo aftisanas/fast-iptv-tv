@@ -28,21 +28,21 @@ export const GUIDES_LINKS = [
 export const STATS = [
   { value: "37,000+", label: "Live Channels" },
   { value: "198,000+", label: "Films & Series" },
-  { value: "99.9%", label: "Uptime" },
-  { value: "50,000+", label: "UK Subscribers" },
+  { value: "60s", label: "Activation" },
+  { value: "24/7", label: "UK Support" },
 ] as const;
 
 export const FEATURES = [
   {
     title: "Fast IPTV Activation — Credentials In Under 60 Seconds",
     description:
-      "Pay and your login details arrive by email before the checkout page finishes loading. No human review, no activation queue. The fastest delivery window in the UK IPTV market — verified by independent timing tests.",
+      "Pay and your login details arrive by email automatically after checkout. No manual review, no activation queue. Designed to get you streaming within minutes of payment.",
     icon: "Zap" as const,
   },
   {
     title: "Strong IPTV Servers — Zero-Buffer 4K On UK Infrastructure",
     description:
-      "Every stream originates from high-capacity data centres on British soil. Low-latency routing means live football goals land on your screen in near real-time. The strong server backbone that keeps 4K running without a single stutter.",
+      "Streams originate from UK-focused data centres tuned for low-latency playback. Designed to keep live sport feeds smooth during peak evening load. 4K UHD is supported on every plan where the source feed transmits in 4K.",
     icon: "Monitor" as const,
   },
   {
@@ -58,9 +58,9 @@ export const FEATURES = [
     icon: "Film" as const,
   },
   {
-    title: "Best IPTV UK For Live Sport — Near-Zero Delay",
+    title: "Live Sport On Fast IPTV UK",
     description:
-      "Sport is where speed matters most. Our feeds run with sub-three-second delay on football, rugby, cricket and motorsport. Hear the roar as it happens, not thirty seconds after your neighbour texts the score.",
+      "Sport is where speed matters most. The infrastructure is tuned for low-latency live sport playback — football, rugby, cricket and motorsport — through UK-focused servers.",
     icon: "LayoutGrid" as const,
   },
   {
@@ -72,13 +72,13 @@ export const FEATURES = [
   {
     title: "Buy IPTV UK With A Secure Proxy Option — Fast And Private",
     description:
-      "An optional secure proxy layer wraps every stream at zero extra cost. The encryption adds no measurable latency — tested and published monthly. Privacy at full speed, not as a paid add-on.",
+      "An optional secure proxy layer wraps every stream at zero extra cost. The encryption is designed to add minimal latency overhead. Privacy at full speed, not as a paid add-on.",
     icon: "Shield" as const,
   },
   {
-    title: "24/7 UK Support — The IPTV Service That Replies In Minutes",
+    title: "24/7 UK Support",
     description:
-      "A named British team answers live chat and email around the clock. Average first response: under four minutes. When something goes wrong, speed of resolution matters as much as speed of streaming.",
+      "A UK-based team answers live chat and email 24 hours a day. When something goes wrong, speed of resolution matters as much as speed of streaming.",
     icon: "Smartphone" as const,
   },
 ] as const;
@@ -169,7 +169,7 @@ export const PRICING_PLANS = [
     id: "diamond",
     tier: "Elite",
     name: "24 Months",
-    subtitle: "Two years locked at the lowest rate — full speed guaranteed",
+    subtitle: "Two years locked at the lowest rate — full speed maintained",
     price: 79.99,
     originalPrice: 159.99,
     perMonth: 3.33,
@@ -258,7 +258,7 @@ export const FAQ_ITEMS = [
   {
     question: "What makes this a fast IPTV service?",
     answer:
-      "Three measurable speed benchmarks: 60-second activation after payment, sub-one-second channel switching on supported apps and sub-three-second live sport delay. Every metric is tested and published.",
+      "Fast IPTV is designed around three speed priorities: instant email activation after payment, rapid channel switching on supported player apps, and low-latency live sport playback. The service runs on UK-focused infrastructure to keep delays short during peak evening hours.",
   },
   {
     question: "How fast is activation after I buy IPTV?",
@@ -268,7 +268,7 @@ export const FAQ_ITEMS = [
   {
     question: "Is this the fastest IPTV in the UK?",
     answer:
-      "Yes — independent timing tests place our activation, channel-switching and live-sport delay among the lowest of any UK-based IPTV service. Our status page publishes the numbers.",
+      "Fast IPTV is engineered with speed as a primary design goal — UK-focused infrastructure, automatic post-payment activation, and fast channel-switching on modern player apps. We won't claim a ranking against every UK provider, but speed is what this service is built around.",
   },
   {
     question: "Does fast IPTV sacrifice quality for speed?",
@@ -283,7 +283,7 @@ export const FAQ_ITEMS = [
   {
     question: "Does the secure proxy option slow down fast IPTV streaming?",
     answer:
-      "No. Our secure proxy adds no measurable latency. Channel switching, sport delay and 4K bitrate remain identical with the proxy on or off — tested monthly.",
+      "The optional secure proxy is designed to add minimal latency overhead. Channel switching, sport playback and 4K streaming run normally with the proxy active.",
   },
   {
     question: "What internet speed do I need?",
@@ -303,7 +303,7 @@ export const FAQ_ITEMS = [
   {
     question: "How fast does support respond?",
     answer:
-      "Average first response under four minutes on live chat and email, 24 hours a day, from a named British team.",
+      "Live chat and email support are available 24/7 from a UK-based team. Response time depends on queue volume but support aims to reply quickly during evening and weekend peak hours.",
   },
   {
     question: "How does fast-iptv.tv compare to traditional pay-TV?",
@@ -389,7 +389,7 @@ export const BLOG_POSTS = [
     slug: "live-uk-sports-streaming-guide",
     title: "Watch Live UK Sports — Fast IPTV Streaming Guide",
     excerpt:
-      "Top-tier UK football, domestic cup ties, European nights and combat sports — all in stunning HD and 4K quality through a single fast IPTV subscription with sub-3-second delay.",
+      "Top-tier UK football, domestic cup ties, European nights and combat sports — all in stunning HD and 4K quality through a single fast IPTV subscription tuned for low-latency sport playback.",
     date: "2026-03-10",
     readTime: "5 min read",
     category: "Sports",

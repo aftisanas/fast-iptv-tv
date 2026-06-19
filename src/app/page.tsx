@@ -5,16 +5,34 @@ import FeaturesSection from "@/components/FeaturesSection";
 import PricingSection from "@/components/PricingSection";
 import DevicesSection from "@/components/DevicesSection";
 import ChannelsSection from "@/components/ChannelsSection";
-import TestimonialsSection from "@/components/TestimonialsSection";
+// import TestimonialsSection from "@/components/TestimonialsSection"; // Temporarily disabled — awaiting real testimonials
 import FAQSection from "@/components/FAQSection";
 import TrustSection from "@/components/TrustSection";
 import CTASection from "@/components/CTASection";
 import { FAQ_ITEMS, PRICING_PLANS, SITE_NAME, SITE_URL } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: { absolute: "Fast IPTV UK — Low-Latency, Anti-Freeze Streaming" },
+  title: { absolute: "Fast IPTV — UK Subscription, 4K, 60-Second Setup" },
   description:
-    "Fast IPTV is a UK-edge IPTV service tuned for speed, low latency, and stable HD / 4K UHD playback across Firestick, Android, Smart TV and iOS.",
+    "Fast IPTV is a UK-focused IPTV subscription with 37,000 channels, 4K UHD, automatic 60-second activation and a 30-day money-back. Setup in under two minutes on Firestick, smart TV or phone.",
+  openGraph: {
+    title: "Fast IPTV — UK Subscription, 4K, 60-Second Setup",
+    description:
+      "Fast IPTV: 37,000 channels, 4K UHD, 60-second activation, 30-day money-back. UK-focused IPTV subscription from £25.99.",
+    url: "https://fast-iptv.tv",
+    siteName: "Fast IPTV",
+    locale: "en_GB",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Fast IPTV — UK Subscription, 4K, 60-Second Setup",
+    description:
+      "Fast IPTV: 37,000 channels, 4K UHD, 60-second activation, 30-day money-back. UK-focused IPTV subscription from £25.99.",
+  },
+  alternates: {
+    canonical: "https://fast-iptv.tv",
+  },
 };
 
 export default function HomePage() {
@@ -62,7 +80,7 @@ export default function HomePage() {
         provider: { "@id": organizationId },
         areaServed: { "@type": "Country", name: "United Kingdom" },
         description:
-          "The fastest IPTV UK subscription: 37,000 live channels, 198,000 films and series, native 4K UHD, secure proxy option, extra connection options, 60-second activation, sub-3-second live sport delay and a 30-day money-back guarantee.",
+          "A UK-focused IPTV subscription: 37,000 live channels, 198,000 films and series, native 4K UHD, secure proxy option, extra connection options, 60-second activation, low-latency live sport playback and a 30-day money-back guarantee.",
         hasOfferCatalog: {
           "@type": "OfferCatalog",
           name: "Fast IPTV UK Plans",
@@ -82,7 +100,7 @@ export default function HomePage() {
         name: "Fast IPTV UK Subscription",
         brand: { "@id": organizationId },
         description:
-          "Fast IPTV UK subscription with 37,000 live channels, native 4K UHD, sub-3-second live sport delay, secure proxy option and extra connection options.",
+          "Fast IPTV UK subscription with 37,000 live channels, native 4K UHD, low-latency live sport playback, secure proxy option and extra connection options.",
         image: logoUrl,
         offers: {
           "@type": "AggregateOffer",
@@ -138,7 +156,7 @@ export default function HomePage() {
       <PricingSection />
       <DevicesSection />
       <ChannelsSection />
-      <TestimonialsSection />
+      {/* <TestimonialsSection /> */ /* Temporarily disabled — awaiting real testimonials */}
       <FAQSection />
       <TrustSection />
       <CTASection />
