@@ -95,7 +95,7 @@ export default function ContactContent() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="mx-auto max-w-2xl text-lg text-gray-300/90 leading-relaxed"
           >
-            The UK-based Fast IPTV support team is available 24/7 via live chat and email — a named British team with deep knowledge of the UK IPTV market. Average first response: under four minutes.
+            The UK-based Fast IPTV support team is available 24/7 via live chat and email, with deep knowledge of the UK IPTV market. The team aims to respond quickly during peak hours.
           </motion.p>
         </div>
 
