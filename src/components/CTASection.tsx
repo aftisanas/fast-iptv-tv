@@ -97,7 +97,7 @@ export default function CTASection() {
             <Link href="/contact" className="text-cyan-300 hover:text-cyan-200 underline-offset-2 hover:underline">
               Email us via our contact page
             </Link>{" "}
-            — average reply under four minutes.
+            — replies quickly during peak hours.
           </p>
         </motion.div>
       </div>

@@ -51,9 +51,9 @@ export default function TrustSection() {
             <span className="gradient-text">You Can Verify</span>
           </h2>
           <p className="mx-auto max-w-xl text-lg text-muted">
-            Claims without evidence are noise. Every guarantee below is published, measured and backed by a full{" "}
+            Every commitment below is documented in policy and backed by a{" "}
             <Link href="/refund" className="text-violet-600 hover:text-violet-700 underline-offset-2 hover:underline">
-              same-day refund
+              30-day money-back
             </Link>.
           </p>
         </motion.div>

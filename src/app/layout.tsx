@@ -23,11 +23,11 @@ const outfit = Outfit({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Fast IPTV UK 2026 | #1 Fastest IPTV Subscription — 60s Activation",
+    default: "Fast IPTV — UK IPTV Subscription",
     template: "%s | Fast IPTV",
   },
   description:
-    "Fast IPTV UK 2026: the fastest IPTV subscription in Britain. 37,000 channels, 4K UHD, sub-3s sport delay, 60-second activation. Live in two minutes — from £25.99.",
+    "Fast IPTV is a UK-focused IPTV subscription with 37,000 channels, 4K UHD, automatic activation and a 30-day money-back. Setup in under two minutes on Firestick, smart TV or phone.",
   authors: [{ name: "Fast IPTV" }],
   creator: "Fast IPTV",
   applicationName: "Fast IPTV",
@@ -56,15 +56,15 @@ export const metadata: Metadata = {
     locale: "en_GB",
     siteName: "Fast IPTV",
     url: SITE_URL,
-    title: "Fast IPTV UK 2026 | #1 Fastest IPTV Subscription — 60s Activation",
+    title: "Fast IPTV — UK IPTV Subscription",
     description:
-      "Fast IPTV UK 2026: the fastest IPTV subscription in Britain. 37,000 channels, 4K UHD, sub-3s sport delay, 60-second activation. Live in two minutes — from £25.99.",
+      "Fast IPTV is a UK-focused IPTV subscription with 37,000 channels, 4K UHD, automatic activation and a 30-day money-back. Setup in under two minutes on Firestick, smart TV or phone.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Fast IPTV UK 2026 | #1 Fastest IPTV Subscription — 60s Activation",
+    title: "Fast IPTV — UK IPTV Subscription",
     description:
-      "Fast IPTV UK 2026: the fastest IPTV subscription in Britain. 37,000 channels, 4K UHD, sub-3s sport delay, 60-second activation. Live in two minutes — from £25.99.",
+      "Fast IPTV is a UK-focused IPTV subscription with 37,000 channels, 4K UHD, automatic activation and a 30-day money-back. Setup in under two minutes on Firestick, smart TV or phone.",
   },
   robots: {
     index: true,
