@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import HeroSection from "@/components/HeroSection";
+import DefinitionSection from "@/components/DefinitionSection";
 import StatsBar from "@/components/StatsBar";
 import FeaturesSection from "@/components/FeaturesSection";
 import PricingSection from "@/components/PricingSection";
@@ -9,7 +10,7 @@ import ChannelsSection from "@/components/ChannelsSection";
 import FAQSection from "@/components/FAQSection";
 import TrustSection from "@/components/TrustSection";
 import CTASection from "@/components/CTASection";
-import { FAQ_ITEMS, PRICING_PLANS, SITE_NAME, SITE_URL } from "@/lib/constants";
+import { FAQ_ITEMS, LAST_UPDATED, PRICING_PLANS, SITE_NAME, SITE_URL } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: { absolute: "Fast IPTV — UK Subscription, 4K, 60-Second Setup" },
@@ -125,6 +126,46 @@ export default function HomePage() {
         ],
       },
       {
+        "@type": "Article",
+        "@id": `${SITE_URL}/#article`,
+        headline: "What is Fast IPTV? UK IPTV Subscription Guide",
+        description:
+          "Fast IPTV is a UK-focused IPTV subscription with 37,000 live channels, 198,000 on-demand titles, 4K UHD, automatic 60-second activation, optional secure proxy, and a 30-day money-back.",
+        url: SITE_URL,
+        inLanguage: "en-GB",
+        datePublished: "2025-11-07",
+        dateModified: LAST_UPDATED,
+        author: {
+          "@id": organizationId,
+          name: "Fast IPTV Editorial Team",
+        },
+        publisher: {
+          "@id": organizationId,
+        },
+        isPartOf: {
+          "@id": websiteId,
+        },
+        mainEntityOfPage: SITE_URL,
+        about: [
+          { "@type": "Thing", name: "IPTV", sameAs: "https://en.wikipedia.org/wiki/IPTV" },
+          { "@type": "Thing", name: "IPTV Subscription" },
+          { "@type": "Thing", name: "4K UHD Streaming" },
+          { "@type": "Thing", name: "United Kingdom", sameAs: "https://en.wikipedia.org/wiki/United_Kingdom" },
+        ],
+        citation: [
+          {
+            "@type": "CreativeWork",
+            name: "IPTV - Wikipedia",
+            url: "https://en.wikipedia.org/wiki/IPTV",
+          },
+          {
+            "@type": "CreativeWork",
+            name: "Ofcom — On-demand programme services",
+            url: "https://www.ofcom.org.uk/tv-radio-and-on-demand/on-demand-services",
+          },
+        ],
+      },
+      {
         "@type": "FAQPage",
         "@id": faqId,
         mainEntity: FAQ_ITEMS.map((item) => ({
@@ -151,6 +192,7 @@ export default function HomePage() {
       />
 
       <HeroSection />
+      <DefinitionSection />
       <StatsBar />
       <FeaturesSection />
       <PricingSection />

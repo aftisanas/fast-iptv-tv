@@ -2,6 +2,9 @@ export const SITE_NAME = "Fast IPTV";
 export const SITE_URL = "https://fast-iptv.tv";
 export const CONTACT_EMAIL = "contact@buy-iptv-uk.com";
 
+export const LAST_UPDATED = "2026-06-19";
+export const LAST_UPDATED_DISPLAY = "19 June 2026";
+
 export const NAV_LINKS = [
   { label: "Home", href: "/" },
   { label: "Why Us", href: "/#features" },
@@ -256,9 +259,9 @@ export const DEVICES = [
 
 export const FAQ_ITEMS = [
   {
-    question: "What makes this a fast IPTV service?",
+    question: "What is Fast IPTV?",
     answer:
-      "Fast IPTV is designed around three speed priorities: instant email activation after payment, rapid channel switching on supported player apps, and low-latency live sport playback. The service runs on UK-focused infrastructure to keep delays short during peak evening hours.",
+      "Fast IPTV is a UK-focused IPTV subscription that streams live channels and on-demand films and series over standard home broadband — no satellite dish, no cable line, no engineer visit. The full plan ships with 37,000+ live channels and 198,000+ on-demand titles in HD, Full HD and 4K UHD, accessible on every common UK streaming device. Setup is designed to be fast: payment triggers automatic email activation in roughly 60 seconds, and player-app configuration typically takes under five minutes on Firestick, smart TV or phone. The service includes an optional built-in secure proxy at no extra cost, supports multiple device add-ons, and is backed by a 30-day money-back. Pricing starts at £25.99 for three months and drops to £3.33 effective monthly on the 24-month plan.",
   },
   {
     question: "How fast is activation after I buy IPTV?",
@@ -278,7 +281,7 @@ export const FAQ_ITEMS = [
   {
     question: "Which devices work best with Fast IPTV?",
     answer:
-      "Amazon Fire TV Stick 4K Max, Apple TV 4K, Formuler Z11 Pro and modern Samsung/LG Smart TVs deliver the lowest channel-switch times. iOS, Android, Windows and macOS apps run at full speed on any 25 Mbps connection.",
+      "Fast IPTV runs on every common UK streaming device that supports IPTV playback. The most popular options among UK subscribers are the Amazon Fire TV Stick 4K and Fire TV Stick 4K Max, both of which run the IPTV Smarters Pro app well and handle 4K UHD on a typical 25 Mbps connection. Apple TV 4K, Nvidia Shield and Formuler Z11 Pro are favoured by users who want a dedicated set-top box with rapid channel switching. On Samsung and LG smart TVs from 2017 onwards, Smart IPTV and Set IPTV apps work natively without extra hardware. iPhones, iPads, Android phones and tablets, Windows PCs, macOS, and MAG receivers are all supported. Most modern devices with an H.265-capable decoder will play the full 4K library smoothly, provided home broadband has the bandwidth.",
   },
   {
     question: "Does the secure proxy option slow down fast IPTV streaming?",
@@ -288,7 +291,7 @@ export const FAQ_ITEMS = [
   {
     question: "What internet speed do I need?",
     answer:
-      "25 Mbps for stable 4K UHD on a single device, 50 Mbps for multiple concurrent 4K streams. HD streams run comfortably on 10 Mbps.",
+      "For stable HD playback, 10 Mbps of consistent home broadband is comfortable. For native 4K UHD streaming on a single device, 25 Mbps is the recommended minimum. Households running two simultaneous 4K streams should plan for 50 Mbps or more. Most modern UK fibre connections — typically 100 to 900 Mbps depending on provider and area — have ample headroom for multiple concurrent streams. If you experience buffering at speeds that should be sufficient, the cause is more often home Wi-Fi than the broadband line itself. Wiring the streaming device to the router with Ethernet eliminates the most common bottleneck. Streaming over 5GHz Wi-Fi from within roughly ten metres of the router is usually fine; 2.4GHz Wi-Fi at longer ranges can struggle with 4K bitrates. Fast IPTV uses adaptive bitrate streaming, so the picture stays watchable when broadband momentarily dips.",
   },
   {
     question: "Can I stream on more than one device at the same time?",
@@ -308,7 +311,7 @@ export const FAQ_ITEMS = [
   {
     question: "How does fast-iptv.tv compare to traditional pay-TV?",
     answer:
-      "We deliver more channels (37,000+ vs a typical pay-TV line-up of ~270), native 4K on every plan and no equipment, dish or engineer visit — at a fraction of the monthly price of a flagship premium pay-TV bundle.",
+      "Fast IPTV delivers a noticeably larger channel library — 37,000+ live channels versus a typical UK pay-TV bundle of around 270 — and includes native 4K UHD on every plan at no extra charge. There is no dish, no engineer visit, no equipment rental, and no minimum contract: every plan is a one-time payment backed by a 30-day money-back. On the cost side, the effective monthly price on the 24-month plan is £3.33; a comparable traditional pay-TV bundle with premium sports and cinema typically runs £75 or more per month in 2026. Where traditional pay-TV still leads is single-bill convenience — if you want broadband and TV from the same supplier, traditional pay-TV is more convenient. Most UK households already have broadband, however, so an IPTV subscription captures the TV-side savings without changing the broadband line.",
   },
 ] as const;
 
