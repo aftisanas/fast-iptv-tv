@@ -59,12 +59,22 @@ export const metadata: Metadata = {
     title: "Fast IPTV — UK IPTV Subscription",
     description:
       "Fast IPTV is a UK-focused IPTV subscription with 37,000 channels, 4K UHD, automatic activation and a 30-day money-back. Setup in under two minutes on Firestick, smart TV or phone.",
+    images: [
+      {
+        url: "/fast-iptv-og-image.webp",
+        width: 1200,
+        height: 630,
+        alt: "Fast IPTV — UK IPTV Subscription with 37,000 channels and 60-second activation",
+        type: "image/webp",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Fast IPTV — UK IPTV Subscription",
     description:
       "Fast IPTV is a UK-focused IPTV subscription with 37,000 channels, 4K UHD, automatic activation and a 30-day money-back. Setup in under two minutes on Firestick, smart TV or phone.",
+    images: ["/fast-iptv-og-image.webp"],
   },
   robots: {
     index: true,
