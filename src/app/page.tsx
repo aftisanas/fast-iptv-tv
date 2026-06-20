@@ -24,12 +24,22 @@ export const metadata: Metadata = {
     siteName: "Fast IPTV",
     locale: "en_GB",
     type: "website",
+    images: [
+      {
+        url: "/fast-iptv-og-image.webp",
+        width: 1200,
+        height: 630,
+        alt: "Fast IPTV — UK IPTV Subscription with 37,000 channels and 60-second activation",
+        type: "image/webp",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Fast IPTV — UK Subscription, 4K, 60-Second Setup",
     description:
       "Fast IPTV: 37,000 channels, 4K UHD, 60-second activation, 30-day money-back. UK-focused IPTV subscription from £25.99.",
+    images: ["/fast-iptv-og-image.webp"],
   },
   alternates: {
     canonical: "https://fast-iptv.tv",
