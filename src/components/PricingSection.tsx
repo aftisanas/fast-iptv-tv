@@ -256,7 +256,7 @@ export default function PricingSection() {
           className="mt-14 flex flex-wrap items-center justify-center gap-6 lg:gap-10"
         >
           {[
-            { icon: Shield, label: "SSL-secured Stripe & PayPal · GBP pricing" },
+            { icon: Shield, label: "Secure WhatsApp ordering · GBP pricing" },
             { icon: CreditCard, label: "30-day money-back guarantee" },
             { icon: Star, label: "60-second activation" },
           ].map((item) => (
@@ -273,6 +273,7 @@ export default function PricingSection() {
         onClose={() => setSelectedPlan(null)}
         planName={selectedPlan ? toAccessLabel(selectedPlan.name) : ""}
         planPrice={selectedPlan?.price ?? 0}
+        proxyPrice={selectedPlan?.proxyPrice ?? 0}
       />
     </section>
   );

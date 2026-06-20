@@ -1,15 +1,19 @@
+// TODO: Re-enable Stripe/Shopify card checkout when payment accounts are set up.
+// Original SECURE CHECKOUT button code preserved in git history.
+// For now, WhatsApp is the sole checkout flow.
 "use client";
 
-import { useEffect, useRef } from "react";
-import { X, Lock, Shield } from "lucide-react";
-import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import { X, Shield, MessageCircle, Minus, Plus } from "lucide-react";
+import { CHECKOUT_COPY, EXTRA_CONNECTION_PRICE, EXTRA_CONNECTIONS_MAX, SITE_NAME } from "@/lib/constants";
+import { buildWhatsAppCheckoutUrl, calculateOrderTotal } from "@/lib/whatsapp";
 
 type OrderSummaryModalProps = {
   open: boolean;
   onClose: () => void;
-  onCheckout?: () => void;
   planName: string;
   planPrice: number;
+  proxyPrice: number;
   currency?: string;
 };
 
@@ -19,12 +23,19 @@ const formatPrice = (value: number, currency: string) =>
 export default function OrderSummaryModal({
   open,
   onClose,
-  onCheckout,
   planName,
   planPrice,
+  proxyPrice,
   currency = "£",
 }: OrderSummaryModalProps) {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const [proxyOn, setProxyOn] = useState(false);
+  const [extraConnections, setExtraConnections] = useState(0);
+
+  useEffect(() => {
+    setProxyOn(false);
+    setExtraConnections(0);
+  }, [planName]);
 
   useEffect(() => {
     if (!open) return;
@@ -48,6 +59,27 @@ export default function OrderSummaryModal({
   }, [open, onClose]);
 
   if (!open) return null;
+
+  const total = calculateOrderTotal({
+    planPrice,
+    proxyEnabled: proxyOn,
+    proxyPrice,
+    extraConnections,
+  });
+
+  const extraConnectionsSubtotal = extraConnections * EXTRA_CONNECTION_PRICE;
+
+  const handleCheckout = () => {
+    const url = buildWhatsAppCheckoutUrl({
+      planName,
+      planPrice,
+      proxyEnabled: proxyOn,
+      proxyPrice,
+      extraConnections,
+      brandName: SITE_NAME,
+    });
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fade-in">
@@ -107,6 +139,7 @@ export default function OrderSummaryModal({
               RECOMMENDED OPTIONS
             </h3>
 
+            {/* Proxy Protection */}
             <div className="rounded-xl border border-gray-100 bg-white px-5 py-4">
               <div className="mb-1 flex items-start justify-between gap-3">
                 <div className="flex flex-wrap items-center gap-2">
@@ -118,25 +151,95 @@ export default function OrderSummaryModal({
                   </span>
                 </div>
 
-                {/* Static toggle (off) — decorative */}
-                <span
-                  aria-hidden="true"
-                  className="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full bg-gray-200"
+                <button
+                  type="button"
+                  role="switch"
+                  aria-checked={proxyOn}
+                  aria-label="Toggle Proxy Protection"
+                  onClick={() => setProxyOn((v) => !v)}
+                  className={`relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors focus-visible:outline-2 focus-visible:outline-violet-600 focus-visible:outline-offset-2 ${
+                    proxyOn
+                      ? "bg-gradient-to-r from-violet-600 to-cyan-500"
+                      : "bg-gray-200"
+                  }`}
                 >
-                  <span className="inline-block h-5 w-5 translate-x-0.5 rounded-full bg-white shadow" />
-                </span>
+                  <span
+                    className={`inline-block h-5 w-5 rounded-full bg-white shadow transition-transform ${
+                      proxyOn ? "translate-x-[1.375rem]" : "translate-x-0.5"
+                    }`}
+                  />
+                </button>
               </div>
 
               <div className="mb-2 text-sm font-bold text-accent">
-                {formatPrice(15, currency)}
+                +{formatPrice(proxyPrice, currency)}
               </div>
 
               <p className="text-xs leading-relaxed text-muted">
                 An integrated proxy designed to prevent ISP tracking of service usage.
               </p>
             </div>
-          </div>
 
+            {/* Extra Connections */}
+            <div className="mt-3 rounded-xl border border-gray-100 bg-white px-5 py-4">
+              <div className="mb-1 flex items-start justify-between gap-3">
+                <div>
+                  <div className="text-sm font-semibold text-foreground">
+                    {CHECKOUT_COPY.extraConnectionsLabel}
+                  </div>
+                  <p className="mt-0.5 text-xs leading-relaxed text-muted">
+                    {CHECKOUT_COPY.extraConnectionsHelp}
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2 shrink-0">
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setExtraConnections((v) => Math.max(0, v - 1))
+                    }
+                    disabled={extraConnections === 0}
+                    aria-label="Decrease extra connections"
+                    className="flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 bg-white text-foreground transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-white focus-visible:outline-2 focus-visible:outline-violet-600 focus-visible:outline-offset-2"
+                  >
+                    <Minus className="h-3.5 w-3.5" aria-hidden="true" />
+                  </button>
+                  <span
+                    aria-live="polite"
+                    className="w-6 text-center text-sm font-bold text-foreground"
+                  >
+                    {extraConnections}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setExtraConnections((v) =>
+                        Math.min(EXTRA_CONNECTIONS_MAX, v + 1)
+                      )
+                    }
+                    disabled={extraConnections === EXTRA_CONNECTIONS_MAX}
+                    aria-label="Increase extra connections"
+                    className="flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 bg-white text-foreground transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-white focus-visible:outline-2 focus-visible:outline-violet-600 focus-visible:outline-offset-2"
+                  >
+                    <Plus className="h-3.5 w-3.5" aria-hidden="true" />
+                  </button>
+                </div>
+              </div>
+
+              <div className="mt-2 text-xs font-semibold text-accent">
+                {CHECKOUT_COPY.extraConnectionsPriceLabel}
+              </div>
+
+              {extraConnections > 0 && (
+                <div className="mt-1 text-xs text-muted">
+                  {extraConnections} × £{EXTRA_CONNECTION_PRICE.toFixed(2)} ={" "}
+                  <span className="font-semibold text-foreground">
+                    {formatPrice(extraConnectionsSubtotal, currency)}
+                  </span>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
 
         {/* Footer */}
@@ -144,28 +247,27 @@ export default function OrderSummaryModal({
           <div className="flex items-center justify-between">
             <span className="text-base font-medium text-muted">Total</span>
             <span className="text-xl font-extrabold text-foreground">
-              {formatPrice(planPrice, currency)}
+              {formatPrice(total, currency)}
             </span>
           </div>
 
           <button
             type="button"
-            onClick={onCheckout}
-            aria-label="Proceed to secure checkout"
-            className="flex w-full items-center justify-center gap-2.5 rounded-xl bg-gradient-to-r from-violet-600 via-purple-600 to-cyan-500 px-6 py-3.5 text-sm font-bold tracking-wide text-white transition-all hover:shadow-lg hover:shadow-purple-500/30 active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2"
+            onClick={handleCheckout}
+            aria-label={`${CHECKOUT_COPY.buttonLabelPrefix} for ${formatPrice(total, currency)}`}
+            className="flex w-full items-center justify-center gap-2.5 rounded-xl bg-green-500 px-6 py-3.5 text-sm font-bold tracking-wide text-white transition-all hover:bg-green-600 hover:shadow-lg hover:shadow-green-500/30 active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-green-700 focus-visible:outline-offset-2"
           >
-            <Lock className="h-4 w-4" aria-hidden="true" />
-            SECURE CHECKOUT
+            <MessageCircle className="h-4 w-4" aria-hidden="true" />
+            {CHECKOUT_COPY.buttonLabelPrefix} · {formatPrice(total, currency)}
           </button>
+
+          <div className="text-center text-xs text-muted">
+            {CHECKOUT_COPY.buttonSubtitle}
+          </div>
 
           <div className="flex items-center justify-center gap-2 text-xs text-muted">
             <Shield className="h-3.5 w-3.5 text-emerald-600" aria-hidden="true" />
-            <Link
-              href="/privacy"
-              className="transition-colors hover:text-foreground"
-            >
-              100% Secure &amp; Encrypted Payment
-            </Link>
+            <span>{CHECKOUT_COPY.footerNote}</span>
           </div>
         </div>
       </div>
