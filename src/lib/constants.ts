@@ -5,6 +5,21 @@ export const CONTACT_EMAIL = "contact@buy-iptv-uk.com";
 export const LAST_UPDATED = "2026-06-19";
 export const LAST_UPDATED_DISPLAY = "19 June 2026";
 
+export const WHATSAPP_NUMBER = "447878757831";
+export const WHATSAPP_DISPLAY = "+44 7878 757831";
+
+export const EXTRA_CONNECTION_PRICE = 7.25;
+export const EXTRA_CONNECTIONS_MAX = 5;
+
+export const CHECKOUT_COPY = {
+  buttonLabelPrefix: "Complete Order on WhatsApp",
+  buttonSubtitle: "Instant reply · payment details sent to you",
+  footerNote: "Secure checkout · 30-day money-back",
+  extraConnectionsLabel: "Extra Connections",
+  extraConnectionsHelp: "Watch on multiple devices simultaneously",
+  extraConnectionsPriceLabel: `+£${EXTRA_CONNECTION_PRICE.toFixed(2)} per extra connection`,
+} as const;
+
 export const NAV_LINKS = [
   { label: "Home", href: "/" },
   { label: "Why Us", href: "/#features" },
@@ -97,6 +112,7 @@ export const PRICING_PLANS = [
     perMonth: 8.66,
     period: "3 months",
     devices: 5,
+    proxyPrice: 4.75,
     badge: "Quick Start",
     discount: "-35%",
     accentColor: "violet",
@@ -124,6 +140,7 @@ export const PRICING_PLANS = [
     perMonth: 6.0,
     period: "6 months",
     devices: 5,
+    proxyPrice: 9.5,
     badge: "Half-Year Value",
     discount: "-40%",
     accentColor: "violet",
@@ -151,6 +168,7 @@ export const PRICING_PLANS = [
     perMonth: 4.17,
     period: "year",
     devices: 5,
+    proxyPrice: 19,
     badge: "Most Popular — Save 44%",
     discount: "-44%",
     accentColor: "blue",
@@ -178,6 +196,7 @@ export const PRICING_PLANS = [
     perMonth: 3.33,
     period: "2 years",
     devices: 5,
+    proxyPrice: 38,
     badge: "Elite — Save 50%",
     discount: "-50%",
     accentColor: "violet",
@@ -266,7 +285,7 @@ export const FAQ_ITEMS = [
   {
     question: "How fast is activation after I buy IPTV?",
     answer:
-      "Under 60 seconds. Your credentials arrive by email before the Stripe or PayPal confirmation page finishes loading.",
+      "Under 60 seconds. Once payment is confirmed, your login credentials arrive by email automatically — typically before you finish the checkout chat.",
   },
   {
     question: "What makes Fast IPTV a speed-focused service?",
