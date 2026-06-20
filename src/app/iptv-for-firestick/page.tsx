@@ -9,7 +9,7 @@ import SubPageShell, {
 export const metadata: Metadata = {
   title: { absolute: "IPTV for Firestick UK — Fast, Anti-Freeze Setup" },
   description:
-    "Set up Fast IPTV on Firestick in minutes. UK-edge servers, low-latency playback, 4K UHD support, and clear step-by-step installation.",
+    "Set up Fast IPTV on Firestick in minutes. UK-focused streaming, low-latency playback, 4K UHD support, and clear step-by-step installation.",
   alternates: { canonical: "https://fast-iptv.tv/iptv-for-firestick" },
 };
 
@@ -160,7 +160,7 @@ export default function IptvForFirestickPage() {
       sections={sections}
       faqs={faqs}
       related={related}
-      description="Set up Fast IPTV on Firestick in minutes. UK-edge servers, low-latency playback, 4K UHD support, and clear step-by-step installation."
+      description="Set up Fast IPTV on Firestick in minutes. UK-focused streaming, low-latency playback, 4K UHD support, and clear step-by-step installation."
     />
   );
 }

@@ -52,7 +52,7 @@ export default function CTASection() {
             className="inline-flex items-center gap-2 rounded-full border border-purple-400/20 bg-white/[0.07] backdrop-blur-md px-5 py-2 text-sm text-purple-300 mb-8"
           >
             <Sparkles className="h-4 w-4 text-cyan-400" />
-            <span className="font-medium">Join 50,000+ UK Households</span>
+            <span className="font-medium">Built For UK Streaming</span>
           </motion.div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
@@ -60,17 +60,17 @@ export default function CTASection() {
             <span className="gradient-text-hero">Stream In Under Two Minutes</span>
           </h2>
           <p className="mx-auto max-w-2xl text-lg text-gray-300/90 mb-10 leading-relaxed">
-            Over 50,000 UK homes already switched to the fastest IPTV in Britain. The 24-month{" "}
+            The 24-month{" "}
             <SectionLink href="/#pricing" className="text-cyan-300 hover:text-cyan-200 underline-offset-2 hover:underline">
               fast IPTV plan
             </SectionLink>{" "}
-            locks the lowest rate while delivering the full 37,000-channel library, 198,000 films and a secure proxy option at full speed. First channel plays sixty seconds after payment, backed by a{" "}
+            locks in the lowest rate while delivering the full 37,000-channel library, 198,000 films and a secure proxy option. First channel plays after 60-second email activation, backed by a{" "}
             <Link href="/refund" className="text-cyan-300 hover:text-cyan-200 underline-offset-2 hover:underline">
-              30-day guarantee
+              30-day money-back
             </Link>{" "}
             and{" "}
             <Link href="/contact" className="text-cyan-300 hover:text-cyan-200 underline-offset-2 hover:underline">
-              UK support
+              UK-based support
             </Link>.
           </p>
 
@@ -97,7 +97,7 @@ export default function CTASection() {
             <Link href="/contact" className="text-cyan-300 hover:text-cyan-200 underline-offset-2 hover:underline">
               Email us via our contact page
             </Link>{" "}
-            — average reply under four minutes.
+            — replies quickly during peak hours.
           </p>
         </motion.div>
       </div>

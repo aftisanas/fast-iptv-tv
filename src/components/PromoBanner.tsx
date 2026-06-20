@@ -169,7 +169,7 @@ export default function PromoBanner() {
           className="text-[10px] sm:text-[11px] mt-0.5"
           style={{ color: "rgba(226, 232, 240, 0.9)" }}
         >
-          <span aria-hidden="true">🔒</span> Secure Payment &nbsp;·&nbsp; <span aria-hidden="true">⚡</span> Instant Activation &nbsp;·&nbsp; 50,000+ UK Subscribers
+          <span aria-hidden="true">🔒</span> Secure Payment &nbsp;·&nbsp; <span aria-hidden="true">⚡</span> Instant Activation &nbsp;·&nbsp; 30-Day Money-Back
         </p>
       </div>
     </div>

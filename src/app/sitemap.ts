@@ -27,7 +27,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // lastmod nudges Google to recrawl "discovered, not indexed" posts.
   const blogUpdated = new Date("2026-05-19");
   const promoted = new Set([
-    "iptv-vs-sky-comparison",
     "premier-league-streaming-guide",
   ]);
   const blogRoutes: MetadataRoute.Sitemap = BLOG_POSTS.filter((post) =>

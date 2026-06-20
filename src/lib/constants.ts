@@ -2,6 +2,9 @@ export const SITE_NAME = "Fast IPTV";
 export const SITE_URL = "https://fast-iptv.tv";
 export const CONTACT_EMAIL = "contact@buy-iptv-uk.com";
 
+export const LAST_UPDATED = "2026-06-19";
+export const LAST_UPDATED_DISPLAY = "19 June 2026";
+
 export const NAV_LINKS = [
   { label: "Home", href: "/" },
   { label: "Why Us", href: "/#features" },
@@ -28,21 +31,21 @@ export const GUIDES_LINKS = [
 export const STATS = [
   { value: "37,000+", label: "Live Channels" },
   { value: "198,000+", label: "Films & Series" },
-  { value: "99.9%", label: "Uptime" },
-  { value: "50,000+", label: "UK Subscribers" },
+  { value: "60s", label: "Activation" },
+  { value: "24/7", label: "UK Support" },
 ] as const;
 
 export const FEATURES = [
   {
     title: "Fast IPTV Activation — Credentials In Under 60 Seconds",
     description:
-      "Pay and your login details arrive by email before the checkout page finishes loading. No human review, no activation queue. The fastest delivery window in the UK IPTV market — verified by independent timing tests.",
+      "Pay and your login details arrive by email automatically after checkout. No manual review, no activation queue. Designed to get you streaming within minutes of payment.",
     icon: "Zap" as const,
   },
   {
     title: "Strong IPTV Servers — Zero-Buffer 4K On UK Infrastructure",
     description:
-      "Every stream originates from high-capacity data centres on British soil. Low-latency routing means live football goals land on your screen in near real-time. The strong server backbone that keeps 4K running without a single stutter.",
+      "Streams originate from UK-focused data centres tuned for low-latency playback. Designed to keep live sport feeds smooth during peak evening load. 4K UHD is supported on every plan where the source feed transmits in 4K.",
     icon: "Monitor" as const,
   },
   {
@@ -58,27 +61,27 @@ export const FEATURES = [
     icon: "Film" as const,
   },
   {
-    title: "Best IPTV UK For Live Sport — Near-Zero Delay",
+    title: "Live Sport On Fast IPTV UK",
     description:
-      "Sport is where speed matters most. Our feeds run with sub-three-second delay on football, rugby, cricket and motorsport. Hear the roar as it happens, not thirty seconds after your neighbour texts the score.",
+      "Sport is where speed matters most. The infrastructure is tuned for low-latency live sport playback — football, rugby, cricket and motorsport — through UK-focused servers.",
     icon: "LayoutGrid" as const,
   },
   {
     title: "High-Speed IPTV Subscription — Full Access From £4.17/Month",
     description:
-      "Full access to 37,000 channels, 4K and the secure proxy option from £4.17/month on the annual plan. The fastest IPTV service in Britain, engineered for speed first. Compare that to traditional pay-TV at £75+ for fewer channels and slower EPG navigation.",
+      "Full access to 37,000 channels, 4K and the secure proxy option from £4.17/month on the annual plan. Built for speed-first UK streaming. Compare that to traditional pay-TV at £75+ for fewer channels and slower EPG navigation.",
     icon: "Clock" as const,
   },
   {
     title: "Buy IPTV UK With A Secure Proxy Option — Fast And Private",
     description:
-      "An optional secure proxy layer wraps every stream at zero extra cost. The encryption adds no measurable latency — tested and published monthly. Privacy at full speed, not as a paid add-on.",
+      "An optional secure proxy layer wraps every stream at zero extra cost. The encryption is designed to add minimal latency overhead. Privacy at full speed, not as a paid add-on.",
     icon: "Shield" as const,
   },
   {
-    title: "24/7 UK Support — The IPTV Service That Replies In Minutes",
+    title: "24/7 UK Support",
     description:
-      "A named British team answers live chat and email around the clock. Average first response: under four minutes. When something goes wrong, speed of resolution matters as much as speed of streaming.",
+      "A UK-based team answers live chat and email 24 hours a day. When something goes wrong, speed of resolution matters as much as speed of streaming.",
     icon: "Smartphone" as const,
   },
 ] as const;
@@ -88,7 +91,7 @@ export const PRICING_PLANS = [
     id: "bronze",
     tier: "Quick Start",
     name: "3 Months",
-    subtitle: "Three months of the fastest IPTV in the UK",
+    subtitle: "Three months of fast IPTV UK streaming",
     price: 25.99,
     originalPrice: 39.99,
     perMonth: 8.66,
@@ -169,7 +172,7 @@ export const PRICING_PLANS = [
     id: "diamond",
     tier: "Elite",
     name: "24 Months",
-    subtitle: "Two years locked at the lowest rate — full speed guaranteed",
+    subtitle: "Two years locked at the lowest rate — full speed maintained",
     price: 79.99,
     originalPrice: 159.99,
     perMonth: 3.33,
@@ -256,9 +259,9 @@ export const DEVICES = [
 
 export const FAQ_ITEMS = [
   {
-    question: "What makes this a fast IPTV service?",
+    question: "What is Fast IPTV?",
     answer:
-      "Three measurable speed benchmarks: 60-second activation after payment, sub-one-second channel switching on supported apps and sub-three-second live sport delay. Every metric is tested and published.",
+      "Fast IPTV is a UK-focused IPTV subscription that streams live channels and on-demand films and series over standard home broadband — no satellite dish, no cable line, no engineer visit. The full plan ships with 37,000+ live channels and 198,000+ on-demand titles in HD, Full HD and 4K UHD, accessible on every common UK streaming device. Setup is designed to be fast: payment triggers automatic email activation in roughly 60 seconds, and player-app configuration typically takes under five minutes on Firestick, smart TV or phone. The service includes an optional built-in secure proxy at no extra cost, supports multiple device add-ons, and is backed by a 30-day money-back. Pricing starts at £25.99 for three months and drops to £3.33 effective monthly on the 24-month plan.",
   },
   {
     question: "How fast is activation after I buy IPTV?",
@@ -266,9 +269,9 @@ export const FAQ_ITEMS = [
       "Under 60 seconds. Your credentials arrive by email before the Stripe or PayPal confirmation page finishes loading.",
   },
   {
-    question: "Is this the fastest IPTV in the UK?",
+    question: "What makes Fast IPTV a speed-focused service?",
     answer:
-      "Yes — independent timing tests place our activation, channel-switching and live-sport delay among the lowest of any UK-based IPTV service. Our status page publishes the numbers.",
+      "Fast IPTV is engineered with speed as a primary design goal — UK-focused infrastructure, automatic post-payment activation, and fast channel-switching on modern player apps. We won't claim a ranking against every UK provider, but speed is what this service is built around.",
   },
   {
     question: "Does fast IPTV sacrifice quality for speed?",
@@ -276,19 +279,19 @@ export const FAQ_ITEMS = [
       "No. Native 4K UHD is included on every plan with adaptive bitrate that protects the picture when broadband dips. Speed and quality run on the same infrastructure.",
   },
   {
-    question: "Which devices give the fastest IPTV experience?",
+    question: "Which devices work best with Fast IPTV?",
     answer:
-      "Amazon Fire TV Stick 4K Max, Apple TV 4K, Formuler Z11 Pro and modern Samsung/LG Smart TVs deliver the lowest channel-switch times. iOS, Android, Windows and macOS apps run at full speed on any 25 Mbps connection.",
+      "Fast IPTV runs on every common UK streaming device that supports IPTV playback. The most popular options among UK subscribers are the Amazon Fire TV Stick 4K and Fire TV Stick 4K Max, both of which run the IPTV Smarters Pro app well and handle 4K UHD on a typical 25 Mbps connection. Apple TV 4K, Nvidia Shield and Formuler Z11 Pro are favoured by users who want a dedicated set-top box with rapid channel switching. On Samsung and LG smart TVs from 2017 onwards, Smart IPTV and Set IPTV apps work natively without extra hardware. iPhones, iPads, Android phones and tablets, Windows PCs, macOS, and MAG receivers are all supported. Most modern devices with an H.265-capable decoder will play the full 4K library smoothly, provided home broadband has the bandwidth.",
   },
   {
     question: "Does the secure proxy option slow down fast IPTV streaming?",
     answer:
-      "No. Our secure proxy adds no measurable latency. Channel switching, sport delay and 4K bitrate remain identical with the proxy on or off — tested monthly.",
+      "The optional secure proxy is designed to add minimal latency overhead. Channel switching, sport playback and 4K streaming run normally with the proxy active.",
   },
   {
     question: "What internet speed do I need?",
     answer:
-      "25 Mbps for stable 4K UHD on a single device, 50 Mbps for multiple concurrent 4K streams. HD streams run comfortably on 10 Mbps.",
+      "For stable HD playback, 10 Mbps of consistent home broadband is comfortable. For native 4K UHD streaming on a single device, 25 Mbps is the recommended minimum. Households running two simultaneous 4K streams should plan for 50 Mbps or more. Most modern UK fibre connections — typically 100 to 900 Mbps depending on provider and area — have ample headroom for multiple concurrent streams. If you experience buffering at speeds that should be sufficient, the cause is more often home Wi-Fi than the broadband line itself. Wiring the streaming device to the router with Ethernet eliminates the most common bottleneck. Streaming over 5GHz Wi-Fi from within roughly ten metres of the router is usually fine; 2.4GHz Wi-Fi at longer ranges can struggle with 4K bitrates. Fast IPTV uses adaptive bitrate streaming, so the picture stays watchable when broadband momentarily dips.",
   },
   {
     question: "Can I stream on more than one device at the same time?",
@@ -303,12 +306,12 @@ export const FAQ_ITEMS = [
   {
     question: "How fast does support respond?",
     answer:
-      "Average first response under four minutes on live chat and email, 24 hours a day, from a named British team.",
+      "Live chat and email support are available 24/7 from a UK-based team. Response time depends on queue volume but support aims to reply quickly during evening and weekend peak hours.",
   },
   {
     question: "How does fast-iptv.tv compare to traditional pay-TV?",
     answer:
-      "We deliver more channels (37,000+ vs a typical pay-TV line-up of ~270), native 4K on every plan and no equipment, dish or engineer visit — at a fraction of the monthly price of a flagship premium pay-TV bundle.",
+      "Fast IPTV delivers a noticeably larger channel library — 37,000+ live channels versus a typical UK pay-TV bundle of around 270 — and includes native 4K UHD on every plan at no extra charge. There is no dish, no engineer visit, no equipment rental, and no minimum contract: every plan is a one-time payment backed by a 30-day money-back. On the cost side, the effective monthly price on the 24-month plan is £3.33; a comparable traditional pay-TV bundle with premium sports and cinema typically runs £75 or more per month in 2026. Where traditional pay-TV still leads is single-bill convenience — if you want broadband and TV from the same supplier, traditional pay-TV is more convenient. Most UK households already have broadband, however, so an IPTV subscription captures the TV-side savings without changing the broadband line.",
   },
 ] as const;
 
@@ -389,7 +392,7 @@ export const BLOG_POSTS = [
     slug: "live-uk-sports-streaming-guide",
     title: "Watch Live UK Sports — Fast IPTV Streaming Guide",
     excerpt:
-      "Top-tier UK football, domestic cup ties, European nights and combat sports — all in stunning HD and 4K quality through a single fast IPTV subscription with sub-3-second delay.",
+      "Top-tier UK football, domestic cup ties, European nights and combat sports — all in stunning HD and 4K quality through a single fast IPTV subscription tuned for low-latency sport playback.",
     date: "2026-03-10",
     readTime: "5 min read",
     category: "Sports",

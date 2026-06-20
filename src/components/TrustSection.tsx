@@ -13,21 +13,21 @@ const trustItems = [
   },
   {
     icon: Wifi,
-    title: "99.9% Uptime On Strong IPTV Servers",
+    title: "Built For High Uptime On UK Servers",
     description:
-      "A live status page tracks performance minute by minute. If uptime dips below 99.9%, service credits apply automatically. Strong infrastructure is the foundation of every speed claim.",
+      "The infrastructure is built for consistent uptime on UK-focused servers. Designed to stay stable during peak evening hours and major sporting events.",
   },
   {
     icon: Lock,
     title: "Secure Proxy Option — Premium IPTV Privacy At Full Speed",
     description:
-      "Our secure proxy layer encrypts every stream with no measurable latency penalty. No bandwidth cap, no logs, no separate subscription. Speed and privacy in one package.",
+      "An optional secure proxy layer encrypts your stream traffic. No bandwidth cap, no separate subscription — included with every plan.",
   },
   {
     icon: ServerCog,
-    title: "UK-Based Support — The IPTV Service That Resolves Fast",
+    title: "UK-Based Support 24/7",
     description:
-      "A named British team answers live chat and email 24/7. Average first response under four minutes. Speed of resolution is as important as speed of streaming.",
+      "A UK-based team answers live chat and email 24/7. The team aims for fast response and resolution.",
   },
 ];
 
@@ -51,9 +51,9 @@ export default function TrustSection() {
             <span className="gradient-text">You Can Verify</span>
           </h2>
           <p className="mx-auto max-w-xl text-lg text-muted">
-            Claims without evidence are noise. Every guarantee below is published, measured and backed by a full{" "}
+            Every commitment below is documented in policy and backed by a{" "}
             <Link href="/refund" className="text-violet-600 hover:text-violet-700 underline-offset-2 hover:underline">
-              same-day refund
+              30-day money-back
             </Link>.
           </p>
         </motion.div>
