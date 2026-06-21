@@ -16,9 +16,22 @@ import {
   Apple,
   MonitorPlay,
   ArrowRight,
+  Cpu,
+  Cast,
+  Box as BoxIcon,
+  Ban,
+  Wrench,
 } from "lucide-react";
 import SectionLink from "@/components/SectionLink";
 import { cn } from "@/lib/utils";
+import {
+  TUTORIAL_DEVICES_EXTRA,
+  QUICK_FIX_CHECKLIST,
+  TROUBLESHOOTING_ITEMS,
+  SUPPORT_WHATSAPP_NUMBER,
+  SUPPORT_WHATSAPP_HREF,
+  type TutorialDevice,
+} from "@/lib/tutorial-content";
 
 type DeviceCard = {
   id: string;
@@ -29,22 +42,40 @@ type DeviceCard = {
 
 const DEVICE_CARDS: DeviceCard[] = [
   {
+    id: "firestick",
+    name: "Amazon Firestick & Fire TV",
+    icon: Flame,
+    blurb: "Allow unknown apps, sideload the player and activate your Fast IPTV line in two minutes.",
+  },
+  {
+    id: "samsung-tv",
+    name: "Samsung Smart TV",
+    icon: Tv,
+    blurb: "Install X-OTT, register your MAC on the TREX UK host via activationpanel.net.",
+  },
+  {
+    id: "lg-tv",
+    name: "LG Smart TV",
+    icon: Tv,
+    blurb: "X-OTT from the LG Content Store + MAC registration on the activation panel.",
+  },
+  {
+    id: "hisense-other-tv",
+    name: "Hisense & Other Smart TVs",
+    icon: Tv,
+    blurb: "Same X-OTT flow on VIDAA OS and other Smart TVs — IBO Player as the fallback.",
+  },
+  {
     id: "android-tv",
     name: "Android TV, Box & Google TV",
-    icon: Tv,
-    blurb: "Sideload IPTV Smarters Pro with Downloader, then sign in with your Fast IPTV Xtream codes.",
+    icon: MonitorPlay,
+    blurb: "Install IPTV Smarters Pro from Google Play, then sign in with Xtream Codes.",
   },
   {
     id: "android-phone",
     name: "Android Phone & Tablet",
     icon: Smartphone,
-    blurb: "Install the player from Google Play and drop in the Fast IPTV credentials we email you.",
-  },
-  {
-    id: "firestick",
-    name: "Amazon Firestick & Fire TV",
-    icon: Flame,
-    blurb: "Allow unknown apps, sideload the player and activate your Fast IPTV line in two minutes.",
+    blurb: "Install the player from Google Play and drop in the credentials we email you.",
   },
   {
     id: "ios",
@@ -53,16 +84,34 @@ const DEVICE_CARDS: DeviceCard[] = [
     blurb: "Grab the player from the App Store and turn off Private Relay before you connect.",
   },
   {
+    id: "formuler",
+    name: "Formuler / Dreamlink",
+    icon: Cpu,
+    blurb: "MyTVOnline portal with Xtream Codes API — no MAC connection needed.",
+  },
+  {
+    id: "roku",
+    name: "Roku TV & Streaming Stick",
+    icon: Cast,
+    blurb: "Install Hot Player, register your MAC on hotplayer.app and add your Xtream Code.",
+  },
+  {
+    id: "buzztv",
+    name: "BuzzTV Box",
+    icon: BoxIcon,
+    blurb: "Built-in XC API Login — server settings → portal name → your credentials.",
+  },
+  {
     id: "pc",
     name: "Windows & macOS",
     icon: Monitor,
-    blurb: "Use IPTV Smarters Pro (easiest) or KODI with the M3U link from your Fast IPTV welcome email.",
+    blurb: "IPTV Smarters Pro (easiest) or KODI with the M3U link from your welcome email.",
   },
   {
-    id: "smart-tv",
-    name: "Samsung, LG & Other Smart TVs",
-    icon: MonitorPlay,
-    blurb: "Pick IPTV Smarters Pro, Smart IPTV, SMARTONE or NET IPTV — full walkthrough for each.",
+    id: "mag-box",
+    name: "MAG Box (Not Supported)",
+    icon: Ban,
+    blurb: "Legacy MAC-only boxes are not supported. See recommended upgrade paths.",
   },
 ];
 
@@ -73,9 +122,9 @@ const FAQ_ITEMS: { question: string; answer: string }[] = [
       "They are in the welcome email we send the moment your payment clears. Not in your inbox? Check spam, then message our UK team and we will resend your Fast IPTV line within minutes.",
   },
   {
-    question: "Do I need a VPN or proxy to watch Fast IPTV?",
+    question: "Do I need a Secure Proxy to watch Fast IPTV?",
     answer:
-      "No — Fast IPTV is delivered over standard HTTPS and works without one. We also include an optional secure proxy option at no extra cost. If you run your own VPN or proxy app, switch it off during activation, and on iOS also disable iCloud Private Relay.",
+      "No — Fast IPTV is delivered over standard HTTPS and works without one. Our optional Secure Proxy add-on is available at checkout if your ISP filters streaming traffic. If you run a third-party VPN or proxy app, switch it off during activation, and on iOS also disable iCloud Private Relay.",
   },
   {
     question: "My Fast IPTV channels will not load — what now?",
@@ -141,6 +190,240 @@ function AppHeading({ children }: { children: React.ReactNode }) {
     <h3 className="text-lg sm:text-xl font-semibold text-foreground mt-8 mb-3">
       {children}
     </h3>
+  );
+}
+
+// Inline-format URLs, hostnames and IPv4s as <code> so they read as copy-paste values.
+function renderStepText(text: string): React.ReactNode {
+  const RE =
+    /(https?:\/\/[^\s,]+|\bactivationpanel\.net\b|\bhotplayer\.app\b|\bfast\.com\b|\biptvsmarters\.com(?:\/[a-z0-9?=_-]*)?|\b\d+\.\d+\.\d+\.\d+\b)/g;
+  const parts: React.ReactNode[] = [];
+  let last = 0;
+  let m: RegExpExecArray | null;
+  while ((m = RE.exec(text)) !== null) {
+    if (m.index > last) parts.push(text.slice(last, m.index));
+    parts.push(
+      <code
+        key={`${m.index}-${m[0]}`}
+        className="font-mono text-xs sm:text-sm bg-violet-50 text-violet-700 px-1.5 py-0.5 rounded border border-violet-100 break-all"
+      >
+        {m[0]}
+      </code>
+    );
+    last = m.index + m[0].length;
+  }
+  if (last < text.length) parts.push(text.slice(last));
+  return parts.length > 0 ? parts : text;
+}
+
+// Renders a per-device walkthrough section from the data file.
+function DeviceGuide({
+  device,
+  bg,
+  eyebrow,
+  children,
+}: {
+  device: TutorialDevice;
+  bg: "mesh" | "cyan";
+  eyebrow?: string;
+  children?: React.ReactNode;
+}) {
+  if (device.notSupported) {
+    return (
+      <section id={device.id} className="relative py-11 lg:py-16 scroll-mt-24">
+        <div className="absolute inset-0 section-gradient-2" />
+        <div className="relative mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+          <div className="rounded-2xl border-2 border-slate-200 bg-white/90 backdrop-blur-sm p-6 sm:p-8">
+            <span className="inline-block rounded-full bg-slate-100 border border-slate-300 px-3 py-1 text-xs font-medium text-slate-600 mb-4 uppercase tracking-wider">
+              {eyebrow ?? "Not Supported"}
+            </span>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4">
+              {device.name}
+            </h2>
+            <ol className="space-y-4">
+              {device.steps.map((step, i) => (
+                <li key={i} className="text-sm sm:text-base text-muted leading-relaxed">
+                  {renderStepText(step.text)}
+                  {step.substeps && (
+                    <ul className="list-disc pl-5 mt-2 space-y-1.5">
+                      {step.substeps.map((sub, j) => (
+                        <li key={j} className="text-sm text-muted leading-relaxed marker:text-slate-400">
+                          {renderStepText(sub)}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section id={device.id} className="relative py-11 lg:py-16 scroll-mt-24">
+      <div className={cn("absolute inset-0", bg === "mesh" ? "mesh-gradient" : "section-gradient-2")} />
+      <div className="relative mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+        <SectionHeading eyebrow={eyebrow}>{device.name}</SectionHeading>
+        <p className="text-sm sm:text-base text-muted leading-relaxed">
+          {device.subtitle}
+        </p>
+        <p className="text-sm sm:text-base text-muted leading-relaxed mt-3">
+          Recommended app:{" "}
+          <strong className="text-foreground">{device.primaryApp}</strong>
+        </p>
+        {device.fallbackApps && (
+          <p className="text-sm sm:text-base text-muted leading-relaxed mt-1">
+            Fallback apps:{" "}
+            <span className="text-foreground/80">{device.fallbackApps}</span>
+          </p>
+        )}
+
+        <AppHeading>Step-by-step</AppHeading>
+        <ol className="list-decimal pl-6 space-y-3">
+          {device.steps.map((step, i) => (
+            <TutorialStep key={i}>
+              {renderStepText(step.text)}
+              {step.substeps && (
+                <ul className="list-disc pl-5 mt-2 space-y-1.5">
+                  {step.substeps.map((sub, j) => (
+                    <li
+                      key={j}
+                      className="text-sm sm:text-base text-muted leading-relaxed marker:text-cyan-600"
+                    >
+                      {renderStepText(sub)}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </TutorialStep>
+          ))}
+        </ol>
+
+        {device.notes?.map((note, i) => (
+          <div
+            key={i}
+            className="mt-6 rounded-xl border border-amber-200 bg-amber-50/60 p-4"
+          >
+            <p className="text-sm text-amber-900 leading-relaxed">
+              <strong>Note:</strong> {renderStepText(note)}
+            </p>
+          </div>
+        ))}
+
+        {children}
+      </div>
+    </section>
+  );
+}
+
+function TroubleshootingSection() {
+  return (
+    <section id="troubleshooting" className="relative py-11 lg:py-16 scroll-mt-24">
+      <div className="absolute inset-0 mesh-gradient" />
+      <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-10 lg:mb-14"
+        >
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 border border-amber-200 px-4 py-1.5 text-sm font-medium text-amber-700 mb-4">
+            <Wrench className="h-4 w-4" />
+            Troubleshooting
+          </span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+            Something Not Working?{" "}
+            <span className="gradient-text">Start Here</span>
+          </h2>
+          <p className="text-lg text-muted max-w-2xl mx-auto">
+            Run through the quick-fix checklist first, then jump to your specific issue
+            below.
+          </p>
+        </motion.div>
+
+        <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-5">
+          Quick-fix checklist
+        </h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-14">
+          {QUICK_FIX_CHECKLIST.map((item, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.04 }}
+              className="rounded-xl border border-violet-100/60 bg-white p-5 premium-card"
+            >
+              <h4 className="font-semibold text-foreground mb-2">{item.title}</h4>
+              <p className="text-sm text-muted leading-relaxed">
+                {renderStepText(item.description)}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+
+        <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-5">
+          Common issues
+        </h3>
+        <div className="space-y-4">
+          {TROUBLESHOOTING_ITEMS.map((item, i) => (
+            <motion.div
+              key={item.id}
+              id={item.id}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: Math.min(i * 0.03, 0.18) }}
+              className="rounded-xl border border-violet-100/60 bg-white p-5 sm:p-6 scroll-mt-24"
+            >
+              <h4 className="text-base sm:text-lg font-semibold text-foreground mb-3">
+                {item.title}
+              </h4>
+              {item.intro && (
+                <p className="text-sm text-muted leading-relaxed mb-3">
+                  {renderStepText(item.intro)}
+                </p>
+              )}
+              {item.steps && (
+                <ol className="list-decimal pl-5 space-y-2">
+                  {item.steps.map((step, j) => (
+                    <li
+                      key={j}
+                      className="text-sm text-muted leading-relaxed marker:text-violet-600 marker:font-semibold"
+                    >
+                      {renderStepText(step)}
+                    </li>
+                  ))}
+                </ol>
+              )}
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="mt-12 rounded-2xl border border-cyan-200 bg-gradient-to-br from-cyan-50/80 to-violet-50/60 p-6 sm:p-8 text-center">
+          <h4 className="text-xl sm:text-2xl font-bold text-foreground mb-2">
+            Still stuck?
+          </h4>
+          <p className="text-sm sm:text-base text-muted leading-relaxed mb-5 max-w-xl mx-auto">
+            Message us with your device type and model, the exact error message, and which
+            app you&apos;re using — our UK team will guide you through the fix
+            step-by-step.
+          </p>
+          <a
+            href={SUPPORT_WHATSAPP_HREF}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2.5 rounded-2xl bg-gradient-to-r from-violet-600 via-purple-600 to-cyan-500 px-7 py-3.5 text-base font-semibold text-white shadow-lg shadow-purple-900/30 transition-all hover:shadow-2xl hover:shadow-purple-500/30 active:scale-[0.98]"
+          >
+            <MessageCircle className="h-5 w-5" />
+            WhatsApp us — {SUPPORT_WHATSAPP_NUMBER}
+          </a>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -260,12 +543,12 @@ export default function TutorialsContent() {
               <span className="gradient-text">Straight To Its Fast IPTV Guide</span>
             </h2>
             <p className="mx-auto max-w-xl text-lg text-muted">
-              Six step-by-step Fast IPTV install guides — choose the card that matches your
-              screen.
+              Step-by-step Fast IPTV install guides for every device — choose the card that
+              matches your screen.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-5">
             {DEVICE_CARDS.map((device, i) => {
               const Icon = device.icon;
               return (
@@ -307,7 +590,7 @@ export default function TutorialsContent() {
       <section id="android-tv" className="relative py-11 lg:py-16 scroll-mt-24">
         <div className="absolute inset-0 mesh-gradient" />
         <div className="relative mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <SectionHeading eyebrow="Guide 1 of 6">
+          <SectionHeading eyebrow="Streaming Box">
             Android TV, Box &amp;{" "}
             <span className="gradient-text">Google TV</span>
           </SectionHeading>
@@ -347,7 +630,7 @@ export default function TutorialsContent() {
       <section id="android-phone" className="relative py-11 lg:py-16 scroll-mt-24">
         <div className="absolute inset-0 section-gradient-2" />
         <div className="relative mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <SectionHeading eyebrow="Guide 2 of 6">
+          <SectionHeading eyebrow="Mobile">
             Android Phone &amp;{" "}
             <span className="gradient-text">Tablet</span>
           </SectionHeading>
@@ -391,7 +674,7 @@ export default function TutorialsContent() {
       <section id="firestick" className="relative py-11 lg:py-16 scroll-mt-24">
         <div className="absolute inset-0 mesh-gradient" />
         <div className="relative mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <SectionHeading eyebrow="Guide 3 of 6">
+          <SectionHeading eyebrow="Streaming Stick">
             Amazon Firestick &amp;{" "}
             <span className="gradient-text">Fire TV</span>
           </SectionHeading>
@@ -444,7 +727,7 @@ export default function TutorialsContent() {
       <section id="ios" className="relative py-11 lg:py-16 scroll-mt-24">
         <div className="absolute inset-0 section-gradient-2" />
         <div className="relative mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <SectionHeading eyebrow="Guide 4 of 6">
+          <SectionHeading eyebrow="Apple Devices">
             iPhone, iPad &amp;{" "}
             <span className="gradient-text">Apple TV</span>
           </SectionHeading>
@@ -487,7 +770,7 @@ export default function TutorialsContent() {
       <section id="pc" className="relative py-11 lg:py-16 scroll-mt-24">
         <div className="absolute inset-0 mesh-gradient" />
         <div className="relative mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <SectionHeading eyebrow="Guide 5 of 6">
+          <SectionHeading eyebrow="Desktop">
             Windows PC &amp;{" "}
             <span className="gradient-text">Mac</span>
           </SectionHeading>
@@ -556,64 +839,23 @@ export default function TutorialsContent() {
         </div>
       </section>
 
-      {/* ── Smart TV ── */}
-      <section id="smart-tv" className="relative py-11 lg:py-16 scroll-mt-24">
-        <div className="absolute inset-0 section-gradient-2" />
-        <div className="relative mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <SectionHeading eyebrow="Guide 6 of 6">
-            Samsung, LG &amp;{" "}
-            <span className="gradient-text">Other Smart TVs</span>
-          </SectionHeading>
-          <p className="text-base text-muted leading-relaxed mb-3">
-            <strong className="text-foreground">
-              Recommended players, easiest first:
-            </strong>
-          </p>
-          <ul className="list-disc pl-6 space-y-2 text-sm sm:text-base text-muted leading-relaxed marker:text-violet-600">
-            <li>
-              <strong className="text-foreground">IPTV Smarters Pro</strong> — free, ideal
-              for Android-based Smart TVs.
-            </li>
-            <li>
-              <strong className="text-foreground">Smart IPTV</strong> — €5.49 lifetime,
-              works on Samsung/LG.
-            </li>
-            <li>
-              <strong className="text-foreground">SMARTONE IPTV</strong> — €2.50/year or
-              €12.99 lifetime.
-            </li>
-            <li>
-              <strong className="text-foreground">Net IPTV</strong> — €6.79 for 2 years or
-              €13.99 lifetime.
-            </li>
-          </ul>
-          <p className="mt-3 text-sm text-muted leading-relaxed">
-            The paid apps include a short trial period so you can confirm everything works
-            before activating long-term.
+      {/* ── Smart TV — Samsung (X-OTT primary + legacy app alternatives) ── */}
+      <DeviceGuide
+        device={TUTORIAL_DEVICES_EXTRA.find((d) => d.id === "samsung-tv")!}
+        bg="cyan"
+        eyebrow="Smart TV"
+      >
+        <div className="mt-10 pt-8 border-t border-violet-100">
+          <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-2">
+            Alternative Samsung apps (if X-OTT isn&apos;t available)
+          </h3>
+          <p className="text-sm text-muted leading-relaxed mb-4">
+            Smart IPTV, SMARTONE and NET IPTV all support Samsung Tizen via MAC-address
+            registration on the developer portal. Each has a small one-off lifetime fee
+            after the trial.
           </p>
 
-          <AppHeading>IPTV Smarters Pro on Smart TV</AppHeading>
-          <ol className="list-decimal pl-6 space-y-3">
-            <TutorialStep>
-              Open your TV&apos;s app store and search{" "}
-              <strong>IPTV Smarters Pro</strong> (developer: WHMCS SMARTERS). It may show
-              as &ldquo;IPTV Smarters Player&rdquo; — always check the developer name to
-              avoid fakes.
-            </TutorialStep>
-            <TutorialStep>Install and open the app.</TutorialStep>
-            <TutorialStep>
-              Enter the Xtream username, password and server URL from your Fast IPTV
-              welcome email.
-            </TutorialStep>
-          </ol>
-          <div className="mt-4 rounded-xl border border-cyan-200 bg-cyan-50/60 p-4">
-            <p className="text-sm text-cyan-900 leading-relaxed">
-              <strong>Tip:</strong> If channels stall, open the app&apos;s settings, set{" "}
-              <strong>Stream Format</strong> to <strong>Default</strong> and save.
-            </p>
-          </div>
-
-          <AppHeading>Smart IPTV (Samsung / LG)</AppHeading>
+          <AppHeading>Smart IPTV</AppHeading>
           <ol className="list-decimal pl-6 space-y-3">
             <TutorialStep>
               Install <strong>Smart IPTV</strong> from your TV&apos;s app store.
@@ -728,7 +970,52 @@ export default function TutorialsContent() {
             </TutorialStep>
           </ol>
         </div>
-      </section>
+      </DeviceGuide>
+
+      {/* ── Smart TV — LG ── */}
+      <DeviceGuide
+        device={TUTORIAL_DEVICES_EXTRA.find((d) => d.id === "lg-tv")!}
+        bg="mesh"
+        eyebrow="Smart TV"
+      />
+
+      {/* ── Smart TV — Hisense & Others ── */}
+      <DeviceGuide
+        device={TUTORIAL_DEVICES_EXTRA.find((d) => d.id === "hisense-other-tv")!}
+        bg="cyan"
+        eyebrow="Smart TV"
+      />
+
+      {/* ── Formuler / Dreamlink ── */}
+      <DeviceGuide
+        device={TUTORIAL_DEVICES_EXTRA.find((d) => d.id === "formuler")!}
+        bg="mesh"
+        eyebrow="Streaming Box"
+      />
+
+      {/* ── Roku ── */}
+      <DeviceGuide
+        device={TUTORIAL_DEVICES_EXTRA.find((d) => d.id === "roku")!}
+        bg="cyan"
+        eyebrow="Streaming Stick"
+      />
+
+      {/* ── BuzzTV Box ── */}
+      <DeviceGuide
+        device={TUTORIAL_DEVICES_EXTRA.find((d) => d.id === "buzztv")!}
+        bg="mesh"
+        eyebrow="Streaming Box"
+      />
+
+      {/* ── MAG Box (Not Supported) ── */}
+      <DeviceGuide
+        device={TUTORIAL_DEVICES_EXTRA.find((d) => d.id === "mag-box")!}
+        bg="cyan"
+        eyebrow="Legacy Hardware"
+      />
+
+      {/* ── Troubleshooting ── */}
+      <TroubleshootingSection />
 
       {/* ── FAQ ── */}
       <section id="faq" className="relative py-11 lg:py-16">
