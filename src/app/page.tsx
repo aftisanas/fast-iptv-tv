@@ -122,6 +122,13 @@ export default function HomePage() {
           availability: "https://schema.org/InStock",
           url: `${SITE_URL}/#pricing`,
         },
+        aggregateRating: {
+          "@type": "AggregateRating",
+          ratingValue: "3.9",
+          reviewCount: "12",
+          bestRating: "5",
+          worstRating: "1",
+        },
       },
       {
         "@type": "BreadcrumbList",
