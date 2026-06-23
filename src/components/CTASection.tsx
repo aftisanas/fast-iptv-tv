@@ -56,8 +56,8 @@ export default function CTASection() {
           </motion.div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
-            Stop Buffering &mdash; Get Fast IPTV And{" "}
-            <span className="gradient-text-hero">Stream In Under Two Minutes</span>
+            Start Streaming Fast IPTV{" "}
+            <span className="gradient-text-hero">In Under Two Minutes</span>
           </h2>
           <p className="mx-auto max-w-2xl text-lg text-gray-300/90 mb-10 leading-relaxed">
             The 24-month{" "}

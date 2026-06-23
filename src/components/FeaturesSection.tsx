@@ -33,11 +33,11 @@ export default function FeaturesSection() {
             <span className="gradient-text">Beats Every Competitor</span>
           </h2>
           <p className="mx-auto max-w-2xl text-lg text-muted">
-            Every feature below is built around one principle: speed. From activation to channel switching to support response, this{" "}
+            Every feature below is built around one principle: speed. Activation runs in around 60 seconds, channel switching is fast on standard player apps, and the infrastructure is tuned for low-latency playback during peak evening hours. The same speed runs on every{" "}
             <SectionLink href="/#pricing" className="text-violet-600 hover:text-violet-700 underline-offset-2 hover:underline">
-              IPTV provider
+              Fast IPTV plan
             </SectionLink>{" "}
-            measures and publishes performance data that most competitors hide. Our fastiptv platform is engineered for every iptv subscription in uk, delivering UK-optimised servers that stay rock-solid during live football matches and peak evening hours.
+            — what changes is the term length, not the experience.
           </p>
         </motion.div>
 

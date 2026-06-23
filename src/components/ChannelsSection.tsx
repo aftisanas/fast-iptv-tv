@@ -24,8 +24,8 @@ export default function ChannelsSection() {
             37,000 Feeds · Instant Playback
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-            Inside The Fast IPTV Channel Library —{" "}
-            <span className="gradient-text">37,000 IPTV UK Feeds</span>
+            Inside the{" "}
+            <span className="gradient-text">Fast IPTV Channel Library</span>
           </h2>
           <p className="mx-auto max-w-2xl text-lg text-muted">
             Speed without content is pointless. Here is what loads the moment you press play — every category included in every{" "}
