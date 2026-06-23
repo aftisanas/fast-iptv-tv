@@ -58,13 +58,13 @@ export const FEATURES = [
     icon: "Zap" as const,
   },
   {
-    title: "Strong IPTV Servers — Zero-Buffer 4K On UK Infrastructure",
+    title: "Reliable IPTV Infrastructure — Tuned For 4K Playback",
     description:
       "Streams originate from UK-focused data centres tuned for low-latency playback. Designed to keep live sport feeds smooth during peak evening load. 4K UHD is supported on every plan where the source feed transmits in 4K.",
     icon: "Monitor" as const,
   },
   {
-    title: "37,000 Channels — The Widest Fast IPTV UK Library",
+    title: "37,000+ Live Channels Across the Fast IPTV Library",
     description:
       "Access one of the largest IPTV selections available, with tens of thousands of options covering every category. Smooth navigation and ultra-fast switching ensure a seamless viewing experience across all supported devices.",
     icon: "Tv" as const,
@@ -88,9 +88,9 @@ export const FEATURES = [
     icon: "Clock" as const,
   },
   {
-    title: "Buy IPTV UK With A Secure Proxy Option — Fast And Private",
+    title: "Secure Proxy Add-On — Optional Privacy Layer",
     description:
-      "An optional secure proxy layer wraps every stream at zero extra cost. The encryption is designed to add minimal latency overhead. Privacy at full speed, not as a paid add-on.",
+      "An optional Secure Proxy add-on encrypts your stream traffic and reduces ISP-side filtering. Available at checkout from £4.75 per term, priced by plan length.",
     icon: "Shield" as const,
   },
   {
@@ -123,7 +123,7 @@ export const PRICING_PLANS = [
       "HD, Full HD and native 4K UHD streaming",
       "Extra connection options available as add-ons",
       "24/7 dedicated UK support",
-      "Secure proxy option included at no extra cost",
+      "Secure Proxy add-on available (from £4.75/term)",
       "30-day money-back guarantee",
       "60-second activation by email",
     ],
@@ -151,7 +151,7 @@ export const PRICING_PLANS = [
       "HD, Full HD and native 4K UHD streaming",
       "Extra connection options available as add-ons",
       "24/7 dedicated UK support",
-      "Secure proxy option included at no extra cost",
+      "Secure Proxy add-on available (from £4.75/term)",
       "30-day money-back guarantee",
       "60-second activation by email",
     ],
@@ -179,7 +179,7 @@ export const PRICING_PLANS = [
       "HD, Full HD and native 4K UHD streaming",
       "Extra connection options available as add-ons",
       "24/7 dedicated UK support",
-      "Secure proxy option included at no extra cost",
+      "Secure Proxy add-on available (from £4.75/term)",
       "30-day money-back guarantee",
       "60-second activation by email",
     ],
@@ -207,7 +207,7 @@ export const PRICING_PLANS = [
       "HD, Full HD and native 4K UHD streaming",
       "Extra connection options available as add-ons",
       "24/7 dedicated UK support",
-      "Secure proxy option included at no extra cost",
+      "Secure Proxy add-on available (from £4.75/term)",
       "30-day money-back guarantee",
       "60-second activation by email",
     ],
@@ -280,7 +280,7 @@ export const FAQ_ITEMS = [
   {
     question: "What is Fast IPTV?",
     answer:
-      "Fast IPTV is a UK-focused IPTV subscription that streams live channels and on-demand films and series over standard home broadband — no satellite dish, no cable line, no engineer visit. The full plan ships with 37,000+ live channels and 198,000+ on-demand titles in HD, Full HD and 4K UHD, accessible on every common UK streaming device. Setup is designed to be fast: payment triggers automatic email activation in roughly 60 seconds, and player-app configuration typically takes under five minutes on Firestick, smart TV or phone. The service includes an optional built-in secure proxy at no extra cost, supports multiple device add-ons, and is backed by a 30-day money-back. Pricing starts at £25.99 for three months and drops to £3.33 effective monthly on the 24-month plan.",
+      "Fast IPTV is a UK-focused IPTV subscription that streams live channels and on-demand films and series over standard home broadband — no satellite dish, no cable line, no engineer visit. The full plan ships with 37,000+ live channels and 198,000+ on-demand titles in HD, Full HD and 4K UHD, accessible on every common UK streaming device. Setup is designed to be fast: payment triggers automatic email activation in roughly 60 seconds, and player-app configuration typically takes under five minutes on Firestick, smart TV or phone. The service offers an optional Secure Proxy add-on (from £4.75 per term), supports Extra Connections, and is backed by a 30-day money-back. Pricing starts at £25.99 for three months and drops to £3.33 effective monthly on the 24-month plan.",
   },
   {
     question: "How fast is activation after I buy IPTV?",
@@ -354,7 +354,7 @@ export const CHANNEL_CATEGORIES = [
     count: "198,000+",
     icon: "Film" as const,
     channels:
-      "Premium movie channels, mainstream platform originals and international premieres. Titles load in under three seconds on a 25 Mbps connection. The on-demand library that matches the speed of the live feeds.",
+      "A library of 198,000+ films, series and documentaries on demand. Includes recent UK and international cinema releases, long-running series and back-catalogue titles. Designed for fast initial load on standard UK broadband.",
   },
   {
     name: "UK & International News On Fast IPTV",

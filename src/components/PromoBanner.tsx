@@ -1,94 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
-interface TimeLeft {
-  hours: number;
-  minutes: number;
-  seconds: number;
-}
-
-function getOrCreateEndTime(): number {
-  if (typeof window === "undefined") return Date.now() + 18 * 60 * 60 * 1000;
-
-  const stored = window.localStorage.getItem("promoEndTime");
-  const now = Date.now();
-
-  if (stored) {
-    const endTime = parseInt(stored, 10);
-    if (!Number.isNaN(endTime) && endTime > now) {
-      return endTime;
-    }
-  }
-
-  const minMs = 14 * 60 * 60 * 1000;
-  const maxMs = 24 * 60 * 60 * 1000 - 60 * 1000;
-  const randomMs = minMs + Math.floor(Math.random() * (maxMs - minMs));
-  const newEndTime = now + randomMs;
-
-  window.localStorage.setItem("promoEndTime", newEndTime.toString());
-  return newEndTime;
-}
-
-function calculateTimeLeft(endTime: number): TimeLeft {
-  const diff = Math.max(0, endTime - Date.now());
-  return {
-    hours: Math.floor(diff / (1000 * 60 * 60)),
-    minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
-    seconds: Math.floor((diff % (1000 * 60)) / 1000),
-  };
-}
+import { Zap, Tv, Clock } from "lucide-react";
 
 export default function PromoBanner() {
-  const [endTime, setEndTime] = useState<number>(0);
-  const [timeLeft, setTimeLeft] = useState<TimeLeft>({
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    const end = getOrCreateEndTime();
-
-    const timeoutId = window.setTimeout(() => {
-      setEndTime(end);
-      setTimeLeft(calculateTimeLeft(end));
-      setMounted(true);
-    }, 0);
-
-    return () => window.clearTimeout(timeoutId);
-  }, []);
-
-  useEffect(() => {
-    if (!mounted || endTime === 0) return;
-
-    const interval = setInterval(() => {
-      const left = calculateTimeLeft(endTime);
-
-      if (left.hours === 0 && left.minutes === 0 && left.seconds === 0) {
-        if (typeof window !== "undefined") {
-          window.localStorage.removeItem("promoEndTime");
-        }
-        const newEnd = getOrCreateEndTime();
-        setEndTime(newEnd);
-        setTimeLeft(calculateTimeLeft(newEnd));
-      } else {
-        setTimeLeft(left);
-      }
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [endTime, mounted]);
-
-  const pad = (n: number) => n.toString().padStart(2, "0");
-
-  if (!mounted) {
-    return (
-      <div className="w-full max-w-2xl mx-auto h-[240px] rounded-2xl opacity-0" aria-hidden />
-    );
-  }
-
   return (
     <div
       className="promo-banner relative w-full max-w-2xl mx-auto rounded-2xl overflow-hidden"
@@ -118,7 +32,7 @@ export default function PromoBanner() {
         }}
       />
 
-      <div className="relative z-10 flex flex-col items-center text-center px-4 sm:px-5 py-4 sm:py-5 gap-2 sm:gap-2.5">
+      <div className="relative z-10 flex flex-col items-center text-center px-4 sm:px-6 py-5 sm:py-6 gap-3">
         <div className="flex items-center gap-2">
           <span aria-hidden="true" className="text-yellow-400 text-base drop-shadow-[0_0_10px_rgba(250,204,21,0.6)]">⚡</span>
           <span
@@ -128,7 +42,7 @@ export default function PromoBanner() {
               textShadow: "0 0 14px rgba(139, 92, 246, 0.6)",
             }}
           >
-            Limited Time Reduction
+            What You Get With Fast IPTV
           </span>
           <span aria-hidden="true" className="text-yellow-400 text-base drop-shadow-[0_0_10px_rgba(250,204,21,0.6)]">⚡</span>
         </div>
@@ -137,36 +51,35 @@ export default function PromoBanner() {
           className="text-lg sm:text-xl md:text-2xl font-extrabold text-white leading-tight"
           style={{ textShadow: "0 0 30px rgba(139, 92, 246, 0.55)" }}
         >
-          <span aria-hidden="true">🔥 </span>Claim Your Discount Before It Ends<span aria-hidden="true"> 🔥</span>
+          Three Things That Define Fast IPTV
         </h2>
 
-        <p
-          className="text-xs sm:text-sm font-medium"
-          style={{ color: "rgba(196, 181, 253, 0.9)" }}
-        >
-          <span aria-hidden="true" className="text-emerald-400">✅</span>{" "}
-          30-Day Money Back Guarantee — Zero Risk. Cancel Anytime.
-        </p>
-
-        <div className="flex items-start gap-1.5 sm:gap-2.5 mt-0.5">
-          <div className="countdown-block">
-            <div className="countdown-number">{pad(timeLeft.hours)}</div>
-            <div className="countdown-label">HOURS</div>
+        <div className="grid grid-cols-3 gap-3 sm:gap-5 w-full mt-1">
+          <div className="flex flex-col items-center gap-1.5">
+            <div className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-violet-500/20 border border-violet-400/30">
+              <Tv className="h-4 w-4 sm:h-5 sm:w-5 text-violet-200" />
+            </div>
+            <div className="text-sm sm:text-base font-bold text-white leading-none">37,000+</div>
+            <div className="text-[10px] sm:text-[11px] uppercase tracking-wider text-violet-200/80">Live Channels</div>
           </div>
-          <span className="countdown-separator">:</span>
-          <div className="countdown-block">
-            <div className="countdown-number">{pad(timeLeft.minutes)}</div>
-            <div className="countdown-label">MINUTES</div>
+          <div className="flex flex-col items-center gap-1.5">
+            <div className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-cyan-500/20 border border-cyan-400/30">
+              <Zap className="h-4 w-4 sm:h-5 sm:w-5 text-cyan-200" />
+            </div>
+            <div className="text-sm sm:text-base font-bold text-white leading-none">60 Seconds</div>
+            <div className="text-[10px] sm:text-[11px] uppercase tracking-wider text-cyan-200/80">Activation</div>
           </div>
-          <span className="countdown-separator">:</span>
-          <div className="countdown-block" key={`s-${timeLeft.seconds}`}>
-            <div className="countdown-number countdown-tick">{pad(timeLeft.seconds)}</div>
-            <div className="countdown-label">SECONDS</div>
+          <div className="flex flex-col items-center gap-1.5">
+            <div className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-emerald-500/20 border border-emerald-400/30">
+              <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-emerald-200" />
+            </div>
+            <div className="text-sm sm:text-base font-bold text-white leading-none">30 Days</div>
+            <div className="text-[10px] sm:text-[11px] uppercase tracking-wider text-emerald-200/80">Money-Back</div>
           </div>
         </div>
 
         <p
-          className="text-[10px] sm:text-[11px] mt-0.5"
+          className="text-[10px] sm:text-[11px] mt-1"
           style={{ color: "rgba(226, 232, 240, 0.9)" }}
         >
           <span aria-hidden="true">🔒</span> Secure Payment &nbsp;·&nbsp; <span aria-hidden="true">⚡</span> Instant Activation &nbsp;·&nbsp; 30-Day Money-Back

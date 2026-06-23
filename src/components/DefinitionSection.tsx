@@ -28,7 +28,7 @@ export default function DefinitionSection() {
             Fast IPTV is a UK-focused IPTV (Internet Protocol Television) subscription that streams 37,000+ live channels and 198,000+ films and series over standard home broadband. The service replaces traditional satellite or cable TV with an internet-delivered stream, requires no dish or engineer visit, and works on devices most UK households already own — Amazon Fire TV Stick, Apple TV, Android TV, Samsung Tizen and LG webOS smart TVs, iPhone, iPad, Windows, macOS, MAG and Formuler boxes.
           </p>
           <p>
-            Activation runs automatically after payment: login credentials arrive by email within roughly 60 seconds of checkout, and configuration in a player app like IPTV Smarters Pro or TiViMate typically takes under five minutes. Plans range from a 3-month entry tier at £25.99 to a 24-month plan at £79.99 (effective £3.33 per month), and every plan includes 4K UHD streaming, an optional secure proxy layer, and 24/7 UK-based customer support. The service is backed by a 30-day money-back.
+            Activation runs automatically after payment: login credentials arrive by email within roughly 60 seconds of checkout, and configuration in a player app like IPTV Smarters Pro or TiViMate typically takes under five minutes. Plans range from a 3-month entry tier at £25.99 to a 24-month plan at £79.99 (effective £3.33 per month), and every plan includes 4K UHD streaming, an optional Secure Proxy add-on, and 24/7 UK-based customer support. The service is backed by a 30-day money-back.
           </p>
         </div>
       </div>

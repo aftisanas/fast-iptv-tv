@@ -19,9 +19,9 @@ const trustItems = [
   },
   {
     icon: Lock,
-    title: "Secure Proxy Option — Premium IPTV Privacy At Full Speed",
+    title: "Secure Proxy Add-On — Optional Privacy Layer",
     description:
-      "An optional secure proxy layer encrypts your stream traffic. No bandwidth cap, no separate subscription — included with every plan.",
+      "An optional Secure Proxy add-on encrypts your stream traffic and reduces ISP-side filtering. Available at checkout from £4.75 per term.",
   },
   {
     icon: ServerCog,

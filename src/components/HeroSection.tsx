@@ -80,11 +80,11 @@ export default function HeroSection() {
           transition={{ duration: 0.7, delay: 0.18 }}
           className="text-base sm:text-lg text-gray-300/90 max-w-3xl mb-3 px-2 sm:px-0"
         >
-         Stream 37,000+ live channels and 198,000+ films in stunning 4K. Our fast IPTV UK service delivers zero buffering, instant activation, and a 30-day money-back guarantee. The{" "}
+          Stream 37,000+ live channels and 198,000+ films in 4K UHD. A UK-focused{" "}
           <SectionLink href="/#features" className="text-cyan-300 hover:text-cyan-200 underline-offset-2 hover:underline">
-            fastest IPTV
+            IPTV subscription
           </SectionLink>{" "}
-          subscription UK has to offer.
+          with automatic 60-second activation, support for every common UK streaming device, and a 30-day money-back.
         </motion.p>
 
         {/* Promo banner — replaces hero device image */}
@@ -120,6 +120,30 @@ export default function HeroSection() {
             <MessageCircle className="h-5 w-5 text-cyan-400" />
             <span>Compare All Plans</span>
           </SectionLink>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.45 }}
+          className="mt-6 sm:mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs sm:text-sm text-gray-300/80"
+        >
+          <div className="flex items-center gap-1.5">
+            <span className="text-cyan-400" aria-hidden="true">✓</span>
+            <span>37,000+ Channels</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="text-cyan-400" aria-hidden="true">✓</span>
+            <span>4K UHD</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="text-cyan-400" aria-hidden="true">✓</span>
+            <span>60-Second Activation</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="text-cyan-400" aria-hidden="true">✓</span>
+            <span>30-Day Money-Back</span>
+          </div>
         </motion.div>
       </div>
 

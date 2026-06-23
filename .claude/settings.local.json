@@ -13,7 +13,8 @@
       "Bash(git commit *)",
       "Bash(git push *)",
       "Bash(grep -niE \"\\\\\\\\b\\(guaranteed|#1|best iptv|fastest iptv\\)\\\\\\\\b\" src/lib/tutorial-content.ts src/app/tutorials/TutorialsContent.tsx)",
-      "Bash(grep -n \"+44 7878 757831\\\\\\\\|447878757831\" src/lib/tutorial-content.ts src/app/tutorials/TutorialsContent.tsx)"
+      "Bash(grep -n \"+44 7878 757831\\\\\\\\|447878757831\" src/lib/tutorial-content.ts src/app/tutorials/TutorialsContent.tsx)",
+      "Bash(git stash *)"
     ]
   }
 }
