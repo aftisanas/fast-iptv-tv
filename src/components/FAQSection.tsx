@@ -8,8 +8,11 @@ import SectionLink from "./SectionLink";
 import { FAQ_ITEMS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
+const TRUNCATION_THRESHOLD = 200;
+
 export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
   return (
     <section id="faq" className="relative py-11 lg:py-16">
@@ -99,17 +102,46 @@ export default function FAQSection() {
                   className="overflow-hidden"
                 >
                   <div className="px-5 py-4 text-sm text-muted leading-relaxed">
-                    {item.answer}
-                    {item.question === "How does fast-iptv.tv compare to traditional pay-TV?" && (
+                    {item.answer.length > TRUNCATION_THRESHOLD ? (
                       <>
-                        {" "}
-                        <Link
-                          href="/blog/iptv-vs-traditional-tv"
-                          className="text-violet-600 hover:text-violet-700 underline-offset-2 hover:underline"
+                        <div className={expandedIndex === i ? "" : "line-clamp-2 sm:line-clamp-3"}>
+                          {item.answer}
+                          {item.question === "How does fast-iptv.tv compare to traditional pay-TV?" && (
+                            <>
+                              {" "}
+                              <Link
+                                href="/blog/iptv-vs-traditional-tv"
+                                className="text-violet-600 hover:text-violet-700 underline-offset-2 hover:underline"
+                              >
+                                see our full IPTV vs traditional TV comparison
+                              </Link>
+                              .
+                            </>
+                          )}
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => setExpandedIndex(expandedIndex === i ? null : i)}
+                          className="mt-2 text-xs font-medium text-violet-600 hover:text-violet-700 underline-offset-2 hover:underline"
                         >
-                          see our full IPTV vs traditional TV comparison
-                        </Link>
-                        .
+                          {expandedIndex === i ? "Show less" : "Read more"}
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        {item.answer}
+                        {item.question === "How does fast-iptv.tv compare to traditional pay-TV?" && (
+                          <>
+                            {" "}
+                            <Link
+                              href="/blog/iptv-vs-traditional-tv"
+                              className="text-violet-600 hover:text-violet-700 underline-offset-2 hover:underline"
+                            >
+                              see our full IPTV vs traditional TV comparison
+                            </Link>
+                            .
+                          </>
+                        )}
                       </>
                     )}
                   </div>

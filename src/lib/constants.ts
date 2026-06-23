@@ -285,17 +285,17 @@ export const FAQ_ITEMS = [
   {
     question: "How fast is activation after I buy IPTV?",
     answer:
-      "Under 60 seconds. Once payment is confirmed, your login credentials arrive by email automatically — typically before you finish the checkout chat.",
+      "Activation takes around 60 seconds in most cases. Once payment clears, your Server URL, Username and Password arrive by email — typically within a minute or two during business hours, and within a few minutes overnight. You enter those credentials into the IPTV app of your choice (IPTV Smarters Pro, X-OTT on Smart TVs, iMPlayer on iOS) and your channel list loads automatically. If you don't see the email within five minutes, check your spam folder. For out-of-hours orders with longer delays, message the WhatsApp support line and the team will push the credentials through manually.",
   },
   {
     question: "What makes Fast IPTV a speed-focused service?",
     answer:
-      "Fast IPTV is engineered with speed as a primary design goal — UK-focused infrastructure, automatic post-payment activation, and fast channel-switching on modern player apps. We won't claim a ranking against every UK provider, but speed is what this service is built around.",
+      "Fast IPTV is positioned around three speed-related experiences: how quickly you can start watching after paying, how responsive playback feels once you're streaming, and how rapidly the service recovers when something goes wrong. Activation is around 60 seconds. Playback is designed for low-latency streaming, particularly on sports and live events. The infrastructure is built for stable streams under load, with the Secure Proxy add-on available for households where ISP-side filtering would otherwise interfere. The “fast” in Fast IPTV is the cumulative experience of activation, playback responsiveness and stable streaming during peak hours.",
   },
   {
     question: "Does fast IPTV sacrifice quality for speed?",
     answer:
-      "No. Native 4K UHD is included on every plan with adaptive bitrate that protects the picture when broadband dips. Speed and quality run on the same infrastructure.",
+      "No — the goal of Fast IPTV is the opposite: deliver native 4K UHD streams at low latency, not strip down quality for activation speed. Channels are available in HD by default, with 4K UHD on a substantial portion of sport, films and major entertainment feeds. The 198,000+ on-demand titles are encoded for fast initial load while preserving viewing quality. The 25 Mbps minimum (50 Mbps for 4K) reflects the bandwidth requirements of full-quality streams, not a compromised baseline. The speed orientation reinforces quality — a service that buffered or lagged wouldn't be “fast” in any meaningful sense.",
   },
   {
     question: "Which devices work best with Fast IPTV?",
@@ -303,9 +303,9 @@ export const FAQ_ITEMS = [
       "Fast IPTV runs on every common UK streaming device that supports IPTV playback. The most popular options among UK subscribers are the Amazon Fire TV Stick 4K and Fire TV Stick 4K Max, both of which run the IPTV Smarters Pro app well and handle 4K UHD on a typical 25 Mbps connection. Apple TV 4K, Nvidia Shield and Formuler Z11 Pro are favoured by users who want a dedicated set-top box with rapid channel switching. On Samsung and LG smart TVs from 2017 onwards, Smart IPTV and Set IPTV apps work natively without extra hardware. iPhones, iPads, Android phones and tablets, Windows PCs, macOS, and MAG receivers are all supported. Most modern devices with an H.265-capable decoder will play the full 4K library smoothly, provided home broadband has the bandwidth.",
   },
   {
-    question: "Does the secure proxy option slow down fast IPTV streaming?",
+    question: "Does the Secure Proxy add-on slow down Fast IPTV streaming?",
     answer:
-      "The optional secure proxy is designed to add minimal latency overhead. Channel switching, sport playback and 4K streaming run normally with the proxy active.",
+      "No — the Secure Proxy add-on is engineered for IPTV streaming specifically, unlike general-purpose VPNs that can add latency by routing all traffic through a distant server. The proxy operates close to the streaming infrastructure and reduces ISP-side filtering rather than re-routing every packet. Customers with the Secure Proxy enabled report stream stability comparable to running without it. For households that haven't experienced ISP filtering, the Secure Proxy is optional. For households that have, it's the recommended option — available at checkout from £4.75 per term (tiered: £4.75 / £9.50 / £19 / £38 for 3 / 6 / 12 / 24 months).",
   },
   {
     question: "What internet speed do I need?",
@@ -315,17 +315,17 @@ export const FAQ_ITEMS = [
   {
     question: "Can I stream on more than one device at the same time?",
     answer:
-      "Yes — extra connection options are available as add-ons on every plan. Contact us before purchase or upgrade in your dashboard after activation.",
+      "Every Fast IPTV subscription includes 5 simultaneous streams by default — five people in the same household can watch different channels at the same time. The streams can be split across any mix of devices: Firestick, Smart TV, phone, laptop. The same Username and Password works on every device. If you need more than 5 concurrent streams, Extra Connections are available at checkout for £7.25 per additional stream, attached to the same subscription. For most UK households the default 5 streams is comfortable — well above typical concurrent usage.",
   },
   {
     question: "Is there a contract or cancellation fee?",
     answer:
-      "No contract, no cancellation fee. Every plan is a one-time payment with a 30-day money-back guarantee — refunded same-day.",
+      "No contracts and no cancellation fees — Fast IPTV plans are one-time payments for the term you select (3, 6, 12 or 24 months), not recurring subscriptions. There's no auto-renewal and no commitment beyond the term you paid for. For renewals, message the support WhatsApp number and the team reactivates your existing credentials. On the refund side, Fast IPTV offers a 30-day money-back policy on every plan: if the service doesn't work for you within the first 30 days, request a refund and the original payment is returned in full. No penalty for using it.",
   },
   {
     question: "How fast does support respond?",
     answer:
-      "Live chat and email support are available 24/7 from a UK-based team. Response time depends on queue volume but support aims to reply quickly during evening and weekend peak hours.",
+      "Fast IPTV support runs over WhatsApp at +44 7878 757831, staffed by a UK-based team during peak hours. Replies are typically rapid during business hours and within a few hours overnight. The WhatsApp model has practical advantages over tickets: messages stay in the same thread (you have your order history on hand), and the team can guide you through device setup in real time. For common issues (login failed, playlist not loading, channels blocked, VOD slow to start), the /tutorials page has detailed troubleshooting that often resolves things faster than waiting for a reply.",
   },
   {
     question: "How does fast-iptv.tv compare to traditional pay-TV?",
