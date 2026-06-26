@@ -47,13 +47,12 @@ export const TUTORIAL_DEVICES_EXTRA: TutorialDevice[] = [
     steps: [
       { text: "Open the Samsung TV App Store → search X-OTT → install → open." },
       { text: "The app will display a MAC Address on screen — write it down." },
-      { text: "On your phone or PC, visit: activationpanel.net" },
-      { text: "Under Select Host, choose TREX UK (or TREX XOTT by default)." },
-      { text: "Enter your TV's MAC Address in the field → click Confirm." },
+      { text: "Send your MAC Address to our WhatsApp support team at +44 7878 757831 — we'll activate your line within minutes." },
+      { text: "Wait for our confirmation message that activation is complete." },
       { text: "Restart the X-OTT app on your TV — your channel list will load." },
     ],
     notes: [
-      "Fallback: if X-OTT isn't available on your model, install IBO Player from the Samsung App Store, note the MAC Address and Device Key shown, register at the official IBO Player site, and add your Xtream Codes details (Server URL: http://line.trxdnscloud.ru + Username and Password).",
+      "Fallback: if X-OTT isn't available on your model, install IBO Player from the Samsung App Store, note the MAC Address and Device Key shown, and send both to our WhatsApp support team — we'll register the device and load your line. You'll then enter your Xtream Codes details (Username and Password from your activation email) inside the app.",
     ],
   },
   {
@@ -66,11 +65,12 @@ export const TUTORIAL_DEVICES_EXTRA: TutorialDevice[] = [
     steps: [
       { text: "From your LG home, open the LG Content Store → search X-OTT → install → open." },
       { text: "Note the MAC Address on screen." },
-      { text: "On phone or PC, go to activationpanel.net → Host: TREX UK → enter MAC → Confirm." },
-      { text: "Restart X-OTT on the TV." },
+      { text: "Send your MAC Address to our WhatsApp support team at +44 7878 757831 — we'll activate your line within minutes." },
+      { text: "Wait for our confirmation message that activation is complete." },
+      { text: "Restart X-OTT on the TV — your channel list will load." },
     ],
     notes: [
-      "If X-OTT isn't in the LG Content Store on your model: install IBO Player instead and follow the same MAC-address flow on the IBO portal.",
+      "If X-OTT isn't in the LG Content Store on your model: install IBO Player instead, note the MAC Address and Device Key, and send both to our WhatsApp support team — we'll register the device for you.",
       "LG-specific tip — if login keeps failing, power-cycle properly: hold the physical TV power button for 10 seconds OR unplug the TV for 30 seconds. Unplug your router for 30 seconds, plug back in, and wait 2 minutes before testing.",
     ],
   },
@@ -84,11 +84,12 @@ export const TUTORIAL_DEVICES_EXTRA: TutorialDevice[] = [
     steps: [
       { text: "Open your TV's App Store → search X-OTT → install → open." },
       { text: "Note the MAC Address shown." },
-      { text: "On phone or PC, go to activationpanel.net → Host: TREX UK → enter MAC → Confirm." },
-      { text: "Restart the X-OTT app on your TV." },
+      { text: "Send your MAC Address to our WhatsApp support team at +44 7878 757831 — we'll activate your line within minutes." },
+      { text: "Wait for our confirmation message that activation is complete." },
+      { text: "Restart the X-OTT app on your TV — your channel list will load." },
     ],
     notes: [
-      "Same flow as Samsung/LG. If X-OTT isn't available, use IBO Player with the same MAC-address registration process.",
+      "Same flow as Samsung/LG. If X-OTT isn't available, use IBO Player and send the MAC Address and Device Key to our WhatsApp support team — we'll register your device.",
     ],
   },
   {
@@ -124,15 +125,8 @@ export const TUTORIAL_DEVICES_EXTRA: TutorialDevice[] = [
     steps: [
       { text: "From your Roku home → Streaming Channels → search Hot Player → Add Channel." },
       { text: "Open Hot Player and note the MAC Address shown." },
-      { text: "On your phone or PC, go to hotplayer.app." },
-      { text: "Click Upload List → enter the MAC Address." },
-      {
-        text: "Select Add Xtream Code and enter:",
-        substeps: [
-          "Server URL: http://line.trxdnscloud.ru",
-          "Username and Password from your activation email",
-        ],
-      },
+      { text: "Send your MAC Address to our WhatsApp support team at +44 7878 757831 — we'll register your device and load your line." },
+      { text: "Wait for our confirmation message that registration is complete." },
       { text: "Refresh Hot Player on Roku — channels load." },
     ],
   },
@@ -268,9 +262,9 @@ export const TROUBLESHOOTING_ITEMS: TroubleshootingItem[] = [
     steps: [
       "Install IBO Player from the Samsung App Store.",
       "Note the MAC Address and Device Key shown.",
-      "On phone or PC, go to the official IBO Player site → upload device details.",
-      "Add Xtream Codes: Server URL http://line.trxdnscloud.ru + your username and password.",
-      "Restart IBO Player on the TV.",
+      "Send the MAC Address and Device Key to our WhatsApp support team at +44 7878 757831 — we'll register your device.",
+      "Once we confirm registration, open IBO Player and enter your Xtream Codes (Username and Password from your activation email) inside the app.",
+      "Restart IBO Player on the TV — channels load.",
     ],
   },
   {
