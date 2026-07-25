@@ -1,11 +1,13 @@
-// TODO: Re-enable Stripe/Shopify card checkout when payment accounts are set up.
-// Original SECURE CHECKOUT button code preserved in git history.
-// For now, WhatsApp is the sole checkout flow.
 "use client";
 
 import { useEffect, useRef, useState } from "react";
 import { X, Shield, MessageCircle, Minus, Plus } from "lucide-react";
-import { CHECKOUT_COPY, EXTRA_CONNECTION_PRICE, EXTRA_CONNECTIONS_MAX, SITE_NAME } from "@/lib/constants";
+import {
+  CHECKOUT_COPY,
+  EXTRA_CONNECTION_PRICE,
+  EXTRA_CONNECTIONS_MAX,
+  SITE_NAME,
+} from "@/lib/constants";
 import { buildWhatsAppCheckoutUrl, calculateOrderTotal } from "@/lib/whatsapp";
 
 type OrderSummaryModalProps = {
@@ -139,12 +141,12 @@ export default function OrderSummaryModal({
               RECOMMENDED OPTIONS
             </h3>
 
-            {/* Proxy Protection */}
+            {/* Secure Proxy */}
             <div className="rounded-xl border border-gray-100 bg-white px-5 py-4">
               <div className="mb-1 flex items-start justify-between gap-3">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="text-sm font-semibold text-foreground">
-                    Proxy Protection
+                    Secure Proxy
                   </span>
                   <span className="inline-flex items-center rounded-md bg-amber-100 px-2 py-0.5 text-[10px] font-bold tracking-[0.12em] text-amber-700">
                     POPULAR
@@ -155,7 +157,7 @@ export default function OrderSummaryModal({
                   type="button"
                   role="switch"
                   aria-checked={proxyOn}
-                  aria-label="Toggle Proxy Protection"
+                  aria-label="Toggle Secure Proxy"
                   onClick={() => setProxyOn((v) => !v)}
                   className={`relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors focus-visible:outline-2 focus-visible:outline-violet-600 focus-visible:outline-offset-2 ${
                     proxyOn
@@ -176,7 +178,7 @@ export default function OrderSummaryModal({
               </div>
 
               <p className="text-xs leading-relaxed text-muted">
-                An integrated proxy designed to prevent ISP tracking of service usage.
+                Optional encrypted route for added privacy on shared networks.
               </p>
             </div>
 

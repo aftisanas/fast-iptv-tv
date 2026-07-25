@@ -80,9 +80,9 @@ export default function BlogContent() {
             transition={{ duration: 0.7, delay: 0.1 }}
             className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] mb-6"
           >
-            <span className="text-white">IPTV UK Guides &</span>
+            <span className="text-white">IPTV Providers UK —</span>
             <br />
-            <span className="gradient-text-hero">Streaming Tips</span>
+            <span className="gradient-text-hero">Guides & Streaming Tips</span>
           </motion.h1>
 
           {/* Subtitle */}
@@ -92,17 +92,85 @@ export default function BlogContent() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="mx-auto max-w-2xl text-lg text-gray-300/90 leading-relaxed"
           >
-            Expert articles on IPTV setup, streaming optimisation, device guides,
-            and the latest in UK television — essential reading for informed{" "}
+            Expert articles on setup, streaming optimisation, device support and the current state of British television — essential reading before choosing between{" "}
             <Link href="/#pricing" className="text-cyan-300 hover:text-cyan-200 underline-offset-2 hover:underline">
-              IPTV subscription
-            </Link>{" "}
-            decisions.
+              IPTV providers
+            </Link>.
           </motion.p>
         </div>
 
         {/* Bottom gradient fade */}
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#fafbff] via-[#fafbff]/80 to-transparent" />
+      </section>
+
+      {/* Editorial intro */}
+      <section className="bg-[#fafbff] pt-6 pb-12 lg:pt-8 lg:pb-16">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+          <div className="space-y-5 text-base leading-relaxed text-gray-700">
+            <p>
+              The guides here exist because a UK subscriber choosing an IPTV
+              service is asked to make a purchase decision without the tools a
+              good decision needs. Marketing pages compress the important
+              trade-offs; independent guidance tends to sit in threads that
+              assume prior knowledge. This hub is the middle layer: the
+              questions a first-time buyer actually asks, answered against a
+              consistent framework — including when the service being examined
+              is the one operated by the same team.
+            </p>
+            <p>
+              Coverage sits in three areas that a UK buyer needs to research
+              before committing. The first is evaluation — a shared vocabulary
+              for what &ldquo;good&rdquo; means when comparing options. The
+              seven-criteria framework used for{" "}
+              <Link
+                href="/blog/best-iptv-uk-guide-2026"
+                className="text-primary hover:underline"
+              >
+                evaluating an IPTV service against a consistent set of criteria
+              </Link>{" "}
+              is the anchor: channel-lineup quality, streaming stability,
+              quality settings, catch-up support, device compatibility, customer
+              support, and pricing against the value actually delivered. Every
+              guide on this site applies the same seven criteria to whichever
+              service is being examined.
+            </p>
+            <p>
+              The second is compatibility — which devices already in the home
+              will run an IPTV subscription without friction. Many UK households
+              already own a streaming stick, so the practical mechanics of{" "}
+              <Link
+                href="/blog/how-to-setup-iptv-firestick"
+                className="text-primary hover:underline"
+              >
+                setting up an IPTV subscription on a streaming stick
+              </Link>{" "}
+              is the walkthrough written first. The same principles carry over
+              to smart televisions, Android boxes, and desktop players; the
+              streaming-stick guide is the reference setup.
+            </p>
+            <p>
+              The third is category-specific reliability, because a service that
+              streams a documentary cleanly may still stumble on a live sporting
+              fixture at peak load. The practical piece on{" "}
+              <Link
+                href="/blog/premier-league-streaming-guide"
+                className="text-primary hover:underline"
+              >
+                UK football fixtures
+              </Link>{" "}
+              explains what the matchday-reliability question actually tests,
+              and what a subscriber can check before committing.
+            </p>
+            <p>
+              The tone throughout is editorial rather than promotional. Where
+              the recommended service is mentioned, the relationship is
+              disclosed in-line rather than hidden. The criteria applied to the
+              recommendation are the same criteria applied everywhere else on
+              the site, so a reader can re-apply the framework to any service
+              the guides do not cover.
+            </p>
+          </div>
+        </div>
       </section>
 
       {/* Blog Grid */}

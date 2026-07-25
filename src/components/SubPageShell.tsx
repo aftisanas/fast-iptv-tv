@@ -1,258 +1,370 @@
-import type { ReactNode } from "react";
+import { ArrowLeft, Tag, Clock, User, ChevronRight } from "lucide-react";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
-import ParticleBackground from "@/components/ParticleBackground";
-import PricingSection from "@/components/PricingSection";
-import CTASection from "@/components/CTASection";
-import { SITE_NAME, SITE_URL } from "@/lib/constants";
+import ParticleBackground from "./ParticleBackground";
+import PricingSection from "./PricingSection";
+import CTASection from "./CTASection";
+import MotionFadeIn from "./MotionFadeIn";
+import MotionScaleIn from "./MotionScaleIn";
+import SubPageFAQ from "./SubPageFAQ";
+import { LOGO_PATH, SITE_NAME, SITE_URL } from "@/lib/constants";
 
-export type ArticleSection = {
-  h2: string;
-  paragraphs: ReactNode[];
-};
+export interface SubPageByline {
+  readonly name: string;
+  readonly role: string;
+  readonly description: string;
+  readonly publishedDate: string;
+  readonly updatedDate: string;
+}
 
-export type FaqItem = {
-  question: string;
-  answer: string;
-};
+export interface SubPageRelatedGuide {
+  readonly title: string;
+  readonly href: string;
+  readonly description: string;
+}
 
-export type RelatedLink = {
-  href: string;
-  label: string;
-  blurb: string;
-};
+export interface SubPageFAQItem {
+  readonly question: string;
+  readonly answer: string;
+}
 
-export type SubPageShellProps = {
-  slug: string;
-  eyebrow: string;
-  h1: string;
-  intro: string;
-  bylineName: string;
-  bylineRole: string;
-  updatedISO: string;
-  readMinutes: number;
-  sections: ArticleSection[];
-  faqs: FaqItem[];
-  related: RelatedLink[];
-  description: string;
-};
+export interface SubPageCitation {
+  readonly name: string;
+  readonly url: string;
+}
 
-export default function SubPageShell(props: SubPageShellProps) {
-  const {
-    slug,
-    eyebrow,
-    h1,
-    intro,
-    bylineName,
-    bylineRole,
-    updatedISO,
-    readMinutes,
-    sections,
-    faqs,
-    related,
-    description,
-  } = props;
+export interface SubPageEntity {
+  readonly name: string;
+}
 
-  const pageUrl = `${SITE_URL}${slug}`;
-  const articleId = `${pageUrl}#article`;
-  const breadcrumbId = `${pageUrl}#breadcrumb`;
-  const faqId = `${pageUrl}#faq`;
-  const organizationId = `${SITE_URL}/#organization`;
+export interface SubPageShellProps {
+  readonly slug: string;
+  readonly title: string;
+  readonly category: string;
+  readonly intro: string;
+  readonly byline: SubPageByline;
+  readonly citations?: ReadonlyArray<SubPageCitation>;
+  readonly aboutEntities?: ReadonlyArray<SubPageEntity>;
+  readonly readTime?: string;
+  readonly publishedDate?: string;
+  readonly updatedDate?: string;
+  readonly relatedGuides: ReadonlyArray<SubPageRelatedGuide>;
+  readonly faqItems: ReadonlyArray<SubPageFAQItem>;
+  readonly children: React.ReactNode;
+}
 
-  const graph = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Article",
-        "@id": articleId,
-        mainEntityOfPage: pageUrl,
-        headline: h1,
-        description,
-        inLanguage: "en-GB",
-        datePublished: updatedISO,
-        dateModified: updatedISO,
-        author: {
-          "@type": "Organization",
-          name: `${SITE_NAME} Editorial`,
-          url: SITE_URL,
-        },
-        publisher: { "@id": organizationId },
-        image: `${SITE_URL}/fast-iptv.webp`,
-      },
-      {
-        "@type": "BreadcrumbList",
-        "@id": breadcrumbId,
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
-          { "@type": "ListItem", position: 2, name: h1, item: pageUrl },
-        ],
-      },
-      {
-        "@type": "FAQPage",
-        "@id": faqId,
-        mainEntity: faqs.map((f) => ({
-          "@type": "Question",
-          name: f.question,
-          acceptedAnswer: { "@type": "Answer", text: f.answer },
-        })),
-      },
-    ],
-  };
-
-  const updatedHuman = new Date(updatedISO).toLocaleDateString("en-GB", {
+const formatDate = (iso: string) =>
+  new Date(iso).toLocaleDateString("en-GB", {
     day: "numeric",
     month: "long",
     year: "numeric",
   });
 
+export default function SubPageShell({
+  slug,
+  title,
+  category,
+  intro,
+  byline,
+  citations,
+  aboutEntities,
+  readTime,
+  publishedDate,
+  updatedDate,
+  relatedGuides,
+  faqItems,
+  children,
+}: SubPageShellProps) {
+  const resolvedPublishedDate = publishedDate ?? byline.publishedDate;
+  const resolvedUpdatedDate = updatedDate ?? byline.updatedDate;
+
+  const canonicalUrl = `${SITE_URL}/${slug.replace(/^\/+/, "")}`;
+  const logoUrl = `${SITE_URL}${LOGO_PATH}`;
+
+  const articleSchema = {
+    "@type": "Article",
+    "@id": `${canonicalUrl}#article`,
+    headline: title,
+    description: intro,
+    inLanguage: "en-GB",
+    isPartOf: { "@id": `${SITE_URL}/#website` },
+    mainEntityOfPage: { "@id": `${canonicalUrl}#webpage` },
+    datePublished: resolvedPublishedDate,
+    dateModified: resolvedUpdatedDate,
+    author: {
+      "@type": "Organization",
+      name: byline.name,
+      description: byline.description,
+    },
+    ...(citations && citations.length > 0 && {
+      citation: citations.map((c) => ({
+        "@type": "CreativeWork",
+        name: c.name,
+        url: c.url,
+      })),
+    }),
+    ...(aboutEntities && aboutEntities.length > 0 && {
+      about: aboutEntities.map((e) => ({
+        "@type": "Thing",
+        name: e.name,
+      })),
+    }),
+    publisher: {
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#organization`,
+      name: SITE_NAME,
+      logo: {
+        "@type": "ImageObject",
+        url: logoUrl,
+        width: 1024,
+        height: 1024,
+      },
+    },
+    articleSection: category,
+  };
+
+  const breadcrumbSchema = {
+    "@type": "BreadcrumbList",
+    "@id": `${canonicalUrl}#breadcrumb`,
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: `${SITE_URL}/`,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: title,
+        item: canonicalUrl,
+      },
+    ],
+  };
+
+  const faqSchema = {
+    "@type": "FAQPage",
+    "@id": `${canonicalUrl}#faq`,
+    mainEntity: faqItems.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+  };
+
+  const graphSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `${canonicalUrl}#webpage`,
+        url: canonicalUrl,
+        name: title,
+        inLanguage: "en-GB",
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        about: { "@id": `${SITE_URL}/#organization` },
+        description: intro,
+        primaryImageOfPage: { "@type": "ImageObject", url: logoUrl },
+      },
+      articleSchema,
+      breadcrumbSchema,
+      faqSchema,
+    ],
+  };
+
   return (
     <>
-      <article>
-        {/* ── Hero (matches homepage HeroSection treatment: dark gradient,
-             aurora blobs, radial overlays, mesh grid, floating orbs, particles).
-             Sits at top: 0 so the transparent fixed Navbar overlays the dark
-             gradient directly — no white body bleeds through above the hero. ── */}
-        <header className="relative overflow-hidden">
-          {/* Deep premium gradient background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#0a0118] via-[#1a0a3e] to-[#0c1445]" />
+      {/* ── Hero ── */}
+      <section className="relative overflow-hidden">
+        {/* Deep premium gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0a0118] via-[#1a0a3e] to-[#0c1445]" />
 
-          {/* Vivid aurora blobs (sized down vs homepage since the hero is shorter) */}
-          <div className="aurora-blob w-[600px] h-[600px] bg-purple-600/25 -top-32 -left-32" style={{ animationDelay: "0s" }} />
-          <div className="aurora-blob w-[420px] h-[420px] bg-blue-500/20 top-1/4 right-[-8%]" style={{ animationDelay: "4s" }} />
-          <div className="aurora-blob w-[500px] h-[500px] bg-violet-500/15 bottom-[-25%] left-1/3" style={{ animationDelay: "8s" }} />
-          <div className="aurora-blob w-[350px] h-[350px] bg-cyan-500/20 top-[55%] left-[-5%]" style={{ animationDelay: "12s" }} />
-          <div className="aurora-blob w-[300px] h-[300px] bg-fuchsia-500/15 top-[8%] left-[55%]" style={{ animationDelay: "6s" }} />
+        {/* Aurora blobs */}
+        <div
+          className="aurora-blob w-[700px] h-[700px] bg-purple-600/25 -top-32 -left-32"
+          style={{ animationDelay: "0s" }}
+        />
+        <div
+          className="aurora-blob w-[500px] h-[500px] bg-blue-500/20 top-1/4 right-[-8%]"
+          style={{ animationDelay: "4s" }}
+        />
+        <div
+          className="aurora-blob w-[600px] h-[600px] bg-violet-500/15 bottom-[-15%] left-1/3"
+          style={{ animationDelay: "8s" }}
+        />
+        <div
+          className="aurora-blob w-[400px] h-[400px] bg-cyan-500/20 top-[60%] left-[-5%]"
+          style={{ animationDelay: "12s" }}
+        />
 
-          {/* Layered radial overlays for depth */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(124,58,237,0.2),transparent_50%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(6,182,212,0.12),transparent_50%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(168,85,247,0.08),transparent_60%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(59,130,246,0.1),transparent_40%)]" />
+        {/* Radial overlays */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(124,58,237,0.2),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(6,182,212,0.12),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(168,85,247,0.08),transparent_60%)]" />
 
-          {/* Subtle mesh grid */}
-          <div
-            className="absolute inset-0 opacity-[0.03]"
-            style={{
-              backgroundImage:
-                "linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px)",
-              backgroundSize: "60px 60px",
-            }}
-          />
+        {/* Mesh grid */}
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px)",
+            backgroundSize: "60px 60px",
+          }}
+        />
 
-          {/* Decorative floating orbs */}
-          <div className="absolute top-[18%] left-[10%] w-2 h-2 rounded-full bg-purple-400/60 animate-float" />
-          <div className="absolute top-[38%] right-[15%] w-1.5 h-1.5 rounded-full bg-cyan-400/50 animate-float" style={{ animationDelay: "2s" }} />
-          <div className="absolute bottom-[22%] left-[20%] w-1 h-1 rounded-full bg-blue-400/60 animate-float" style={{ animationDelay: "4s" }} />
-          <div className="absolute top-[50%] right-[8%] w-2.5 h-2.5 rounded-full bg-violet-400/40 animate-float" style={{ animationDelay: "1s" }} />
+        {/* Decorative floating orbs */}
+        <div className="absolute top-[15%] left-[10%] w-2 h-2 rounded-full bg-purple-400/60 animate-float" />
+        <div
+          className="absolute top-[35%] right-[15%] w-1.5 h-1.5 rounded-full bg-cyan-400/50 animate-float"
+          style={{ animationDelay: "2s" }}
+        />
+        <div
+          className="absolute bottom-[25%] left-[20%] w-1 h-1 rounded-full bg-blue-400/60 animate-float"
+          style={{ animationDelay: "4s" }}
+        />
 
-          {/* Particles */}
-          <ParticleBackground />
+        {/* Particles */}
+        <ParticleBackground />
 
-          {/* Bottom gradient fade to article body */}
-          <div className="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-white to-transparent pointer-events-none" />
-
-          {/* Content — flex-col with gap so vertical spacing works even when
-              inline elements would otherwise collapse onto the same line.
-              pt-28 sm:pt-32 lg:pt-32 mirrors HeroSection's clearance of the
-              fixed Navbar; bottom padding keeps the hero a similar height. */}
-          <div className="relative z-10 mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 pt-28 sm:pt-32 lg:pt-32 pb-16 sm:pb-20 lg:pb-24 flex flex-col items-center text-center gap-6">
+        {/* Hero content */}
+        <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20 lg:pb-24">
+          {/* Back link */}
+          <MotionFadeIn x={-10} y={0} duration={0.5}>
             <Link
               href="/"
-              className="inline-flex items-center gap-2 text-sm text-cyan-300/90 hover:text-cyan-200 transition-colors"
+              className="inline-flex items-center gap-2 text-sm text-gray-300 hover:text-white transition-colors mb-6"
             >
               <ArrowLeft className="h-4 w-4" />
-              Back to Fast IPTV
+              Back to IPTV Providers UK
             </Link>
+          </MotionFadeIn>
 
-            <span className="inline-block rounded-full bg-white/10 backdrop-blur-sm border border-white/15 px-4 py-1.5 text-xs sm:text-sm font-medium text-cyan-200">
-              {eyebrow}
+          {/* Category badge */}
+          <MotionScaleIn initialScale={0.95} delay={0.05}>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-purple-400/25 bg-white/[0.07] backdrop-blur-md px-4 py-1.5 text-xs font-semibold tracking-wider text-purple-200 uppercase mb-6">
+              <Tag className="h-3 w-3 text-cyan-300" />
+              {category}
             </span>
+          </MotionScaleIn>
 
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-bold tracking-tight leading-[1.1] text-white">
-              {h1}
-            </h1>
+          {/* H1 — LCP element, no motion wrapper */}
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-bold tracking-tight leading-[1.1] text-white mb-5">
+            {title}
+          </h1>
 
-            <p className="text-base sm:text-lg text-gray-300/90 leading-relaxed max-w-2xl">
-              {intro}
-            </p>
+          {/* Intro paragraph */}
+          <MotionFadeIn
+            as="p"
+            delay={0.18}
+            duration={0.7}
+            className="text-base sm:text-lg text-gray-300/90 leading-relaxed max-w-3xl mb-8"
+          >
+            {intro}
+          </MotionFadeIn>
 
-            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs sm:text-sm text-gray-400">
-              <span>
-                By <span className="text-gray-200 font-medium">{bylineName}</span>
-                <span className="text-gray-500"> · {bylineRole}</span>
+          {/* Byline */}
+          <MotionFadeIn
+            delay={0.25}
+            duration={0.7}
+            className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs sm:text-sm text-gray-400"
+          >
+            <span className="inline-flex items-center gap-1.5">
+              <User className="h-3.5 w-3.5 text-purple-300" />
+              <span className="text-gray-200 font-medium">{byline.name}</span>
+              <span className="text-gray-500">— {byline.role}</span>
+            </span>
+            <span className="inline-flex items-center gap-1.5">
+              <span aria-hidden="true" className="h-1 w-1 rounded-full bg-gray-500" />
+              <span>Updated {formatDate(resolvedUpdatedDate)}</span>
+            </span>
+            {readTime && (
+              <span className="inline-flex items-center gap-1.5">
+                <Clock className="h-3.5 w-3.5 text-cyan-300" />
+                <span>{readTime}</span>
               </span>
-              <span aria-hidden="true" className="text-gray-600">·</span>
-              <span>
-                Updated <time dateTime={updatedISO}>{updatedHuman}</time>
-              </span>
-              <span aria-hidden="true" className="text-gray-600">·</span>
-              <span>{readMinutes} min read</span>
-            </div>
-          </div>
-        </header>
+            )}
+          </MotionFadeIn>
+        </div>
 
-        {/* ── Article body ── */}
-        <div className="relative bg-white">
-          <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-            {sections.map((section) => (
-              <section key={section.h2} className="mb-12 last:mb-0">
-                <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-5 leading-tight">
-                  {section.h2}
-                </h2>
-                <div className="space-y-4 text-base text-gray-700 leading-relaxed">
-                  {section.paragraphs.map((p, idx) => (
-                    <p key={idx}>{p}</p>
-                  ))}
-                </div>
-              </section>
-            ))}
+        {/* Bottom gradient fade to site background */}
+        <div className="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-[#fafbff] to-transparent pointer-events-none" />
+      </section>
 
-            {/* FAQ block */}
-            <section className="mt-16 pt-10 border-t border-violet-100/70" aria-labelledby="page-faq-heading">
-              <h2 id="page-faq-heading" className="text-2xl sm:text-3xl font-bold text-foreground mb-6">
-                Frequently asked questions
-              </h2>
-              <dl className="space-y-6">
-                {faqs.map((f, i) => (
-                  <div key={i} className="rounded-xl border border-violet-100/70 bg-violet-50/30 p-5">
-                    <dt className="text-base font-semibold text-foreground mb-2">{f.question}</dt>
-                    <dd className="text-base text-gray-700 leading-relaxed">{f.answer}</dd>
-                  </div>
-                ))}
-              </dl>
-            </section>
-
-            {/* Related guides */}
-            <nav aria-label="Related Fast IPTV guides" className="mt-16 pt-10 border-t border-violet-100/70">
-              <h2 className="text-xl font-bold text-foreground mb-5">More Fast IPTV UK guides</h2>
-              <ul className="grid sm:grid-cols-2 gap-4">
-                {related.map((r) => (
-                  <li key={r.href}>
-                    <Link
-                      href={r.href}
-                      className="group block rounded-xl border border-violet-100/60 bg-white p-5 transition-all hover:border-violet-200 hover:shadow-sm"
-                    >
-                      <span className="block text-sm font-semibold text-foreground group-hover:text-violet-700">
-                        {r.label}
-                      </span>
-                      <span className="mt-1 block text-sm text-muted">{r.blurb}</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          </div>
+      {/* ── Article body slot ── */}
+      <article className="relative py-12 lg:py-16">
+        <div className="absolute inset-0 mesh-gradient" />
+        <div className="relative mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+          {children}
         </div>
       </article>
 
-      {/* ── Conversion footer (reused homepage components) ── */}
+      {/* ── FAQ (driven by faqItems prop, schema-aligned) ── */}
+      {faqItems.length > 0 && (
+        <section className="relative py-11 lg:py-14">
+          <div className="absolute inset-0 mesh-gradient" />
+          <div className="relative mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+            <div className="mb-10 text-center">
+              <span className="inline-block rounded-full bg-violet-50 border border-violet-200 px-4 py-1.5 text-sm font-medium text-violet-700 mb-4">
+                Frequently Asked Questions
+              </span>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground">
+                Questions UK Buyers Ask About{" "}
+                <span className="gradient-text">This Topic</span>
+              </h2>
+            </div>
+
+            <SubPageFAQ items={faqItems} />
+          </div>
+        </section>
+      )}
+
+      {/* ── Related guides ── */}
+      {relatedGuides.length > 0 && (
+        <section className="relative py-11 lg:py-14">
+          <div className="absolute inset-0 section-gradient-1" />
+          <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+            <div className="mb-8 text-center">
+              <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">
+                <span className="gradient-text">Related IPTV Providers UK Guides</span>
+              </h2>
+              <p className="text-sm text-muted">
+                Related editorial guides from IPTV Providers UK.
+              </p>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {relatedGuides.map((guide) => (
+                <Link
+                  key={guide.href}
+                  href={guide.href}
+                  className="group relative flex flex-col rounded-2xl border border-violet-100/60 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-violet-300 hover:shadow-lg hover:shadow-violet-100/60"
+                >
+                  <h3 className="text-base font-semibold text-foreground mb-2 group-hover:text-violet-700 transition-colors">
+                    {guide.title}
+                  </h3>
+                  <p className="text-sm text-muted leading-relaxed flex-1">
+                    {guide.description}
+                  </p>
+                  <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-violet-600 group-hover:text-violet-700">
+                    Read the guide
+                    <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── Conversion footer ── */}
       <PricingSection />
       <CTASection />
 
-      {/* ── JSON-LD structured data ── */}
+      {/* ── JSON-LD @graph (Article + BreadcrumbList + FAQPage) ── */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(graph) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(graphSchema) }}
       />
     </>
   );

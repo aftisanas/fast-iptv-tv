@@ -1,4 +1,8 @@
-import { WHATSAPP_NUMBER, EXTRA_CONNECTION_PRICE } from "./constants";
+import { EXTRA_CONNECTION_PRICE } from "./constants";
+
+export const WHATSAPP_NUMBER = "447878757831";
+export const SUPPORT_WHATSAPP_NUMBER = "+44 7878 757831";
+export const SUPPORT_WHATSAPP_HREF = `https://wa.me/${WHATSAPP_NUMBER}`;
 
 export interface WhatsAppOrderDetails {
   planName: string;
@@ -30,13 +34,13 @@ export function buildWhatsAppCheckoutUrl(order: WhatsAppOrderDetails): string {
   });
 
   const lines = [
-    `Hi 👋 I'd like to order ${brand}.`,
+    `Hi — I'd like to order ${brand}.`,
     "",
     `Plan: ${order.planName} (£${order.planPrice.toFixed(2)})`,
   ];
 
   if (order.proxyEnabled) {
-    lines.push(`Proxy Protection: Yes (+£${order.proxyPrice.toFixed(2)})`);
+    lines.push(`Secure Proxy: Yes (+£${order.proxyPrice.toFixed(2)})`);
   }
 
   if (order.extraConnections > 0) {

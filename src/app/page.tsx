@@ -1,186 +1,91 @@
-import type { Metadata } from "next";
 import HeroSection from "@/components/HeroSection";
-import DefinitionSection from "@/components/DefinitionSection";
 import StatsBar from "@/components/StatsBar";
 import FeaturesSection from "@/components/FeaturesSection";
 import PricingSection from "@/components/PricingSection";
 import DevicesSection from "@/components/DevicesSection";
 import ChannelsSection from "@/components/ChannelsSection";
-// import TestimonialsSection from "@/components/TestimonialsSection"; // Temporarily disabled — awaiting real testimonials
 import FAQSection from "@/components/FAQSection";
 import TrustSection from "@/components/TrustSection";
 import CTASection from "@/components/CTASection";
-import { FAQ_ITEMS, LAST_UPDATED, PRICING_PLANS, SITE_NAME, SITE_URL } from "@/lib/constants";
-
-export const metadata: Metadata = {
-  title: { absolute: "Fast IPTV — UK Subscription, 4K, 60-Second Setup" },
-  description:
-    "Fast IPTV is a UK-focused IPTV subscription with 37,000 channels, 4K UHD, automatic 60-second activation and a 30-day money-back. Setup in under two minutes on Firestick, smart TV or phone.",
-  openGraph: {
-    title: "Fast IPTV — UK Subscription, 4K, 60-Second Setup",
-    description:
-      "Fast IPTV: 37,000 channels, 4K UHD, 60-second activation, 30-day money-back. UK-focused IPTV subscription from £25.99.",
-    url: "https://fast-iptv.tv",
-    siteName: "Fast IPTV",
-    locale: "en_GB",
-    type: "website",
-    images: [
-      {
-        url: "/fast-iptv-og-image.webp",
-        width: 1200,
-        height: 630,
-        alt: "Fast IPTV — UK IPTV Subscription with 37,000 channels and 60-second activation",
-        type: "image/webp",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Fast IPTV — UK Subscription, 4K, 60-Second Setup",
-    description:
-      "Fast IPTV: 37,000 channels, 4K UHD, 60-second activation, 30-day money-back. UK-focused IPTV subscription from £25.99.",
-    images: ["/fast-iptv-og-image.webp"],
-  },
-  alternates: {
-    canonical: "https://fast-iptv.tv",
-  },
-};
+import {
+  AUTHOR_BYLINE,
+  CONTACT_EMAIL,
+  FAQ_ITEMS,
+  LOGO_PATH,
+  PRICING_PLANS,
+  SITE_NAME,
+  SITE_URL,
+} from "@/lib/constants";
 
 export default function HomePage() {
   const organizationId = `${SITE_URL}/#organization`;
   const websiteId = `${SITE_URL}/#website`;
-  const serviceId = `${SITE_URL}/#service`;
+  const webpageId = `${SITE_URL}/#webpage`;
   const productId = `${SITE_URL}/#product`;
-  const breadcrumbId = `${SITE_URL}/#breadcrumb`;
   const faqId = `${SITE_URL}/#faq`;
-  const logoUrl = `${SITE_URL}/fast-iptv.webp`;
+  const logoUrl = `${SITE_URL}${LOGO_PATH}`;
 
-  const prices = PRICING_PLANS.map((p) => p.price);
-  const lowPrice = Math.min(...prices).toFixed(2);
-  const highPrice = Math.max(...prices).toFixed(2);
-
-  const graph = {
+  const homepageGraph = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "Organization",
         "@id": organizationId,
         name: SITE_NAME,
-        alternateName: "Fast IPTV UK",
         url: SITE_URL,
         logo: {
           "@type": "ImageObject",
           url: logoUrl,
-          width: 512,
-          height: 512,
+          width: 1024,
+          height: 1024,
+        },
+        contactPoint: {
+          "@type": "ContactPoint",
+          contactType: "customer service",
+          availableLanguage: "English",
+          areaServed: "GB",
+          email: CONTACT_EMAIL,
         },
       },
       {
         "@type": "WebSite",
         "@id": websiteId,
-        url: SITE_URL,
         name: SITE_NAME,
-        publisher: { "@id": organizationId },
+        url: SITE_URL,
         inLanguage: "en-GB",
+        publisher: { "@id": organizationId },
       },
       {
-        "@type": "Service",
-        "@id": serviceId,
-        serviceType: "Fast IPTV UK Subscription",
-        name: "Fast IPTV UK Subscription",
-        provider: { "@id": organizationId },
-        areaServed: { "@type": "Country", name: "United Kingdom" },
+        "@type": "WebPage",
+        "@id": webpageId,
+        url: SITE_URL,
+        name: "IPTV Providers UK 2026 | #1 Rated 4K IPTV Service £4.99",
+        inLanguage: "en-GB",
+        isPartOf: { "@id": websiteId },
+        about: { "@id": organizationId },
         description:
-          "A UK-focused IPTV subscription: 37,000 live channels, 198,000 films and series, native 4K UHD, secure proxy option, extra connection options, 60-second activation, low-latency live sport playback and a 30-day money-back guarantee.",
-        hasOfferCatalog: {
-          "@type": "OfferCatalog",
-          name: "Fast IPTV UK Plans",
-          itemListElement: PRICING_PLANS.map((plan) => ({
-            "@type": "Offer",
-            name: `${plan.name} Plan`,
-            price: plan.price.toFixed(2),
-            priceCurrency: "GBP",
-            url: `${SITE_URL}/#pricing`,
-            availability: "https://schema.org/InStock",
-          })),
-        },
+          "Trusted IPTV providers UK 2026. 37,000 channels, 4K UHD, five simultaneous screens and 24/7 UK support — from £4.99/month with a 30-day refund.",
+        dateModified: AUTHOR_BYLINE.updatedDate,
+        mainEntity: [{ "@id": productId }, { "@id": faqId }],
       },
       {
         "@type": "Product",
         "@id": productId,
-        name: "Fast IPTV UK Subscription",
-        brand: { "@id": organizationId },
-        description:
-          "Fast IPTV UK subscription with 37,000 live channels, native 4K UHD, low-latency live sport playback, secure proxy option and extra connection options.",
-        image: logoUrl,
-        offers: {
-          "@type": "AggregateOffer",
-          lowPrice,
-          highPrice,
-          priceCurrency: "GBP",
-          offerCount: PRICING_PLANS.length,
-          availability: "https://schema.org/InStock",
-          url: `${SITE_URL}/#pricing`,
-        },
-        aggregateRating: {
-          "@type": "AggregateRating",
-          ratingValue: "3.9",
-          reviewCount: "12",
-          bestRating: "5",
-          worstRating: "1",
-        },
-      },
-      {
-        "@type": "BreadcrumbList",
-        "@id": breadcrumbId,
-        itemListElement: [
-          {
-            "@type": "ListItem",
-            position: 1,
-            name: "Home",
-            item: SITE_URL,
-          },
-        ],
-      },
-      {
-        "@type": "Article",
-        "@id": `${SITE_URL}/#article`,
-        headline: "What is Fast IPTV? UK IPTV Subscription Guide",
-        description:
-          "Fast IPTV is a UK-focused IPTV subscription with 37,000 live channels, 198,000 on-demand titles, 4K UHD, automatic 60-second activation, optional secure proxy, and a 30-day money-back.",
+        name: `${SITE_NAME} Subscription`,
         url: SITE_URL,
-        inLanguage: "en-GB",
-        datePublished: "2025-11-07",
-        dateModified: LAST_UPDATED,
-        author: {
-          "@id": organizationId,
-          name: "Fast IPTV Editorial Team",
-        },
-        publisher: {
-          "@id": organizationId,
-        },
-        isPartOf: {
-          "@id": websiteId,
-        },
-        mainEntityOfPage: SITE_URL,
-        about: [
-          { "@type": "Thing", name: "IPTV", sameAs: "https://en.wikipedia.org/wiki/IPTV" },
-          { "@type": "Thing", name: "IPTV Subscription" },
-          { "@type": "Thing", name: "4K UHD Streaming" },
-          { "@type": "Thing", name: "United Kingdom", sameAs: "https://en.wikipedia.org/wiki/United_Kingdom" },
-        ],
-        citation: [
-          {
-            "@type": "CreativeWork",
-            name: "IPTV - Wikipedia",
-            url: "https://en.wikipedia.org/wiki/IPTV",
-          },
-          {
-            "@type": "CreativeWork",
-            name: "Ofcom — On-demand programme services",
-            url: "https://www.ofcom.org.uk/tv-radio-and-on-demand/on-demand-services",
-          },
-        ],
+        image: [logoUrl],
+        description:
+          "IPTV Providers UK subscription with 37,000+ live channels, 198,000+ on-demand titles, 4K UHD and five simultaneous screens — from £4.99/month on the 12-month term.",
+        brand: { "@type": "Brand", name: SITE_NAME },
+        offers: PRICING_PLANS.map((plan) => ({
+          "@type": "Offer",
+          name: `${plan.name} Plan`,
+          price: plan.price.toFixed(2),
+          priceCurrency: "GBP",
+          availability: "https://schema.org/InStock",
+          itemCondition: "https://schema.org/NewCondition",
+          url: `${SITE_URL}/#pricing`,
+        })),
       },
       {
         "@type": "FAQPage",
@@ -199,31 +104,20 @@ export default function HomePage() {
 
   return (
     <>
-      {/* LCP: preload the brand mark used in the fixed header */}
-      <link
-        rel="preload"
-        as="image"
-        href="/fast-iptv.webp"
-        type="image/webp"
-        fetchPriority="high"
-      />
-
       <HeroSection />
-      <DefinitionSection />
       <StatsBar />
       <FeaturesSection />
       <PricingSection />
       <DevicesSection />
       <ChannelsSection />
-      {/* <TestimonialsSection /> */ /* Temporarily disabled — awaiting real testimonials */}
       <FAQSection />
       <TrustSection />
       <CTASection />
 
-      {/* JSON-LD Structured Data — single @graph */}
+      {/* JSON-LD Structured Data — consolidated @graph */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(graph) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homepageGraph) }}
       />
     </>
   );

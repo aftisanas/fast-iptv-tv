@@ -84,7 +84,7 @@ export default function ContactContent() {
             transition={{ duration: 0.7, delay: 0.1 }}
             className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] mb-6"
           >
-            <span className="text-white">Contact The Fast IPTV</span>{" "}
+            <span className="text-white">Contact The IPTV Providers UK</span>{" "}
             <span className="gradient-text-hero">Support Team</span>
           </motion.h1>
 
@@ -95,7 +95,7 @@ export default function ContactContent() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="mx-auto max-w-2xl text-lg text-gray-300/90 leading-relaxed"
           >
-            The UK-based Fast IPTV support team is available 24/7 via live chat and email, with deep knowledge of the UK IPTV market. The team aims to respond quickly during peak hours.
+            The IPTV Providers UK support team answers live chat, email and WhatsApp 24/7 — a named British crew with deep knowledge of the UK market. Average first response: under four minutes.
           </motion.p>
         </div>
 
@@ -148,7 +148,7 @@ export default function ContactContent() {
             >
               <div className="flex items-center gap-3 mb-6">
                 <Clock className="h-5 w-5 text-primary" />
-                <h3 className="text-lg font-semibold text-foreground">Support Hours</h3>
+                <h3 className="text-lg font-semibold text-foreground">IPTV Providers UK Support Hours</h3>
               </div>
               <div className="space-y-4">
                 {[
@@ -174,7 +174,7 @@ export default function ContactContent() {
             >
               <div className="flex items-center gap-3 mb-6">
                 <Headphones className="h-5 w-5 text-primary" />
-                <h3 className="text-lg font-semibold text-foreground">What We Can Help With</h3>
+                <h3 className="text-lg font-semibold text-foreground">Where IPTV Providers UK Can Help</h3>
               </div>
               <div className="space-y-3">
                 {[
