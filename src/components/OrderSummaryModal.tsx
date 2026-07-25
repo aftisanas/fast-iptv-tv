@@ -1,13 +1,11 @@
+// TODO: Re-enable Stripe/Shopify card checkout when payment accounts are set up.
+// Original SECURE CHECKOUT button code preserved in git history.
+// For now, WhatsApp is the sole checkout flow.
 "use client";
 
 import { useEffect, useRef, useState } from "react";
 import { X, Shield, MessageCircle, Minus, Plus } from "lucide-react";
-import {
-  CHECKOUT_COPY,
-  EXTRA_CONNECTION_PRICE,
-  EXTRA_CONNECTIONS_MAX,
-  SITE_NAME,
-} from "@/lib/constants";
+import { CHECKOUT_COPY, EXTRA_CONNECTION_PRICE, EXTRA_CONNECTIONS_MAX, SITE_NAME } from "@/lib/constants";
 import { buildWhatsAppCheckoutUrl, calculateOrderTotal } from "@/lib/whatsapp";
 
 type OrderSummaryModalProps = {
@@ -16,6 +14,7 @@ type OrderSummaryModalProps = {
   planName: string;
   planPrice: number;
   proxyPrice: number;
+  extraConnectionPrice?: number;
   currency?: string;
 };
 
@@ -28,6 +27,7 @@ export default function OrderSummaryModal({
   planName,
   planPrice,
   proxyPrice,
+  extraConnectionPrice = EXTRA_CONNECTION_PRICE,
   currency = "£",
 }: OrderSummaryModalProps) {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -67,9 +67,10 @@ export default function OrderSummaryModal({
     proxyEnabled: proxyOn,
     proxyPrice,
     extraConnections,
+    extraConnectionPrice,
   });
 
-  const extraConnectionsSubtotal = extraConnections * EXTRA_CONNECTION_PRICE;
+  const extraConnectionsSubtotal = extraConnections * extraConnectionPrice;
 
   const handleCheckout = () => {
     const url = buildWhatsAppCheckoutUrl({
@@ -78,6 +79,7 @@ export default function OrderSummaryModal({
       proxyEnabled: proxyOn,
       proxyPrice,
       extraConnections,
+      extraConnectionPrice,
       brandName: SITE_NAME,
     });
     window.open(url, "_blank", "noopener,noreferrer");
@@ -141,12 +143,12 @@ export default function OrderSummaryModal({
               RECOMMENDED OPTIONS
             </h3>
 
-            {/* Secure Proxy */}
+            {/* Proxy Protection */}
             <div className="rounded-xl border border-gray-100 bg-white px-5 py-4">
               <div className="mb-1 flex items-start justify-between gap-3">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="text-sm font-semibold text-foreground">
-                    Secure Proxy
+                    Proxy Protection
                   </span>
                   <span className="inline-flex items-center rounded-md bg-amber-100 px-2 py-0.5 text-[10px] font-bold tracking-[0.12em] text-amber-700">
                     POPULAR
@@ -157,7 +159,7 @@ export default function OrderSummaryModal({
                   type="button"
                   role="switch"
                   aria-checked={proxyOn}
-                  aria-label="Toggle Secure Proxy"
+                  aria-label="Toggle Proxy Protection"
                   onClick={() => setProxyOn((v) => !v)}
                   className={`relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors focus-visible:outline-2 focus-visible:outline-violet-600 focus-visible:outline-offset-2 ${
                     proxyOn
@@ -178,7 +180,7 @@ export default function OrderSummaryModal({
               </div>
 
               <p className="text-xs leading-relaxed text-muted">
-                Optional encrypted route for added privacy on shared networks.
+                An integrated proxy designed to prevent ISP tracking of service usage.
               </p>
             </div>
 
@@ -229,12 +231,12 @@ export default function OrderSummaryModal({
               </div>
 
               <div className="mt-2 text-xs font-semibold text-accent">
-                {CHECKOUT_COPY.extraConnectionsPriceLabel}
+                {CHECKOUT_COPY.extraConnectionsPriceLabel(extraConnectionPrice)}
               </div>
 
               {extraConnections > 0 && (
                 <div className="mt-1 text-xs text-muted">
-                  {extraConnections} × £{EXTRA_CONNECTION_PRICE.toFixed(2)} ={" "}
+                  {extraConnections} × {formatPrice(extraConnectionPrice, currency)} ={" "}
                   <span className="font-semibold text-foreground">
                     {formatPrice(extraConnectionsSubtotal, currency)}
                   </span>

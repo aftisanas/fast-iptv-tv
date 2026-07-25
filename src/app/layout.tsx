@@ -23,33 +23,18 @@ const outfit = Outfit({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "IPTV Providers UK 2026 | #1 Rated 4K IPTV Service £4.99",
-    template: "%s | IPTV Providers UK",
+    default: "Fast IPTV — UK IPTV Subscription",
+    template: "%s | Fast IPTV",
   },
   description:
-    "Trusted IPTV providers UK 2026. 37,000 channels, 4K UHD, five simultaneous screens and 24/7 UK support. From £4.99/month with a 30-day refund.",
-  keywords: [
-    "iptv providers",
-    "iptv providers uk",
-    "best iptv providers",
-    "best iptv providers uk",
-    "uk iptv providers",
-    "iptv subscription",
-    "iptv uk",
-    "best iptv uk",
-    "iptv service",
-    "iptv reviews",
-    "buy iptv",
-    "british iptv",
-    "premium iptv",
-  ],
-  authors: [{ name: "IPTV Providers UK" }],
-  creator: "IPTV Providers UK",
-  applicationName: "IPTV Providers UK",
+    "Fast IPTV is a UK-focused IPTV subscription with 37,000 channels, 4K UHD, automatic activation and a 30-day money-back. Setup in under two minutes on Firestick, smart TV or phone.",
+  authors: [{ name: "Fast IPTV" }],
+  creator: "Fast IPTV",
+  applicationName: "Fast IPTV",
   alternates: {
-    canonical: "/",
+    canonical: SITE_URL,
     languages: {
-      "en-GB": "/",
+      "en-GB": SITE_URL,
     },
   },
   manifest: "/favicon_io/site.webmanifest",
@@ -69,17 +54,27 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_GB",
-    siteName: "IPTV Providers UK",
+    siteName: "Fast IPTV",
     url: SITE_URL,
-    title: "IPTV Providers UK 2026 — The Complete Guide To The #1 Rated Service",
+    title: "Fast IPTV — UK IPTV Subscription",
     description:
-      "Stop guessing which IPTV providers deliver. 37,000 channels, 198,000 films, fast activation, strong servers — with a 30-day money-back on every plan.",
+      "Fast IPTV is a UK-focused IPTV subscription with 37,000 channels, 4K UHD, automatic activation and a 30-day money-back. Setup in under two minutes on Firestick, smart TV or phone.",
+    images: [
+      {
+        url: "/fast-iptv-og-image.webp",
+        width: 1200,
+        height: 630,
+        alt: "Fast IPTV — UK IPTV Subscription with 37,000 channels and 60-second activation",
+        type: "image/webp",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "IPTV Providers UK 2026 — The #1 Rated 4K IPTV Service",
+    title: "Fast IPTV — UK IPTV Subscription",
     description:
-      "Trusted IPTV providers UK. 37,000 channels, 4K UHD, five simultaneous screens, 30-day guarantee. From £4.99/month.",
+      "Fast IPTV is a UK-focused IPTV subscription with 37,000 channels, 4K UHD, automatic activation and a 30-day money-back. Setup in under two minutes on Firestick, smart TV or phone.",
+    images: ["/fast-iptv-og-image.webp"],
   },
   robots: {
     index: true,

@@ -1,211 +1,226 @@
-# GEO Analysis — iptv-providers-uk.com
+# GEO Analysis — fast-iptv.tv
 
-**Date:** 2026-07-12
-**Framing:** Google's position (Search Central) is that GEO is SEO. Findings below are SEO fundamentals applied to AI-search surfaces (Google AI Overviews, ChatGPT web, Perplexity, Bing Copilot).
+**Date:** 2026-06-20
+**Scope:** Homepage + site-wide signals (robots, sitemap, schema, rendering, brand entity presence)
+**Framework:** GEO = SEO fundamentals applied to AI-search surfaces (Google AIO, ChatGPT, Perplexity)
+**Compared against:** baseline analysis 2026-06-19 (59/100)
 
 ---
 
-## 1. GEO Readiness Score: **65 / 100**
+## 1. GEO Readiness Score: 76 / 100  ▲ +17 vs baseline
 
-| Category | Weight | Score | Notes |
-|---|---|---|---|
-| Citability (passage-level) | 25% | 16 / 25 | FAQ answers self-contained but under-length; unsourced hero statistics |
-| Structural Readability | 20% | 17 / 20 | Clean H1 → H2 → H3, question-based FAQ H2/H3, lists throughout |
-| Multi-Modal | 15% | 6 / 15 | Logo only; no video, no comparison tables, no diagrams |
-| Authority & Brand | 20% | 11 / 20 | `/about` + `/editorial-policy` strong; homepage has no visible byline, `Organization.sameAs` missing |
-| Technical Accessibility | 20% | 15 / 20 | Server-rendered (Next.js server components); AI crawlers implicitly allowed but not explicitly permitted |
+| Category | Weight | Score | Δ | Notes |
+|---|---|---|---|---|
+| Citability | 25 | 23/25 | +7 | "What is X?" in first 60 words ✓ · four 134-167w answer blocks ✓ · Article citations |
+| Structural readability | 20 | 17/20 | +1 | New question-based H2 "What is Fast IPTV?" — hierarchy preserved |
+| Multi-modal content | 15 | 6/15 | — | Unchanged — still no video, no infographic, no interactive tool |
+| Authority & brand signals | 20 | 14/20 | +9 | Author byline ✓ · Updated date ✓ · Article schema with author/publisher/dateModified/citation ✓ |
+| Technical accessibility | 20 | 16/20 | — | SSR ✓ · AI crawlers allowed via wildcard · `/llms.txt` still 404 |
+| **Total** | **100** | **76** | **+17** | Strong upper-mid band — authority layer is now the binding constraint, not citability |
+
+---
 
 ## 2. Platform Breakdown
 
-| Platform | Score | Rationale |
-|---|---|---|
-| **Google AI Overviews** | 70 / 100 | Strong SSR + consolidated `@graph`; needs `dateModified`, entity links (`sameAs`), and passage-length tuning |
-| **ChatGPT (OpenAI web search)** | 55 / 100 | No Wikipedia entity, no Reddit brand footprint, no `Person` schema for editorial byline |
-| **Perplexity** | 50 / 100 | Perplexity citations lean 46.7% to Reddit + Wikipedia — neither exists for this brand yet |
-| **Bing Copilot** | 60 / 100 | Bing indexes standard SEO; consider IndexNow if not wired |
+| Platform | Score | Δ | Why |
+|---|---|---|---|
+| Google AI Overviews | 78/100 | ▲ +16 | Article schema + named author + `dateModified` + Wikipedia citation = all the E-E-A-T signals AIO ranks on. FAQPage + Product + Service unchanged. Still no `AggregateRating` (rich snippet ceiling). |
+| ChatGPT (web search) | 62/100 | ▲ +12 | Wikipedia citation in Article schema + 140-word self-contained Q1 answer + explicit definition in first paragraph all match ChatGPT's extraction patterns. Still no Wikipedia entity for "Fast IPTV" itself (the lever that would push to 75+). |
+| Perplexity | 56/100 | ▲ +11 | Self-contained 150-word answer blocks for the four most cited intents (definition, devices, broadband, comparison) match Perplexity's quote-extraction selector. Still no Reddit/community surface — Perplexity citation ceiling. |
+| Bing Copilot | 70/100 | ▲ +10 | Article schema + clean sitemap + IndexNow-compatible Next.js. The Article `dateModified` is a Bing freshness signal. |
 
 ---
 
-## 3. AI Crawler Access — `robots.txt`
+## 3. What Changed vs Baseline (Phase 1+2a)
 
-Current `src/app/robots.ts` emits only:
+**Newly live:**
+- `H2: What is Fast IPTV?` definition section above the fold, server-rendered, with byline `Reviewed by Fast IPTV Editorial Team · Updated 19 June 2026` and `<time dateTime="2026-06-19">` element
+- `Article` JSON-LD `@graph` node with `author`, `publisher`, `datePublished: 2025-11-07`, `dateModified: 2026-06-19`, `about[]` linking to Wikipedia entities for `IPTV` and `United Kingdom`, and `citation[]` to Wikipedia + Ofcom
+- FAQ Q1 renamed `What makes this a fast IPTV service?` → `What is Fast IPTV?` (matches AI query pattern)
+- 4 FAQ answers expanded into the 134–167 word citability range:
+  - Q1 (definition) — 140 words
+  - Q5 (devices) — 150 words
+  - Q7 (internet speed) — 150 words
+  - Q11 (vs traditional pay-TV) — 150 words
+- Site-wide compliance scrub removed unverifiable claims (`99.9% uptime`, `sub-three-second lag`, `under four minutes response`, broadcaster trademarks) — these were trust-debt for AI summaries
+
+**Still missing (gating further uplift):**
+- `/llms.txt` — 404
+- `Organization.sameAs[]` array — no entity graph (Wikipedia / LinkedIn / YouTube / Trustpilot)
+- `AggregateRating` schema — no Google rich snippet star eligibility
+- Wikipedia entity for "Fast IPTV" brand — ChatGPT ceiling
+- Reddit / YouTube brand mention surface — Perplexity ceiling
+- Multi-modal: no video embed, no infographic, no calculator/tool
+
+---
+
+## 4. AI Crawler Access Status
+
+`robots.txt` (unchanged since baseline):
 
 ```
 User-Agent: *
 Allow: /
-Disallow: /api/
-Disallow: /_next/
-Disallow: /admin/
-Sitemap: https://iptv-providers-uk.com/sitemap.xml
+Disallow: /tutorials
+Sitemap: https://fast-iptv.tv/sitemap.xml
 ```
 
-**Interpretation:** AI crawlers (GPTBot, ClaudeBot, PerplexityBot, OAI-SearchBot) are **implicitly allowed** because the wildcard `*` grants them access and nothing blocks them. No crawler is currently mis-blocked.
-
-**Recommendation — Explicit allowlist (Medium priority):** Explicit `User-agent:` entries are more resilient to future wildcard changes and act as a clear signal in log audits. Add to `src/app/robots.ts`:
-
-| Crawler | Owner | Recommended action |
+| Crawler | Status | Implication |
 |---|---|---|
-| `GPTBot` | OpenAI | Allow — ChatGPT web search / SearchGPT |
-| `OAI-SearchBot` | OpenAI | Allow — OpenAI SERP feature |
-| `ChatGPT-User` | OpenAI | Allow — live browsing on user turns |
-| `ClaudeBot` | Anthropic | Allow — Claude web features |
-| `PerplexityBot` | Perplexity | Allow — Perplexity citations |
-| `Google-Extended` | Google | Allow — controls Gemini / AI Overviews training separately from Googlebot |
-| `Bingbot` | Microsoft | Allow (already covered by `*`) |
-| `CCBot` | Common Crawl | Decide: allow for training corpus reach, block if data-sovereignty stance |
-| `Bytespider` | ByteDance | Optional block (TikTok training, low citation ROI) |
+| GPTBot, OAI-SearchBot, ChatGPT-User | Allowed (wildcard) | ChatGPT web surfaces can index |
+| ClaudeBot | Allowed (wildcard) | Claude search/browse works |
+| PerplexityBot | Allowed (wildcard) | Perplexity can index |
+| CCBot, anthropic-ai, Bytespider, cohere-ai | Allowed (wildcard) | Training corpora captured |
+| Google-Extended | Allowed (wildcard) | Bard/Gemini training-corpus opt-in |
 
-## 4. `/llms.txt` Status
+**No regression.** Optional improvement: split into explicit AI-crawler blocks so future tooling auto-detects allow/deny intent (e.g. for IndexNow + Cloudflare AI Audit). Low priority — wildcard semantics are unambiguous.
 
-**Missing (404 at `/llms.txt`).**
-
-Per primary-source evidence in the claude-seo skill: John Mueller and the SE Ranking 300k-domain study report `llms.txt` is **not currently a citation lever** for major AI search systems. Adding it is low-risk and low-cost, but should not be scored as a driver of visibility. Reporting as **Info priority**, not an action item.
-
-## 5. Brand Mention Analysis
-
-Ahrefs' Dec-2025 study of 75k brands ranks brand-mention channels far above backlinks for AI citation correlation. Current footprint:
-
-| Channel | Status | Signal to build |
-|---|---|---|
-| Wikipedia | Not present | Highest ChatGPT citation weight (47.9% of ChatGPT sources) |
-| Reddit | Not detected as a brand entity | Highest Perplexity citation weight (46.7%) |
-| YouTube | Not detected | Ahrefs' strongest single correlate (~0.737) |
-| LinkedIn (Organization) | Not linked from schema | Moderate |
-| Trustpilot | Referenced in FAQ copy but no `sameAs` link | Adds review authority |
-
-`Organization.sameAs` in the homepage `@graph` is empty — this is the single fastest fix to raise AI-search entity confidence.
-
-## 6. Passage-Level Citability
-
-Optimal AI-citation passage length is **134–167 words**. Sampling the current homepage FAQ (`src/lib/constants.ts:251-307`):
-
-| Question | Approx. word count | Verdict |
-|---|---|---|
-| "What should a subscriber look for…" | ~45 | **Too short** — expand with the five checks broken out as an inline list |
-| "How many channels do the best IPTV providers offer?" | ~42 | **Too short** |
-| "Does the Secure Proxy add-on slow down streaming?" | ~110 | **Close** — the only answer within striking distance |
-| "What is a fair price for an IPTV subscription?" | ~55 | **Too short** |
-| Remaining 7 answers | 25–45 each | **Too short** |
-
-**Recommendation:** Rewrite each FAQ answer to 134–167 words by adding the *methodology* behind the claim (how "under sixty seconds" is measured, which UK broadcasters are counted toward 500+, etc.). Self-contained methodology is exactly what AI systems quote.
-
-## 7. Server-Side Rendering Check
-
-**Pass.** Recent commit `0193334` converted 8 sections + Footer to server components; the H1 renders as plain server text; JSON-LD is injected via `dangerouslySetInnerHTML` inside the server component (`src/app/page.tsx:118-121`). No JavaScript execution is required for AI crawlers to see headings, FAQ text, pricing, or schema.
-
-Framer-motion islands are isolated to interactive sub-components — they do not gate any AI-relevant content.
-
-## 8. Schema Recommendations
-
-The homepage `@graph` in `src/app/page.tsx:28-102` already includes `Organization`, `WebSite`, `WebPage`, `Product` with `Offer[]`, and `FAQPage`. Gaps:
-
-| Gap | Priority | Change |
-|---|---|---|
-| `Organization.sameAs` is missing | **High** | Add Trustpilot, LinkedIn, YouTube, Facebook/Instagram profile URLs |
-| `WebPage.dateModified` is missing | **High** | Emit `dateModified: AUTHOR_BYLINE.updatedDate` on the WebPage node |
-| No `Person` schema for the byline on homepage | Medium | Add a `Person` node for `AUTHOR_BYLINE` (already emitted on `/about`) and link it as `WebPage.author` |
-| `FAQPage` on a commercial homepage | **Info** | Per Aug-2023 Google restriction, this will not earn FAQ rich results. Retain for AI-citation extraction only. No action. |
-| `Product.aggregateRating` / `review` | Medium (only if verifiable) | If Trustpilot/Reddit review counts can be sourced with a link, add `aggregateRating`; otherwise leave out (do not fabricate) |
-| Missing `BreadcrumbList` on blog | Medium | Deferred per commit `0193334` — still worth doing for AI navigation context |
-
-## 9. Content Reformatting Suggestions
-
-**A. Homepage hero statistics need on-page sourcing (High priority)**
-
-Claims "37,000+ live channels", "198,000+ films and series", "60-second activation", "average first reply under four minutes" appear without a methodology link. AI models prefer citing pages that show *how* a number is derived.
-
-Fix pattern: add a small "How we measure this" footnote-style block linking to `/editorial-policy`, and inside `/editorial-policy` add a "Measurement Methodology" section with:
-- Channel count: definition of "channel" (unique feed vs. timeshift), snapshot date, list source
-- Support reply time: rolling 7-day median, source system (WhatsApp / email queue)
-- Activation time: from payment confirmation to credential email
-
-**B. Add a comparison table without naming competitors (High priority)**
-
-The DMCA scrub removed named competitors — correct call. But AI Overviews strongly favour pages containing tables. Replace with a **category-neutral evaluation matrix**: seven criteria × "what to check" × "what a good answer looks like". This aligns with the existing seven-criteria framework at `/blog/best-iptv-uk-guide-2026` and is directly citable.
-
-**C. Add a visible byline chip on the homepage (Medium priority)**
-
-Blog posts render `AUTHOR_BYLINE` (per commit `0193334`), but the homepage doesn't. AI systems weight author signals when deciding what to quote. A single-line chip ("By IPTV Providers UK Editorial · Updated 11 Jul 2026 · About the team") near the H1 costs nothing and pairs the schema `Person` node with a visible surface.
-
-**D. Expand FAQ answers to 134-167 words (Medium priority)**
-
-See Section 6.
+The `Disallow: /tutorials` blocks Googlebot from `/tutorials` too. Reconsider — this is the only path-level block and may be unintentional crawl-budget loss. **Flag: P2 — investigate intent.**
 
 ---
 
-## 10. Top 5 Highest-Impact Changes
+## 5. `/llms.txt` Status
 
-Priority buckets are the **output** of validation, not a substitute for it. Each recommendation lists its first-principle observation, dependency chain, falsifiability check, and leading indicator.
+**Result:** 404 (unchanged).
 
-### #1 — Add `Organization.sameAs` links (High)
-- **THINK:** Ahrefs' 75k-brand study shows brand mentions correlate ~3× more strongly with AI citations than backlinks; `sameAs` is the machine-readable declaration of those mentions.
-- **CONNECT-system:** Unblocks Perplexity (Reddit-heavy) and ChatGPT (Wikipedia-heavy) citation paths that currently have no entity to resolve.
-- **ACCEPT (falsifiability):** Fails if `Organization.sameAs` links point to profiles the brand does not actually control — validation is "can each URL be verified as the brand's own account?"
-- **GROW (leading indicator):** GSC → brand-query impressions; number of pages resolving `iptv-providers-uk.com` as `Organization` in Google's Knowledge Graph API.
-- **Where:** `src/app/page.tsx` `@graph[0]` (Organization node).
+Evidence position from the seo-geo skill: `/llms.txt` has no proven citation-ranking weight (Mueller, Illyes, SE Ranking 300k-domain study). Recommend adding as a low-cost hedge (15 min) but do not treat as a lever.
 
-### #2 — Emit `WebPage.dateModified` (High)
-- **THINK:** AI systems bias toward fresh sources for query classes with time drift (streaming, pricing, hardware compatibility).
-- **CONNECT-system:** Independent of the other changes — a five-line diff.
-- **ACCEPT:** Fails if `dateModified` is stale relative to visible content; re-check quarterly.
-- **GROW:** Impression share on queries containing "2026" / "this year".
-- **Where:** `src/app/page.tsx` WebPage node — set `dateModified: AUTHOR_BYLINE.updatedDate`.
+Template (paste at `public/llms.txt`):
 
-### #3 — Add explicit AI-crawler allowlist to robots.ts (Medium → High if any future default-deny)
-- **THINK:** Implicit-allow is currently equivalent, but an explicit block on `Bytespider`/`CCBot` requires the file to already enumerate the allowed set for symmetry.
-- **CONNECT-system:** Prerequisite for any future decision to block a specific crawler without accidentally blocking the wanted ones.
-- **ACCEPT:** Fails if a wanted crawler stops fetching post-change — monitor Vercel/CDN logs for 4xx to AI UA strings.
-- **GROW:** Weekly count of GPTBot / ClaudeBot / PerplexityBot fetches in access logs.
-- **Where:** `src/app/robots.ts` — extend `rules[]` with per-UA blocks.
+```
+# Fast IPTV
+> UK-focused IPTV subscription. 37,000+ live channels, 198,000+ on-demand titles, native 4K UHD, 60-second automatic activation, 30-day money-back.
 
-### #4 — Rewrite FAQ answers to 134-167 words with methodology (Medium)
-- **THINK:** AI extractors quote the shortest self-contained passage that answers the query with attribution; too-short answers get skipped for a competing 150-word paragraph elsewhere.
-- **CONNECT-system:** Compounds with #5 (measurement methodology page) — each FAQ answer can link into it, reinforcing the entity.
-- **ACCEPT:** Fails if expanded answers drop the direct-answer-in-first-40-words property. Every rewrite must keep the answer in sentence 1.
-- **GROW:** Track appearance in AI Overviews for the FAQ questions verbatim.
-- **Where:** `src/lib/constants.ts` `FAQ_ITEMS`.
+## Pillar pages
+- [What is Fast IPTV?](https://fast-iptv.tv/#what-is-fast-iptv): Definition + service summary
+- [Pricing plans](https://fast-iptv.tv/#pricing): Four plans, £25.99 to £79.99
+- [Device compatibility](https://fast-iptv.tv/iptv-for-firestick): Firestick + Apple TV + smart TV setup
+- [Buffering diagnosis](https://fast-iptv.tv/iptv-buffering-fix): Five root causes of IPTV buffering
+- [UK legality](https://fast-iptv.tv/is-iptv-legal-uk): Legal-status explainer
 
-### #5 — Add "How we measure" section under `/editorial-policy` and link from homepage stats (High)
-- **THINK:** Every "37,000 channels" / "under four minutes" claim is unsourced today; sourced claims are the ones AI systems repeat with attribution.
-- **CONNECT-system:** Feeds #4 (FAQ methodology hooks) and #1 (Organization credibility).
-- **ACCEPT:** Fails if the methodology is written unfalsifiably ("we count carefully"). Each metric needs a definition + snapshot date + source system.
-- **GROW:** Watch for AI Overview citations that include the numeric claim (e.g., "37,000 channels").
-- **Where:** New section in `src/app/editorial-policy/page.tsx`; hero + StatsBar reference it inline.
+## Key facts
+- Channel count: 37,000+ live channels
+- VOD library: 198,000+ films and series
+- Activation: ~60 seconds via email after payment
+- Lowest effective monthly rate: £3.33 on the 24-month plan
+- Refund window: 30 days
+- Support: 24/7 UK-based live chat and email
+```
 
 ---
 
-## Contradictions With Google's Primary Source
+## 6. Brand Mention / Entity Analysis (UNCHANGED — biggest remaining lever)
 
-Per `references/google-ai-optimization-guide.md`: Google explicitly rejects `llms.txt`, AI-rephrasing, chunking, and mention-farming as effective levers. This report reflects that — `llms.txt` is flagged as *Info-only*, and the emphasis is on brand-entity building (durable), passage quality (durable), and `dateModified` (durable), not on AI-specific hacks.
+| Signal | Status | GEO Risk |
+|---|---|---|
+| Wikipedia presence (brand) | None | **High** — ChatGPT pulls 47.9% of citations from Wikipedia |
+| Reddit threads / mentions | Unverified, likely none | **High** — Perplexity pulls 46.7% from Reddit |
+| YouTube channel / mentions | Unverified | **High** — YouTube mentions correlate ~0.737 with AI citations |
+| LinkedIn company page | Unverified | Moderate |
+| Trustpilot | Mentioned on-page but no `sameAs` link | Moderate |
+| Schema `Organization.sameAs[]` | **Still missing entirely** | **High** — no entity graph |
+
+**Brand mentions correlate 3× more strongly with AI visibility than backlinks** (Ahrefs 75k-brand study). On-page signals are now strong; the next blocker is OFF-page.
 
 ---
 
-## Quick Wins Checklist
+## 7. Passage-Level Citability (Sampled)
 
-- [ ] Add `Organization.sameAs` (Trustpilot, LinkedIn, YouTube, socials)
-- [ ] Add `WebPage.dateModified` = `AUTHOR_BYLINE.updatedDate`
-- [ ] Add visible byline chip on homepage (matches blog treatment)
-- [ ] Add explicit AI-crawler allowlist in `src/app/robots.ts`
-- [ ] Add "How we measure" methodology section under `/editorial-policy`
-- [ ] Expand FAQ answers to 134–167 words with methodology
-- [ ] Add category-neutral 7-criteria evaluation table to homepage
+| Block | Word count | Self-contained? | Has data? | Verdict |
+|---|---|---|---|---|
+| DefinitionSection ¶1 | ~85 | Yes | Yes (37k/198k, device list) | ✓ AI citation target |
+| DefinitionSection ¶2 | ~95 | Yes | Yes (£25.99 → £79.99, 60s, 30-day) | ✓ AI citation target |
+| FAQ Q1 (What is Fast IPTV?) | 140 | Yes | Yes | ✓ Optimal (134-167 band) |
+| FAQ Q5 (Devices) | 150 | Yes | Yes (specific models, 25 Mbps) | ✓ Optimal |
+| FAQ Q7 (Speed) | 150 | Yes | Yes (10/25/50 Mbps tiers, 5GHz Wi-Fi) | ✓ Optimal |
+| FAQ Q11 (vs pay-TV) | 150 | Yes | Yes (£3.33 vs £75+, 37k vs 270) | ✓ Optimal |
+| Q2-Q4, Q6, Q8-Q10 | 20-50 each | Partial | Low | Still short — phase-2b candidate |
 
-## Medium-Effort Items
+---
 
-- [ ] Add `Person` schema node for editorial byline on homepage `@graph`
-- [ ] Add `BreadcrumbList` on blog posts
-- [ ] Create `/llms.txt` (low citation ROI — do only if trivial)
-- [ ] YouTube presence: 3–5 short explainer videos, embedded on relevant pages
-- [ ] Reddit: earn organic mentions on r/IPTV / r/CordCutters (never self-promote)
+## 8. Server-Side Rendering Check
 
-## High-Impact / Long-Horizon
+Next.js 16.2.2 App Router with `static` prerender confirmed on all 21 routes (build output). All content above is server-rendered HTML — AI crawlers without JS execution receive the full DOM including the new `Article` JSON-LD and the DefinitionSection text. **Pass.**
 
-- [ ] Wikipedia entity for the editorial team or the brand (requires notability sources)
-- [ ] Original research: annual UK-IPTV market survey — creates unique citability
-- [ ] Interactive tool (e.g., "channel finder" or "device compatibility checker") — multi-modal boost
+---
 
+## 9. Top 5 Highest-Impact Next Changes (Phase 2b candidates)
+
+### 1. Add `Organization.sameAs[]` array  ·  Authority +3, ChatGPT +5
+**Where:** `src/app/page.tsx` Organization node in `@graph`
+```ts
+sameAs: [
+  "https://www.trustpilot.com/review/fast-iptv.tv",      // when live
+  "https://www.linkedin.com/company/fast-iptv",            // when live
+  "https://www.youtube.com/@FastIPTV",                     // when live
+  "https://twitter.com/FastIPTVuk",                        // when live
+]
+```
+**THINK:** Entity-graph anchor. **ACCEPT:** Validate each URL returns 200 + brand match. **GROW:** Track via `site-explorer-linked-anchors-external` in 30 days.
+
+### 2. Expand FAQ Q2-Q4, Q6, Q8-Q10 to 134-167 words  ·  Citability +2, Perplexity +6
+Each short answer is a missed Perplexity citation. Same pattern as Phase 2a Q1/Q5/Q7/Q11.
+**THINK:** Citation window is the answer block, not the page. **ACCEPT:** All answers ≥ 130 words after edit. **GROW:** Test prompt "how fast is IPTV activation" weekly in Perplexity.
+
+### 3. Publish `/llms.txt`  ·  Authority +1 (hedge, not lever)
+Template above. 15-min job.
+**ACCEPT:** Returns 200 with text/plain (not text/html). **GROW:** Server logs for GPTBot/ClaudeBot/PerplexityBot hits on `/llms.txt`.
+
+### 4. Add `AggregateRating` schema (only if real reviews exist)  ·  Google AIO +4
+Requires real verified Trustpilot pull or first-party reviews. Do NOT fabricate.
+**ACCEPT:** All ratings traceable to verified source. **GROW:** Star snippet eligibility in GSC.
+
+### 5. Reduce visible H1/H2 superlatives on `/` and sub-pages  ·  ChatGPT +3, Perplexity +3
+Current H2 `Why Our Fast IPTV UK Subscription Beats Every Competitor` and `The Widest Fast IPTV UK Library` contain superlatives that AI summaries actively filter out. Rewrite as factual claims ("Why Fast IPTV — Four Differentiators"; "37,000-Channel Fast IPTV Library").
+**THINK:** AI summaries quote the noun phrase, not the boast. **ACCEPT:** Re-run prompt "what does Fast IPTV offer" in ChatGPT after 30 days — should now cite by feature, not by claim.
+
+---
+
+## 10. Schema Recommendations (delta vs Phase 2a)
+
+| Node | Status | Action |
+|---|---|---|
+| `Organization` | Present, missing `sameAs[]` | Add `sameAs` when external profiles ready |
+| `WebSite` | Present | ✓ no change |
+| `Service` | Present | ✓ no change |
+| `Product` | Present, missing `AggregateRating` | Add IF real reviews exist |
+| `BreadcrumbList` | Present | Expand for sub-pages (each route should breadcrumb to `/`) |
+| `Article` (NEW) | **Present (Phase 2a)** | ✓ no change — author, publisher, dateModified, citation, about all there |
+| `FAQPage` | Present, data-driven | ✓ no change — propagates from `FAQ_ITEMS` |
+
+---
+
+## 11. Falsifiability — How To Know This Worked
+
+| Hypothesis | Falsification check | Window |
+|---|---|---|
+| Adding the DefinitionSection improves AI citability | Run prompt "what is fast iptv" in ChatGPT/Perplexity at T+30d; check if fast-iptv.tv is cited or quoted | 30 days |
+| Article schema dateModified improves Google AIO freshness | GSC: AIO impressions for "fast iptv UK" cluster at T+30d vs prior 30d | 30 days |
+| Expanded FAQ answers get cited by Perplexity | Perplexity prompt "what internet speed for 4K IPTV" — does fast-iptv.tv appear in sources? | 14 days |
+| Authority layer (byline + dateModified) shifts E-E-A-T signal | GSC organic impressions for top-3 head terms | 60 days |
+
+If none of the four pass at T+60d, the binding constraint is **off-page entity presence** (Section 6), not the on-page work.
+
+---
+
+## 12. Leading Indicators To Monitor Without Re-Running The Audit
+
+1. **GSC AIO impressions** for the head-term cluster (`fast iptv`, `iptv uk`, `iptv subscription`) — weekly
+2. **Direct branded search volume** for `fast iptv` — monthly (proxy for brand-mention growth)
+3. **Server log hits** from GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot on `/` — weekly
+4. **Citation appearances** in ChatGPT (test query: "best IPTV UK 2026") — monthly manual check
+5. **Wikipedia + Reddit mention count** — quarterly (this is the lever that breaks the off-page ceiling)
+
+---
+
+## Verdict
+
+Phase 1 (compliance scrub) + Phase 2a (definition + Article schema + FAQ expansion) lifted the GEO readiness score from **59 → 76 (+17)**. The on-page authority layer is now competitive. The remaining 24-point gap is overwhelmingly off-page: brand entity presence on Wikipedia, Reddit, YouTube. On-page Phase 2b can recover ~6 more points (sameAs array, FAQ expansion of remaining 7 answers, llms.txt, superlative cleanup); the rest requires off-domain work.
+
+```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Built by agricidaniel — Join the AI Marketing Hub community
 🆓 Free  → https://www.skool.com/ai-marketing-hub
 ⚡ Pro   → https://www.skool.com/ai-marketing-hub-pro
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```

@@ -1,8 +1,10 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { Play, MessageCircle, ChevronRight } from "lucide-react";
 import ParticleBackground from "./ParticleBackground";
 import PromoBanner from "./PromoBanner";
 import SectionLink from "./SectionLink";
-import MotionFadeIn from "./MotionFadeIn";
 
 export default function HeroSection() {
   return (
@@ -61,40 +63,45 @@ export default function HeroSection() {
 
       {/* ── Content ── */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 sm:pt-[7.5rem] lg:pt-32 pb-2 flex flex-col items-center text-center">
-        {/* Headline — plain H1 for LCP, no motion wrapper */}
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-bold tracking-tight leading-[1.1] mb-2">
-          <span className="text-white">IPTV Providers UK — </span>
-          <br />
-          <span className="text-white">The Guide To The #1 Rated </span>
-          <span className="gradient-text-hero">IPTV Service</span>
-        </h1>
+        {/* Headline — 2 lines, matches reference sizing */}
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.1 }}
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-bold tracking-tight leading-[1.1] mb-2 text-white"
+        >
+          Fast IPTV — UK Subscription With 60-Second Activation
+        </motion.h1>
 
         {/* Subtitle */}
-        <MotionFadeIn
-          as="p"
-          y={20}
-          duration={0.7}
-          delay={0.18}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.18 }}
           className="text-base sm:text-lg text-gray-300/90 max-w-3xl mb-3 px-2 sm:px-0"
         >
-          Compare 37,000+ live channels, 198,000+ films and series, and 4K UHD across five simultaneous screens — with 60-second activation and a 30-day money-back on every plan. UK-focused infrastructure and 24/7 support built for British households.
-        </MotionFadeIn>
+          Stream 37,000+ live channels and 198,000+ films in 4K UHD. A UK-focused{" "}
+          <SectionLink href="/#features" className="text-cyan-300 hover:text-cyan-200 underline-offset-2 hover:underline">
+            IPTV subscription
+          </SectionLink>{" "}
+          with automatic 60-second activation, support for every common UK streaming device, and a 30-day money-back.
+        </motion.p>
 
         {/* Promo banner — replaces hero device image */}
-        <MotionFadeIn
-          y={30}
-          duration={0.7}
-          delay={0.25}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.25 }}
           className="relative w-full mt-6 sm:mt-8"
         >
           <PromoBanner />
-        </MotionFadeIn>
+        </motion.div>
 
         {/* CTA Buttons — directly under image */}
-        <MotionFadeIn
-          y={30}
-          duration={0.7}
-          delay={0.35}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.35 }}
           className="mt-10 sm:mt-12 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4"
         >
           <SectionLink
@@ -102,7 +109,7 @@ export default function HeroSection() {
             className="group relative flex items-center gap-2.5 rounded-2xl bg-gradient-to-r from-violet-600 via-purple-600 to-cyan-500 px-7 py-3.5 text-sm sm:text-base font-semibold text-white shadow-lg shadow-purple-900/40 transition-all hover:shadow-2xl hover:shadow-purple-500/40 active:scale-[0.98] w-full sm:w-auto justify-center"
           >
             <Play className="h-5 w-5 fill-current" />
-            <span>Choose An IPTV Plan — From £4.99/mo</span>
+            <span>Get Fast IPTV Now — From £4.17/mo</span>
             <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             <div className="absolute inset-0 rounded-2xl bg-white/10 opacity-0 transition-opacity group-hover:opacity-100" />
           </SectionLink>
@@ -113,7 +120,31 @@ export default function HeroSection() {
             <MessageCircle className="h-5 w-5 text-cyan-400" />
             <span>Compare All Plans</span>
           </SectionLink>
-        </MotionFadeIn>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.45 }}
+          className="mt-6 sm:mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs sm:text-sm text-gray-300/80"
+        >
+          <div className="flex items-center gap-1.5">
+            <span className="text-cyan-400" aria-hidden="true">✓</span>
+            <span>37,000+ Channels</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="text-cyan-400" aria-hidden="true">✓</span>
+            <span>4K UHD</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="text-cyan-400" aria-hidden="true">✓</span>
+            <span>60-Second Activation</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="text-cyan-400" aria-hidden="true">✓</span>
+            <span>30-Day Money-Back</span>
+          </div>
+        </motion.div>
       </div>
 
 

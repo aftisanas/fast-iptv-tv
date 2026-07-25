@@ -1,24 +1,26 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Clock, ArrowLeft, Tag, UserRound, CalendarCheck2 } from "lucide-react";
+import { Clock, ArrowLeft, Tag } from "lucide-react";
 import Link from "next/link";
 import SectionLink from "@/components/SectionLink";
-import { AUTHOR_BYLINE } from "@/lib/constants";
 
-interface BlogPostContentProps {
-  post: {
-    slug: string;
-    title: string;
-    excerpt: string;
-    date: string;
-    readTime: string;
-    category: string;
-  };
-  content: string[];
+interface BlogPostMeta {
+  slug: string;
+  title: string;
+  excerpt: string;
+  date: string;
+  readTime: string;
+  category: string;
 }
 
-export default function BlogPostContent({ post, content }: BlogPostContentProps) {
+interface BlogPostContentProps {
+  post: BlogPostMeta;
+  content: string[];
+  relatedPosts: BlogPostMeta[];
+}
+
+export default function BlogPostContent({ post, content, relatedPosts }: BlogPostContentProps) {
   return (
     <div className="pt-20">
       <article className="py-16 lg:py-24">
@@ -65,31 +67,9 @@ export default function BlogPostContent({ post, content }: BlogPostContentProps)
               {post.title}
             </h1>
 
-            <p className="text-lg text-muted leading-relaxed mb-6">
+            <p className="text-lg text-muted leading-relaxed">
               {post.excerpt}
             </p>
-
-            {/* Editorial byline chip */}
-            <div className="flex flex-wrap items-center gap-3 rounded-xl border border-violet-100/70 bg-violet-50/40 px-4 py-3">
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-violet-100 to-cyan-50">
-                <UserRound className="h-4 w-4 text-violet-600" aria-hidden="true" />
-              </span>
-              <div className="flex flex-col">
-                <span className="text-sm font-semibold text-foreground">
-                  {AUTHOR_BYLINE.name}
-                </span>
-                <span className="text-xs text-muted">{AUTHOR_BYLINE.role}</span>
-              </div>
-              <span className="ml-auto flex items-center gap-1.5 text-xs text-muted">
-                <CalendarCheck2 className="h-3.5 w-3.5 text-emerald-600" aria-hidden="true" />
-                Updated{" "}
-                {new Date(AUTHOR_BYLINE.updatedDate).toLocaleDateString("en-GB", {
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
-                })}
-              </span>
-            </div>
           </motion.header>
 
           {/* Content */}
@@ -153,6 +133,39 @@ export default function BlogPostContent({ post, content }: BlogPostContentProps)
             })}
           </motion.div>
 
+          {/* Related guides — internal links so every post is reachable
+              from every other post (crawl path + link equity) */}
+          {relatedPosts.length > 0 && (
+            <motion.nav
+              aria-label="Related Fast IPTV guides"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="mt-16 border-t border-violet-100/60 pt-10"
+            >
+              <h2 className="text-xl font-bold text-foreground mb-5">
+                More Fast IPTV UK guides
+              </h2>
+              <ul className="grid sm:grid-cols-2 gap-4">
+                {relatedPosts.map((rp) => (
+                  <li key={rp.slug}>
+                    <Link
+                      href={`/blog/${rp.slug}`}
+                      className="group block rounded-xl border border-violet-100/60 bg-white p-5 transition-all hover:border-violet-200 hover:shadow-sm"
+                    >
+                      <span className="text-xs font-medium text-primary">
+                        {rp.category}
+                      </span>
+                      <span className="mt-1 block text-sm font-semibold text-foreground group-hover:text-violet-700">
+                        {rp.title}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </motion.nav>
+          )}
+
           {/* CTA */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -161,10 +174,10 @@ export default function BlogPostContent({ post, content }: BlogPostContentProps)
             className="mt-16 rounded-2xl border border-primary/15 bg-blue-50 p-8 text-center"
           >
             <h3 className="text-xl font-bold text-foreground mb-3">
-              Ready To Choose From The Top IPTV Providers UK?
+              Ready to Start Streaming?
             </h3>
             <p className="text-muted mb-6">
-              Start with the #1 rated UK IPTV provider. Plans from £4.99/month with a 30-day money-back guarantee.
+              Get started with Fast IPTV today. Plans from £4.17/month with a 30-day money-back guarantee.
             </p>
             <SectionLink
               href="/#pricing"

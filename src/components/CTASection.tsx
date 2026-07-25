@@ -1,8 +1,9 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { Play, MessageCircle, Sparkles } from "lucide-react";
 import Link from "next/link";
 import SectionLink from "./SectionLink";
-import MotionReveal from "./MotionReveal";
-import MotionScaleIn from "./MotionScaleIn";
 
 export default function CTASection() {
   return (
@@ -38,31 +39,38 @@ export default function CTASection() {
       />
 
       <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-        <MotionReveal y={30}>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0, margin: "0px 0px 200px 0px" }}
+        >
           {/* Badge */}
-          <MotionScaleIn
-            initialScale={0.9}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, amount: 0, margin: "0px 0px 200px 0px" }}
             className="inline-flex items-center gap-2 rounded-full border border-purple-400/20 bg-white/[0.07] backdrop-blur-md px-5 py-2 text-sm text-purple-300 mb-8"
           >
             <Sparkles className="h-4 w-4 text-cyan-400" />
-            <span className="font-medium">UK IPTV Provider You Can Actually Verify</span>
-          </MotionScaleIn>
+            <span className="font-medium">Built For UK Streaming</span>
+          </motion.div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6">
-            Start Streaming In{" "}
-            <span className="gradient-text-hero">Under Two Minutes</span>
+            Start Streaming Fast IPTV{" "}
+            <span className="gradient-text-hero">In Under Two Minutes</span>
           </h2>
           <p className="mx-auto max-w-2xl text-lg text-gray-300/90 mb-10 leading-relaxed">
-            Every plan delivers the full 37,000-channel library, 198,000+ films, and the optional{" "}
+            The 24-month{" "}
             <SectionLink href="/#pricing" className="text-cyan-300 hover:text-cyan-200 underline-offset-2 hover:underline">
-              Secure Proxy add-on
-            </SectionLink>. First channel plays in under two minutes after payment — backed by a{" "}
+              fast IPTV plan
+            </SectionLink>{" "}
+            locks in the lowest rate while delivering the full 37,000-channel library, 198,000 films and a secure proxy option. First channel plays after 60-second email activation, backed by a{" "}
             <Link href="/refund" className="text-cyan-300 hover:text-cyan-200 underline-offset-2 hover:underline">
-              30-day refund
+              30-day money-back
             </Link>{" "}
             and{" "}
             <Link href="/contact" className="text-cyan-300 hover:text-cyan-200 underline-offset-2 hover:underline">
-              24/7 UK support
+              UK-based support
             </Link>.
           </p>
 
@@ -72,7 +80,7 @@ export default function CTASection() {
               className="group relative flex items-center gap-2.5 rounded-2xl bg-gradient-to-r from-violet-600 via-purple-600 to-cyan-500 px-8 py-4 text-base font-semibold text-white transition-all hover:shadow-2xl hover:shadow-purple-500/30 active:scale-[0.98] w-full sm:w-auto justify-center"
             >
               <Play className="h-5 w-5 fill-current" />
-              Choose An IPTV Plan — From £4.99/mo
+              Buy Fast IPTV UK — Start Your IPTV Subscription Today
               <div className="absolute inset-0 rounded-2xl bg-white/10 opacity-0 transition-opacity group-hover:opacity-100" />
             </SectionLink>
             <SectionLink
@@ -80,14 +88,18 @@ export default function CTASection() {
               className="group flex items-center gap-2.5 rounded-2xl border border-white/15 bg-white/[0.06] backdrop-blur-sm px-8 py-4 text-base font-semibold text-white transition-all hover:border-purple-400/30 hover:bg-white/10 w-full sm:w-auto justify-center"
             >
               <MessageCircle className="h-5 w-5 text-cyan-400" />
-              Chat With The UK Team
+              Chat With Our UK Team
             </SectionLink>
           </div>
 
           <p className="mt-8 text-sm text-gray-400">
-            Questions? Email contact@buy-iptv-uk.com — replies during peak hours.
+            Questions?{" "}
+            <Link href="/contact" className="text-cyan-300 hover:text-cyan-200 underline-offset-2 hover:underline">
+              Email us via our contact page
+            </Link>{" "}
+            — replies quickly during peak hours.
           </p>
-        </MotionReveal>
+        </motion.div>
       </div>
     </section>
   );

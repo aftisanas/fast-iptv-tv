@@ -1,8 +1,4 @@
-import { EXTRA_CONNECTION_PRICE } from "./constants";
-
-export const WHATSAPP_NUMBER = "447878757831";
-export const SUPPORT_WHATSAPP_NUMBER = "+44 7878 757831";
-export const SUPPORT_WHATSAPP_HREF = `https://wa.me/${WHATSAPP_NUMBER}`;
+import { WHATSAPP_NUMBER, EXTRA_CONNECTION_PRICE } from "./constants";
 
 export interface WhatsAppOrderDetails {
   planName: string;
@@ -10,42 +6,47 @@ export interface WhatsAppOrderDetails {
   proxyEnabled: boolean;
   proxyPrice: number;
   extraConnections: number;
+  /** Per-connection rate for the selected plan. Falls back to the 3-month base rate. */
+  extraConnectionPrice?: number;
   brandName?: string;
 }
 
 export function calculateOrderTotal(
   order: Omit<WhatsAppOrderDetails, "brandName" | "planName">
 ): number {
+  const unitPrice = order.extraConnectionPrice ?? EXTRA_CONNECTION_PRICE;
   return (
     order.planPrice +
     (order.proxyEnabled ? order.proxyPrice : 0) +
-    order.extraConnections * EXTRA_CONNECTION_PRICE
+    order.extraConnections * unitPrice
   );
 }
 
 export function buildWhatsAppCheckoutUrl(order: WhatsAppOrderDetails): string {
   const brand = order.brandName ?? "the service";
-  const extraConnectionsPrice = order.extraConnections * EXTRA_CONNECTION_PRICE;
+  const unitPrice = order.extraConnectionPrice ?? EXTRA_CONNECTION_PRICE;
+  const extraConnectionsPrice = order.extraConnections * unitPrice;
   const total = calculateOrderTotal({
     planPrice: order.planPrice,
     proxyEnabled: order.proxyEnabled,
     proxyPrice: order.proxyPrice,
     extraConnections: order.extraConnections,
+    extraConnectionPrice: unitPrice,
   });
 
   const lines = [
-    `Hi — I'd like to order ${brand}.`,
+    `Hi 👋 I'd like to order ${brand}.`,
     "",
     `Plan: ${order.planName} (£${order.planPrice.toFixed(2)})`,
   ];
 
   if (order.proxyEnabled) {
-    lines.push(`Secure Proxy: Yes (+£${order.proxyPrice.toFixed(2)})`);
+    lines.push(`Proxy Protection: Yes (+£${order.proxyPrice.toFixed(2)})`);
   }
 
   if (order.extraConnections > 0) {
     lines.push(
-      `Extra Connections: ${order.extraConnections} (+£${extraConnectionsPrice.toFixed(2)})`
+      `Extra Connections: ${order.extraConnections} × £${unitPrice.toFixed(2)} (+£${extraConnectionsPrice.toFixed(2)})`
     );
   }
 
