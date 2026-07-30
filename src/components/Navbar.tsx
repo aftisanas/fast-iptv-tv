@@ -4,14 +4,15 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
-import { NAV_LINKS } from "@/lib/constants";
+import { Menu, X, ChevronDown } from "lucide-react";
+import { NAV_LINKS, MONEY_LINKS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import SectionLink from "@/components/SectionLink";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isMoneyMenuOpen, setIsMoneyMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 80);
@@ -86,6 +87,57 @@ export default function Navbar() {
                   )} />
                 </SectionLink>
               ))}
+              {/* Subscribe dropdown — exposes MONEY_LINKS sitewide for
+                  maximum PageRank flow to the new commercial pages. */}
+              <div
+                className="relative"
+                onMouseEnter={() => setIsMoneyMenuOpen(true)}
+                onMouseLeave={() => setIsMoneyMenuOpen(false)}
+              >
+                <button
+                  type="button"
+                  aria-haspopup="menu"
+                  aria-expanded={isMoneyMenuOpen}
+                  onClick={() => setIsMoneyMenuOpen((v) => !v)}
+                  className={cn(
+                    "relative flex items-center gap-1 px-4 py-2 text-sm font-medium transition-colors group",
+                    isScrolled ? "text-muted hover:text-foreground" : "text-gray-300 hover:text-white"
+                  )}
+                >
+                  Subscribe
+                  <ChevronDown className="h-3.5 w-3.5" />
+                  <span className={cn(
+                    "absolute bottom-0 left-1/2 h-0.5 w-0 transition-all duration-300 group-hover:left-4 group-hover:w-[calc(100%-2rem)]",
+                    isScrolled
+                      ? "bg-gradient-to-r from-violet-600 to-cyan-500"
+                      : "bg-gradient-to-r from-purple-400 to-cyan-400"
+                  )} />
+                </button>
+                <AnimatePresence>
+                  {isMoneyMenuOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 8 }}
+                      transition={{ duration: 0.15 }}
+                      className="absolute right-0 top-full mt-2 w-64 rounded-xl border border-violet-100 bg-white p-2 shadow-xl shadow-violet-900/5"
+                      role="menu"
+                    >
+                      {MONEY_LINKS.map((item) => (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          role="menuitem"
+                          onClick={() => setIsMoneyMenuOpen(false)}
+                          className="block rounded-lg px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-violet-50 hover:text-violet-700"
+                        >
+                          {item.label}
+                        </Link>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </nav>
 
             {/* Desktop CTA */}
@@ -171,6 +223,28 @@ export default function Navbar() {
                     </SectionLink>
                   </motion.div>
                 ))}
+                {/* Subscribe section — money pages surfaced in mobile menu */}
+                <div className="mt-4 pt-4 border-t border-violet-100">
+                  <p className="px-4 mb-2 text-xs font-semibold uppercase tracking-wide text-violet-600">
+                    Subscribe
+                  </p>
+                  {MONEY_LINKS.map((link, i) => (
+                    <motion.div
+                      key={link.href}
+                      initial={{ x: 50, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      transition={{ delay: (NAV_LINKS.length + i) * 0.04 }}
+                    >
+                      <Link
+                        href={link.href}
+                        onClick={() => setIsMobileOpen(false)}
+                        className="block rounded-lg px-4 py-2 text-sm font-medium text-muted transition-all hover:bg-violet-50 hover:text-foreground"
+                      >
+                        {link.label}
+                      </Link>
+                    </motion.div>
+                  ))}
+                </div>
               </nav>
               <div className="mt-8 flex flex-col gap-3">
                 <SectionLink

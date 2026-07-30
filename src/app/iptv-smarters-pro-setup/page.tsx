@@ -133,6 +133,11 @@ const faqs: FaqItem[] = [
 
 const related: RelatedLink[] = [
   {
+    href: "/best-iptv-provider-uk",
+    label: "UK IPTV provider comparison — 2026",
+    blurb: "Which UK IPTV provider to point Smarters Pro at. Seven-criteria comparison.",
+  },
+  {
     href: "/iptv-for-firestick",
     label: "IPTV for Firestick — fast UK setup",
     blurb: "The wider device guide — every Firestick-specific setting Smarters Pro relies on.",

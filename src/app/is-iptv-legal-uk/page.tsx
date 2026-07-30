@@ -133,6 +133,11 @@ const faqs: FaqItem[] = [
 
 const related: RelatedLink[] = [
   {
+    href: "/best-iptv-provider-uk",
+    label: "Our UK IPTV provider ranking — 2026",
+    blurb: "Legality checks matter for provider selection. See the seven-criteria comparison.",
+  },
+  {
     href: "/iptv-buffering-fix",
     label: "IPTV buffering fix",
     blurb: "Diagnostic flow for finding and fixing the real cause of unstable streams.",

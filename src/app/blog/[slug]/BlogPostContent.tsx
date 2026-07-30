@@ -20,6 +20,33 @@ interface BlogPostContentProps {
   relatedPosts: BlogPostMeta[];
 }
 
+// Parse markdown-style [text](url) inline links so blog body can deep-link
+// to money pages (e.g. "compare UK IPTV providers" → /best-iptv-provider-uk)
+// without requiring a full markdown pipeline. Added 2026-07-30.
+function renderInlineLinks(line: string, keyPrefix: string) {
+  const regex = /\[([^\]]+)\]\(([^)]+)\)/g;
+  const parts: React.ReactNode[] = [];
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+  let i = 0;
+  while ((match = regex.exec(line)) !== null) {
+    if (match.index > lastIndex) parts.push(line.slice(lastIndex, match.index));
+    const [, text, url] = match;
+    parts.push(
+      <Link
+        key={`${keyPrefix}-l${i++}`}
+        href={url}
+        className="text-violet-600 underline-offset-2 hover:underline hover:text-violet-700 font-medium"
+      >
+        {text}
+      </Link>
+    );
+    lastIndex = match.index + match[0].length;
+  }
+  if (lastIndex < line.length) parts.push(line.slice(lastIndex));
+  return parts.length ? parts : line;
+}
+
 export default function BlogPostContent({ post, content, relatedPosts }: BlogPostContentProps) {
   return (
     <div className="pt-20">
@@ -95,15 +122,15 @@ export default function BlogPostContent({ post, content, relatedPosts }: BlogPos
                       );
                     }
                     if (line.startsWith("- **")) {
-                      const match = line.match(/- \*\*(.+?)\*\*(.+)/);
-                      if (match) {
+                      const m = line.match(/- \*\*(.+?)\*\*(.+)/);
+                      if (m) {
                         return (
                           <li
                             key={j}
                             className="text-sm text-gray-600 leading-relaxed ml-4 mb-2 list-disc"
                           >
-                            <strong className="text-foreground">{match[1]}</strong>
-                            {match[2]}
+                            <strong className="text-foreground">{m[1]}</strong>
+                            {renderInlineLinks(m[2], `b${i}-l${j}`)}
                           </li>
                         );
                       }
@@ -114,7 +141,7 @@ export default function BlogPostContent({ post, content, relatedPosts }: BlogPos
                           key={j}
                           className="text-sm text-gray-600 leading-relaxed ml-4 mb-2 list-disc"
                         >
-                          {line.replace("- ", "")}
+                          {renderInlineLinks(line.replace("- ", ""), `b${i}-l${j}`)}
                         </li>
                       );
                     }
@@ -124,7 +151,7 @@ export default function BlogPostContent({ post, content, relatedPosts }: BlogPos
                         key={j}
                         className="text-base text-gray-600 leading-relaxed mb-4"
                       >
-                        {line}
+                        {renderInlineLinks(line, `b${i}-l${j}`)}
                       </p>
                     );
                   })}
