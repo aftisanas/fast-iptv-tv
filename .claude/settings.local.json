@@ -18,7 +18,8 @@
       "Bash(git show *)",
       "Read(//tmp/**)",
       "Bash(tr -d '\\\\r')",
-      "Bash(mv /tmp/geo-fixed.md GEO-ANALYSIS.md)"
+      "Bash(mv /tmp/geo-fixed.md GEO-ANALYSIS.md)",
+      "Bash(git checkout *)"
     ]
   }
 }
