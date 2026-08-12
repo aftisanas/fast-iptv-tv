@@ -1,5 +1,3 @@
-import { LAST_UPDATED, LAST_UPDATED_DISPLAY } from "@/lib/constants";
-
 export default function DefinitionSection() {
   return (
     <section
@@ -10,10 +8,6 @@ export default function DefinitionSection() {
       <div className="relative mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <div className="mb-6 flex items-center gap-3 text-sm text-muted">
           <span>Reviewed by <span className="font-medium text-foreground">Fast IPTV Editorial Team</span></span>
-          <span aria-hidden="true">·</span>
-          <span>
-            Updated <time dateTime={LAST_UPDATED}>{LAST_UPDATED_DISPLAY}</time>
-          </span>
         </div>
 
         <h2

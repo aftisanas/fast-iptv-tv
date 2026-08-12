@@ -53,7 +53,7 @@ const sections: ArticleSection[] = [
       "Step two: if you must stay on Wi-Fi, connect to the 5 GHz band rather than 2.4 GHz. The 5 GHz band is less congested and faster over short distances. Most modern routers broadcast both — look for the SSID with \"_5G\" or \"5GHz\" suffix.",
       "Step three: reposition the router. Routers tucked inside cabinets or behind televisions lose 30-50% of their signal strength. The router should be elevated, with line-of-sight to the streaming device, and at least 30 centimetres from any large metal object.",
       <>
-        Step four: change DNS. Switch the streaming device to Cloudflare's 1.1.1.1 or Google's 8.8.8.8 DNS servers. ISP DNS servers are sometimes the slowest part of the playback chain. For device-specific guidance on the most common UK streamer, our{" "}
+        Step four: change DNS. Switch the streaming device to Cloudflare&apos;s 1.1.1.1 or Google&apos;s 8.8.8.8 DNS servers. ISP DNS servers are sometimes the slowest part of the playback chain. For device-specific guidance on the most common UK streamer, our{" "}
         <Link href="/iptv-for-firestick" className="text-violet-600 hover:text-violet-700 underline underline-offset-2">
           IPTV for Firestick
         </Link>{" "}
@@ -135,6 +135,11 @@ const faqs: FaqItem[] = [
 ];
 
 const related: RelatedLink[] = [
+  {
+    href: "/best-iptv-provider-uk",
+    label: "Best IPTV Provider UK 2026",
+    blurb: "The best UK IPTV provider ranking — verified uptime, anti-freeze recovery, refund honesty.",
+  },
   {
     href: "/iptv-for-firestick",
     label: "IPTV for Firestick — fast UK setup",

@@ -22,6 +22,7 @@ type OrderSummaryModalProps = {
   planName: string;
   planPrice: number;
   proxyPrice: number;
+  extraConnectionPrice?: number;
   currency?: string;
 };
 
@@ -82,6 +83,7 @@ export default function OrderSummaryModal({
   planName,
   planPrice,
   proxyPrice,
+  extraConnectionPrice = EXTRA_CONNECTION_PRICE,
   currency = "£",
 }: OrderSummaryModalProps) {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -134,9 +136,10 @@ export default function OrderSummaryModal({
     proxyEnabled: proxyOn,
     proxyPrice,
     extraConnections,
+    extraConnectionPrice,
   });
 
-  const extraConnectionsSubtotal = extraConnections * EXTRA_CONNECTION_PRICE;
+  const extraConnectionsSubtotal = extraConnections * extraConnectionPrice;
 
   const displayLabel = toAccessLabel(planName);
   const durationMonths = parseDurationMonths(planName);
