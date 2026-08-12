@@ -1,5 +1,7 @@
 export const SITE_NAME = "Fast IPTV";
 export const SITE_URL = "https://fast-iptv.tv";
+export const SITE_SLUG = "fast-iptv";
+export const CHECKOUT_HUB_URL = "https://checkout.british-iptv-4k.com";
 export const CONTACT_EMAIL = "contact@buy-iptv-uk.com";
 
 export const LAST_UPDATED = "2026-06-19";

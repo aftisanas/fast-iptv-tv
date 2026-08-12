@@ -9,11 +9,6 @@ import OrderSummaryModal from "./OrderSummaryModal";
 
 type PricingPlan = (typeof PRICING_PLANS)[number];
 
-const toAccessLabel = (planName: string) => {
-  const match = planName.match(/^(\d+)\s+Months?$/i);
-  return match ? `${match[1]}-Month Access` : `${planName} Access`;
-};
-
 const tierMeta: Record<string, {
   icon: React.ElementType;
   gradient: string;
@@ -271,7 +266,7 @@ export default function PricingSection() {
       <OrderSummaryModal
         open={selectedPlan !== null}
         onClose={() => setSelectedPlan(null)}
-        planName={selectedPlan ? toAccessLabel(selectedPlan.name) : ""}
+        planName={selectedPlan?.name ?? ""}
         planPrice={selectedPlan?.price ?? 0}
         proxyPrice={selectedPlan?.proxyPrice ?? 0}
         extraConnectionPrice={selectedPlan?.extraConnectionPrice}
