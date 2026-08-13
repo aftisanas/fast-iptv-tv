@@ -6,27 +6,32 @@ export interface WhatsAppOrderDetails {
   proxyEnabled: boolean;
   proxyPrice: number;
   extraConnections: number;
+  /** Per-plan unit price for one extra connection over the full term. */
+  extraConnectionPrice?: number;
   brandName?: string;
 }
 
 export function calculateOrderTotal(
   order: Omit<WhatsAppOrderDetails, "brandName" | "planName">
 ): number {
+  const unit = order.extraConnectionPrice ?? EXTRA_CONNECTION_PRICE;
   return (
     order.planPrice +
     (order.proxyEnabled ? order.proxyPrice : 0) +
-    order.extraConnections * EXTRA_CONNECTION_PRICE
+    order.extraConnections * unit
   );
 }
 
 export function buildWhatsAppCheckoutUrl(order: WhatsAppOrderDetails): string {
   const brand = order.brandName ?? "the service";
-  const extraConnectionsPrice = order.extraConnections * EXTRA_CONNECTION_PRICE;
+  const unit = order.extraConnectionPrice ?? EXTRA_CONNECTION_PRICE;
+  const extraConnectionsPrice = order.extraConnections * unit;
   const total = calculateOrderTotal({
     planPrice: order.planPrice,
     proxyEnabled: order.proxyEnabled,
     proxyPrice: order.proxyPrice,
     extraConnections: order.extraConnections,
+    extraConnectionPrice: unit,
   });
 
   const lines = [

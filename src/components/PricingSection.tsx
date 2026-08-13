@@ -269,6 +269,7 @@ export default function PricingSection() {
         planName={selectedPlan?.name ?? ""}
         planPrice={selectedPlan?.price ?? 0}
         proxyPrice={selectedPlan?.proxyPrice ?? 0}
+        extraConnectionPrice={selectedPlan?.extraConnectionPrice ?? 0}
       />
     </section>
   );
