@@ -46,7 +46,7 @@ export function buildWhatsAppCheckoutUrl(order: WhatsAppOrderDetails): string {
 
   if (order.extraConnections > 0) {
     lines.push(
-      `Extra Connections: ${order.extraConnections} (+£${extraConnectionsPrice.toFixed(2)})`
+      `Extra Connections: ${order.extraConnections} × £${unit.toFixed(2)} (+£${extraConnectionsPrice.toFixed(2)})`
     );
   }
 

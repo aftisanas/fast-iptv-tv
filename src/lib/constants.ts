@@ -12,6 +12,8 @@ export const LAST_UPDATED_DISPLAY = "19 June 2026";
 export const WHATSAPP_NUMBER = "447878757831";
 export const WHATSAPP_DISPLAY = "+44 7878 757831";
 
+// Base (3-month) extra-connection rate. Longer terms scale this — each plan
+// carries its own `extraConnectionPrice` in PRICING_PLANS below.
 export const EXTRA_CONNECTION_PRICE = 7.25;
 export const EXTRA_CONNECTIONS_MAX = 5;
 
@@ -46,6 +48,21 @@ export const GUIDES_LINKS = [
   { label: "IPTV Buffering Fix", href: "/iptv-buffering-fix" },
   { label: "IPTV Smarters Pro Setup", href: "/iptv-smarters-pro-setup" },
   { label: "Is IPTV Legal in the UK?", href: "/is-iptv-legal-uk" },
+] as const;
+
+// PHASE 1 MONEY LINKS (2026-07-30) — narrowed from 7 pages to a two-page
+// test after zero-backlink audit. With no external authority to spread,
+// internal PageRank is our only ranking currency; concentrating it on the
+// smallest number of pages gives the strongest possible ranking signal.
+// /best-iptv-provider-uk absorbs the entire UK-provider keyword cluster
+// (best iptv provider uk, best uk iptv provider, iptv providers in uk,
+// uk iptv provider, iptv provider in uk — all KD 0-4, one SERP).
+// /iptv-channels targets a genuinely distinct SERP intent (channel list)
+// so does not cannibalise. /buy-iptv is HELD BACK for Phase 2. The homepage
+// competes for "iptv subscription" (SV 2000) via its existing title.
+export const MONEY_LINKS = [
+  { label: "Best IPTV Provider UK", href: "/best-iptv-provider-uk" },
+  { label: "IPTV Channels", href: "/iptv-channels" },
 ] as const;
 
 export const STATS = [
@@ -324,7 +341,7 @@ export const FAQ_ITEMS = [
   {
     question: "Can I stream on more than one device at the same time?",
     answer:
-      "Every Fast IPTV subscription includes 5 simultaneous streams by default — five people in the same household can watch different channels at the same time. The streams can be split across any mix of devices: Firestick, Smart TV, phone, laptop. The same Username and Password works on every device. If you need more than 5 concurrent streams, Extra Connections are available at checkout for £7.25 per additional stream, attached to the same subscription. For most UK households the default 5 streams is comfortable — well above typical concurrent usage.",
+      "Every Fast IPTV subscription includes 5 simultaneous streams by default — five people in the same household can watch different channels at the same time. The streams can be split across any mix of devices: Firestick, Smart TV, phone, laptop. The same Username and Password works on every device. If you need more than 5 concurrent streams, Extra Connections are available at checkout, priced by plan length (£7.25 / £14.50 / £29 / £58 per additional stream on the 3 / 6 / 12 / 24-month plans), attached to the same subscription. For most UK households the default 5 streams is comfortable — well above typical concurrent usage.",
   },
   {
     question: "Is there a contract or cancellation fee?",
@@ -391,11 +408,11 @@ export const CHANNEL_CATEGORIES = [
 export const BLOG_POSTS = [
   {
     slug: "best-iptv-uk-guide-2026",
-    title: "Best IPTV UK 2026 — How To Choose A Trusted Fast IPTV Provider",
+    title: "How To Choose A UK IPTV Service — Buyer's Checklist For 2026",
     excerpt:
-      "Finding the best IPTV service in the UK means looking beyond flashy promises. This guide breaks down the 7 criteria that matter most for British viewers — from channel quality and reliability to support and genuine value.",
-    date: "2026-04-01",
-    readTime: "12 min read",
+      "A practical checklist for choosing a UK IPTV service in 2026 — evaluation criteria, what channel counts and EPG quality actually mean, legality and payment considerations, and the red flags to walk away from.",
+    date: "2026-07-30",
+    readTime: "9 min read",
     category: "Guide",
   },
   {

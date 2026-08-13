@@ -209,8 +209,8 @@ export default function HomePage() {
       />
 
       <HeroSection />
-      <DefinitionSection />
       <StatsBar />
+      <DefinitionSection />
       <FeaturesSection />
       <PricingSection />
       <DevicesSection />

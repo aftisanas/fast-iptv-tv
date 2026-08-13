@@ -15,6 +15,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/iptv-buffering-fix`, lastModified: subPagesUpdated, changeFrequency: "monthly", priority: 0.8 },
     { url: `${SITE_URL}/iptv-smarters-pro-setup`, lastModified: subPagesUpdated, changeFrequency: "monthly", priority: 0.8 },
     { url: `${SITE_URL}/is-iptv-legal-uk`, lastModified: subPagesUpdated, changeFrequency: "monthly", priority: 0.7 },
+    // PHASE 1 MONEY PAGES (2026-07-30) — narrowed to a two-page test.
+    // /best-iptv-uk, /best-iptv-subscription, /iptv-services, /iptv-subscription
+    // and /buy-iptv were pulled to concentrate internal PageRank on the
+    // survivors. Restore /buy-iptv here in Phase 2 if the test proves out.
+    { url: `${SITE_URL}/best-iptv-provider-uk`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${SITE_URL}/iptv-channels`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
     { url: `${SITE_URL}/blog`, lastModified: now, changeFrequency: "weekly", priority: 0.7 },
     { url: `${SITE_URL}/contact`, lastModified: now, changeFrequency: "monthly", priority: 0.5 },
     { url: `${SITE_URL}/refund`, lastModified: now, changeFrequency: "yearly", priority: 0.4 },

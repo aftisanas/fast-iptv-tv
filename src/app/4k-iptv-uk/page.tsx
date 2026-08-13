@@ -91,7 +91,7 @@ const sections: ArticleSection[] = [
       "The second check is the network path. Switch the playback device from Wi-Fi to Ethernet for a single stream. If the picture stabilises immediately, the bottleneck is Wi-Fi range or interference, not the broadband line. Repositioning the router, switching to 5 GHz or adding a powerline adapter usually solves it.",
       "The third check is DNS. The default DNS server provided by your ISP can be slow to resolve the stream's edge endpoint, which adds latency to the very first frame. Switching the device to Cloudflare's 1.1.1.1 or Google's 8.8.8.8 DNS is a 30-second change that often improves time-to-first-frame.",
       <>
-        The fourth check is the playback profile. Inside the player, confirm that the stream profile is set to "Auto" or "4K" rather than locked to a lower tier from a previous session. If none of those four solve it, head{" "}
+        The fourth check is the playback profile. Inside the player, confirm that the stream profile is set to &ldquo;Auto&rdquo; or &ldquo;4K&rdquo; rather than locked to a lower tier from a previous session. If none of those four solve it, head{" "}
         <Link href="/" className="text-violet-600 hover:text-violet-700 underline underline-offset-2">
           back to the Fast IPTV homepage
         </Link>{" "}
@@ -130,6 +130,11 @@ const faqs: FaqItem[] = [
 ];
 
 const related: RelatedLink[] = [
+  {
+    href: "/best-iptv-provider-uk",
+    label: "Best IPTV Provider UK 2026 — Ranked & Compared",
+    blurb: "The UK IPTV provider comparison: seven criteria, side-by-side rankings, and how Fast IPTV stacks up.",
+  },
   {
     href: "/iptv-for-firestick",
     label: "IPTV for Firestick — fast UK setup",
