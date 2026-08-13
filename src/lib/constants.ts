@@ -1,3 +1,5 @@
+export const CHECKOUT_MODE = (process.env.NEXT_PUBLIC_CHECKOUT_MODE ?? "whatsapp") as "whatsapp" | "hub";
+
 export const SITE_NAME = "Fast IPTV";
 export const SITE_URL = "https://fast-iptv.tv";
 export const SITE_SLUG = "fast-iptv";
@@ -21,7 +23,7 @@ export const CHECKOUT_COPY = {
   footerNote: "Secure checkout · 30-day money-back",
   extraConnectionsLabel: "Extra Connections",
   extraConnectionsHelp: "Watch on multiple devices simultaneously",
-  extraConnectionsPriceLabel: (price: number = EXTRA_CONNECTION_PRICE) =>
+  extraConnectionsPriceLabel: (price: number) =>
     `+£${price.toFixed(2)} per extra connection`,
 } as const;
 
@@ -191,7 +193,7 @@ export const PRICING_PLANS = [
     period: "year",
     devices: 5,
     proxyPrice: 19,
-    extraConnectionPrice: 29.0,
+    extraConnectionPrice: 29,
     badge: "Most Popular — Save 44%",
     discount: "-44%",
     accentColor: "blue",
@@ -220,7 +222,7 @@ export const PRICING_PLANS = [
     period: "2 years",
     devices: 5,
     proxyPrice: 38,
-    extraConnectionPrice: 58.0,
+    extraConnectionPrice: 58,
     badge: "Elite — Save 50%",
     discount: "-50%",
     accentColor: "violet",

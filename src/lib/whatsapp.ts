@@ -6,7 +6,7 @@ export interface WhatsAppOrderDetails {
   proxyEnabled: boolean;
   proxyPrice: number;
   extraConnections: number;
-  /** Per-connection rate for the selected plan. Falls back to the 3-month base rate. */
+  /** Per-plan unit price for one extra connection over the full term. */
   extraConnectionPrice?: number;
   brandName?: string;
 }
@@ -14,24 +14,24 @@ export interface WhatsAppOrderDetails {
 export function calculateOrderTotal(
   order: Omit<WhatsAppOrderDetails, "brandName" | "planName">
 ): number {
-  const unitPrice = order.extraConnectionPrice ?? EXTRA_CONNECTION_PRICE;
+  const unit = order.extraConnectionPrice ?? EXTRA_CONNECTION_PRICE;
   return (
     order.planPrice +
     (order.proxyEnabled ? order.proxyPrice : 0) +
-    order.extraConnections * unitPrice
+    order.extraConnections * unit
   );
 }
 
 export function buildWhatsAppCheckoutUrl(order: WhatsAppOrderDetails): string {
   const brand = order.brandName ?? "the service";
-  const unitPrice = order.extraConnectionPrice ?? EXTRA_CONNECTION_PRICE;
-  const extraConnectionsPrice = order.extraConnections * unitPrice;
+  const unit = order.extraConnectionPrice ?? EXTRA_CONNECTION_PRICE;
+  const extraConnectionsPrice = order.extraConnections * unit;
   const total = calculateOrderTotal({
     planPrice: order.planPrice,
     proxyEnabled: order.proxyEnabled,
     proxyPrice: order.proxyPrice,
     extraConnections: order.extraConnections,
-    extraConnectionPrice: unitPrice,
+    extraConnectionPrice: unit,
   });
 
   const lines = [
@@ -46,7 +46,7 @@ export function buildWhatsAppCheckoutUrl(order: WhatsAppOrderDetails): string {
 
   if (order.extraConnections > 0) {
     lines.push(
-      `Extra Connections: ${order.extraConnections} × £${unitPrice.toFixed(2)} (+£${extraConnectionsPrice.toFixed(2)})`
+      `Extra Connections: ${order.extraConnections} × £${unit.toFixed(2)} (+£${extraConnectionsPrice.toFixed(2)})`
     );
   }
 
