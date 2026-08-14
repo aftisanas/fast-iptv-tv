@@ -36,6 +36,18 @@ type Availability =
   | { state: "unavailable"; whatsappUrl: string };
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// Reserved / non-deliverable TLDs the hub (Shopify) rejects. Kept lowercase;
+// compared case-insensitively.
+const BLOCKED_TLDS = new Set(["test", "local", "invalid", "example", "exp"]);
+
+function isDeliverableEmail(email: string): boolean {
+  if (!EMAIL_RE.test(email)) return false;
+  const tld = email.slice(email.lastIndexOf(".") + 1).toLowerCase();
+  if (tld.length < 2) return false;
+  if (!/^[a-z]+$/.test(tld)) return false;
+  if (BLOCKED_TLDS.has(tld)) return false;
+  return true;
+}
 // Deliberately loose. Strip formatting (spaces, dashes, brackets, dots) and
 // require an optional leading + followed by 7-15 digits. E.164-ish, not strict.
 const PHONE_RE = /^\+?\d{7,15}$/;
@@ -146,7 +158,7 @@ function CheckoutForPlan({ plan }: { plan: Plan }) {
   const trimmedName = name;
   const trimmedEmail = email.trim();
   const trimmedPhone = phone.trim();
-  const emailValid = EMAIL_RE.test(trimmedEmail);
+  const emailValid = isDeliverableEmail(trimmedEmail);
   // Jointly required — either field alone can satisfy it, so mononyms work.
   const nameValid = (firstName.trim() + lastName.trim()).length >= 2;
   // Optional: empty is valid. If non-empty, must look like a phone number
@@ -602,9 +614,19 @@ function CheckoutForPlan({ plan }: { plan: Plan }) {
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={submitting}
                   placeholder="you@example.com"
+                  aria-invalid={trimmedEmail !== "" && !emailValid}
+                  aria-describedby="checkout-email-help"
                   className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-foreground placeholder:text-muted/60 transition-colors focus:border-violet-400 focus:outline-2 focus:outline-violet-600 focus:outline-offset-1 disabled:cursor-not-allowed disabled:bg-gray-50"
                 />
-                <p className="mt-1.5 text-[11px] leading-relaxed text-muted">
+                {trimmedEmail !== "" && !emailValid && (
+                  <p className="mt-1.5 text-[11px] leading-relaxed text-red-600">
+                    Please enter a valid email address
+                  </p>
+                )}
+                <p
+                  id="checkout-email-help"
+                  className="mt-1.5 text-[11px] leading-relaxed text-muted"
+                >
                   Your login credentials will be sent here after payment.
                 </p>
               </div>
