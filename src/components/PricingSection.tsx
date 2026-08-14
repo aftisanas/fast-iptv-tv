@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Check, Shield, CreditCard, Star, Crown, Gem, Award, Medal } from "lucide-react";
-import { PRICING_PLANS } from "@/lib/constants";
+import { CHECKOUT_MODE, PRICING_PLANS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import OrderSummaryModal from "./OrderSummaryModal";
 
@@ -82,8 +83,17 @@ const tierMeta: Record<string, {
 };
 
 export default function PricingSection() {
+  const router = useRouter();
   const [hoveredPlan, setHoveredPlan] = useState<string | null>(null);
   const [selectedPlan, setSelectedPlan] = useState<PricingPlan | null>(null);
+
+  const handleChoosePlan = (plan: PricingPlan) => {
+    if (CHECKOUT_MODE === "hub") {
+      router.push(`/checkout?plan=${plan.id}`);
+      return;
+    }
+    setSelectedPlan(plan);
+  };
 
   return (
     <section id="pricing" className="relative py-11 lg:py-16">
@@ -228,7 +238,7 @@ export default function PricingSection() {
                   {/* CTA Button */}
                   <button
                     type="button"
-                    onClick={() => setSelectedPlan(plan)}
+                    onClick={() => handleChoosePlan(plan)}
                     aria-label={`Choose ${plan.tier} plan — ${plan.name}`}
                     className={cn(
                       "flex items-center justify-center gap-2 rounded-xl px-5 py-3.5 text-sm font-bold transition-all active:scale-[0.98] w-full",
