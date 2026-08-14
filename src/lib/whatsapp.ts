@@ -22,6 +22,43 @@ export function calculateOrderTotal(
   );
 }
 
+export interface WhatsappFallbackMessage {
+  planName: string;
+  proxyOn: boolean;
+  extraConnections: number;
+  total: number;
+  currency: string;
+}
+
+export function buildWhatsappMessage({
+  planName,
+  proxyOn,
+  extraConnections,
+  total,
+  currency,
+}: WhatsappFallbackMessage): string {
+  const parts = [`Hi, I'd like to complete my ${planName} order.`];
+
+  const addons: string[] = [];
+  if (proxyOn) addons.push("Proxy Protection");
+  if (extraConnections > 0) {
+    addons.push(
+      `${extraConnections} Extra Connection${extraConnections > 1 ? "s" : ""}`
+    );
+  }
+
+  if (addons.length > 0) {
+    parts.push(`Add-ons: ${addons.join(", ")}.`);
+  }
+
+  parts.push(`Total: ${currency}${total.toFixed(2)}.`);
+  parts.push(
+    "The checkout page wasn't available — can you help me complete the order here?"
+  );
+
+  return parts.join(" ");
+}
+
 export function buildWhatsAppCheckoutUrl(order: WhatsAppOrderDetails): string {
   const brand = order.brandName ?? "the service";
   const unit = order.extraConnectionPrice ?? EXTRA_CONNECTION_PRICE;

@@ -9,6 +9,7 @@ export interface CheckoutHubParams {
   siteSlug: string;
   email: string;
   name: string;
+  phone?: string;
   proxyEnabled: boolean;
   extraConnections: number;
 }
@@ -23,7 +24,7 @@ interface HubApiResponse {
 export async function callCheckoutHub(
   params: CheckoutHubParams
 ): Promise<CheckoutResponse> {
-  const { planName, siteSlug, email, name, proxyEnabled, extraConnections } = params;
+  const { planName, siteSlug, email, name, phone, proxyEnabled, extraConnections } = params;
 
   const res = await fetch(`${CHECKOUT_HUB_URL}/api/checkout`, {
     method: "POST",
@@ -33,6 +34,7 @@ export async function callCheckoutHub(
       planName,
       email,
       name,
+      phone,
       addons: {
         proxyProtection: proxyEnabled,
         extraConnections,
