@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Check, Shield, CreditCard, Star, Crown, Gem, Award, Medal } from "lucide-react";
-import { CHECKOUT_MODE, PRICING_PLANS } from "@/lib/constants";
+import { CHECKOUT_MODE, PAYMENT_MARKS, PRICING_PLANS, TRUST_COPY } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import OrderSummaryModal from "./OrderSummaryModal";
 
@@ -261,8 +261,12 @@ export default function PricingSection() {
           className="mt-14 flex flex-wrap items-center justify-center gap-6 lg:gap-10"
         >
           {[
-            { icon: Shield, label: "Secure WhatsApp ordering · GBP pricing" },
-            { icon: CreditCard, label: "30-day money-back guarantee" },
+            // Was "Secure WhatsApp ordering · GBP pricing" — hardcoded, never
+            // gated on CHECKOUT_MODE, and left in place when the Shopify
+            // checkout went live. It advertised friction that no longer exists,
+            // directly above the button that opens a real card checkout.
+            { icon: CreditCard, label: "Secure card checkout" },
+            { icon: Shield, label: TRUST_COPY.guarantee },
             { icon: Star, label: "60-second activation" },
           ].map((item) => (
             <div key={item.label} className="flex items-center gap-2 text-sm text-muted">
@@ -270,6 +274,39 @@ export default function PricingSection() {
               <span>{item.label}</span>
             </div>
           ))}
+        </motion.div>
+
+        {/* Payment marks + the handoff, named before it happens.
+            Checkout is hosted by Shopify on another domain; saying so here is
+            what turns an alarming redirect into an expected one. */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, amount: 0, margin: "0px 0px 200px 0px" }}
+          className="mt-8 flex flex-col items-center gap-3"
+        >
+          <ul className="flex flex-wrap items-center justify-center gap-2.5">
+            {PAYMENT_MARKS.map((mark) => (
+              <li key={mark.id}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`/trust/${mark.id}.webp`}
+                  alt={mark.name}
+                  width={48}
+                  height={32}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-8 w-auto rounded border border-gray-200/70 bg-white"
+                />
+              </li>
+            ))}
+          </ul>
+          <p className="max-w-md text-center text-xs leading-relaxed text-muted">
+            {TRUST_COPY.handoff}
+          </p>
+          <p className="text-center text-xs font-medium text-muted">
+            {TRUST_COPY.oneTime} {TRUST_COPY.currency}
+          </p>
         </motion.div>
       </div>
 

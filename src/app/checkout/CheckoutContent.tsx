@@ -17,8 +17,10 @@ import {
   CHECKOUT_HUB_URL,
   CONTACT_EMAIL,
   EXTRA_CONNECTIONS_MAX,
+  PAYMENT_MARKS,
   PRICING_PLANS,
   SITE_SLUG,
+  TRUST_COPY,
   WHATSAPP_NUMBER,
 } from "@/lib/constants";
 import {
@@ -652,9 +654,40 @@ function CheckoutForPlan({ plan }: { plan: Plan }) {
                 onWhatsapp={handleWhatsappClick}
               />
 
+              {/* The subtitle has to match the route the buyer is actually
+                  about to take. `CHECKOUT_COPY.buttonSubtitle` describes the
+                  WhatsApp flow and is only correct when the hub has told us
+                  the store is unavailable. */}
               <div className="text-center text-xs text-muted">
-                {CHECKOUT_COPY.buttonSubtitle}
+                {availability.state === "available"
+                  ? TRUST_COPY.handoff
+                  : CHECKOUT_COPY.buttonSubtitle}
               </div>
+
+              {/* Card marks sit at the decision point, not just in the footer. */}
+              <ul className="flex flex-wrap items-center justify-center gap-2">
+                {PAYMENT_MARKS.map((mark) => (
+                  <li key={mark.id}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={`/trust/${mark.id}.webp`}
+                      alt={mark.name}
+                      width={40}
+                      height={26}
+                      loading="lazy"
+                      decoding="async"
+                      className="h-6 w-auto rounded border border-gray-200/70 bg-white"
+                    />
+                  </li>
+                ))}
+              </ul>
+
+              <p className="text-center text-xs font-medium text-foreground">
+                {TRUST_COPY.oneTime}
+              </p>
+              <p className="text-center text-xs text-muted">
+                {TRUST_COPY.currency}
+              </p>
 
               <div className="flex items-center justify-center gap-2 text-xs text-muted">
                 <Shield className="h-3.5 w-3.5 text-emerald-600" aria-hidden="true" />

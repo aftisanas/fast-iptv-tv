@@ -7,6 +7,7 @@ import PricingSection from "@/components/PricingSection";
 import DevicesSection from "@/components/DevicesSection";
 import ChannelsSection from "@/components/ChannelsSection";
 // import TestimonialsSection from "@/components/TestimonialsSection"; // Temporarily disabled — awaiting real testimonials
+import TrustPanels from "@/components/TrustPanels";
 import FAQSection from "@/components/FAQSection";
 import TrustSection from "@/components/TrustSection";
 import CTASection from "@/components/CTASection";
@@ -122,13 +123,13 @@ export default function HomePage() {
           availability: "https://schema.org/InStock",
           url: `${SITE_URL}/#pricing`,
         },
-        aggregateRating: {
-          "@type": "AggregateRating",
-          ratingValue: "3.9",
-          reviewCount: "12",
-          bestRating: "5",
-          worstRating: "1",
-        },
+        // No `aggregateRating` here on purpose. One used to sit at 3.9 from 12
+        // reviews with no reviews anywhere on the page to support it — both a
+        // structured-data violation and, under the UK DMCC Act 2024, an
+        // unverifiable review signal. It is not coming back until there are
+        // real, published, on-page reviews with a real figure behind them.
+        // The trust panels in <TrustPanels /> are evidence, not ratings, and
+        // deliberately carry no score.
       },
       {
         "@type": "BreadcrumbList",
@@ -215,7 +216,9 @@ export default function HomePage() {
       <PricingSection />
       <DevicesSection />
       <ChannelsSection />
-      {/* <TestimonialsSection /> */ /* Temporarily disabled — awaiting real testimonials */}
+      {/* Trust panels replace the disabled TestimonialsSection. Real support
+          threads as evidence — no ratings, scores or counts. */}
+      <TrustPanels />
       <FAQSection />
       <TrustSection />
       <CTASection />
