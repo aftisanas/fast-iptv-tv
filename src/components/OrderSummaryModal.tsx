@@ -184,7 +184,7 @@ export default function OrderSummaryModal({
               </div>
 
               <p className="text-xs leading-relaxed text-muted">
-                An integrated proxy designed to prevent ISP tracking of service usage.
+                Routes your stream over our own encrypted link, for steadier speeds when the network is busy in the evenings.
               </p>
             </div>
 

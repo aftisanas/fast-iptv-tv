@@ -24,6 +24,17 @@ const nextConfig: NextConfig = {
         destination: '/blog/live-uk-sports-streaming-guide',
         permanent: true,
       },
+      // Both 404'd while "fast iptv login" sat at position 1.2 in search.
+      {
+        source: '/my-account',
+        destination: '/login',
+        permanent: true,
+      },
+      {
+        source: '/account',
+        destination: '/login',
+        permanent: true,
+      },
     ];
   },
 };

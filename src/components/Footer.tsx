@@ -8,7 +8,9 @@ import SectionLink from "@/components/SectionLink";
 
 export default function Footer() {
   return (
-    <footer className="relative border-t border-violet-100/50 bg-gradient-to-b from-[#fafbff] to-white">
+    /* pb-24 on mobile clears the fixed StickyBuyBar, which would otherwise sit
+       on top of the last row of footer links. */
+    <footer className="relative border-t border-violet-100/50 bg-gradient-to-b from-[#fafbff] to-white pb-24 lg:pb-0">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Main footer */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 py-10 sm:py-14 lg:py-16 lg:max-w-6xl lg:mx-auto">

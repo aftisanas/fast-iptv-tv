@@ -1,0 +1,6 @@
+# Originals for images that ship from /public live here so a crop can be
+# regenerated. Only the source of a published asset is tracked — rejected
+# candidates stay on disk locally rather than in git history.
+*
+!.gitignore
+!definition-section-source.jpg

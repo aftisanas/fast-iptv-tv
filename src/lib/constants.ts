@@ -28,11 +28,45 @@ export const CHECKOUT_COPY = {
     `+£${price.toFixed(2)} per extra connection`,
 } as const;
 
+/**
+ * Payment is taken by Shopify Payments on a Shopify-hosted checkout, which
+ * lives on a different domain to this site. An unannounced domain change at
+ * the moment the card comes out is the single loudest scam signal we can send,
+ * so we name the handoff before it happens rather than letting it surprise
+ * anyone. Wording must stay true to the real flow — see PAYMENT_MARKS.
+ */
+export const TRUST_COPY = {
+  /** Shown next to the plan buttons and on the checkout page. */
+  handoff:
+    "You'll finish payment on our secure Shopify checkout — the same system used by millions of UK stores.",
+  /**
+   * The fear here is a recurring charge from a service the buyer has just met.
+   * We answer that, and only that: there is no subscription product, so nothing
+   * renews. We deliberately do NOT claim "no stored card" — checkout offers
+   * Shop Pay, which saves cards by design.
+   */
+  oneTime: "One-time payment — no subscription, nothing renews automatically.",
+  /** Non-UK visitors are 55% of traffic. Say the billing currency up front. */
+  currency: "Priced and charged in GBP. Your bank converts at its own rate.",
+  guarantee: "30-day money-back guarantee",
+} as const;
+
+/** Card marks shown at the decision points. Files live in /public/trust. */
+export const PAYMENT_MARKS = [
+  { id: "visa", name: "Visa" },
+  { id: "mastercard", name: "Mastercard" },
+  { id: "amex", name: "American Express" },
+  { id: "paypal", name: "PayPal" },
+] as const;
+
 export const NAV_LINKS = [
   { label: "Home", href: "/" },
   { label: "Why Us", href: "/#features" },
   { label: "Pricing", href: "/#pricing" },
-  { label: "Reviews", href: "/#testimonials" },
+  // Was "/#testimonials" — an anchor that no longer existed anywhere on the
+  // page, which Google was still serving as a jump link (29 impressions at
+  // position 7.79). It now points at the trust panels below.
+  { label: "Reviews", href: "/#reviews" },
   { label: "FAQ", href: "/#faq" },
 ] as const;
 
