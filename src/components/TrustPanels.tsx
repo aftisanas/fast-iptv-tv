@@ -9,10 +9,9 @@ import { TRUST_COPY } from "@/lib/constants";
  * Evidence, not testimonials. See src/lib/trust-panels.ts for why there is no
  * rating, score or review count anywhere in this section.
  *
- * The screenshots are shown in a fixed-height window with a feathered base so
- * the thread reads as running on past the card, rather than being cropped flat
- * into a tile — a guillotined screenshot looks staged, a continuing one does
- * not.
+ * Each screenshot is pre-cropped to the exchange that carries the point and is
+ * then shown whole. Cropping again in CSS only ever hid the customer's own
+ * words, which is the one thing a visitor is here to read.
  */
 export default function TrustPanels() {
   return (
@@ -63,9 +62,10 @@ export default function TrustPanels() {
                 </div>
               </div>
 
-              {/* Fixed window + feathered base: the conversation carries on
-                  past the card instead of ending at a crop line. */}
-              <div className="relative mt-auto h-72 overflow-hidden bg-[#0b141a]">
+              {/* Shown whole. Each file is already cropped to the exchange that
+                  matters, so a fixed window would only hide the customer's own
+                  words — which are the entire point of the panel. */}
+              <div className="mt-auto bg-[#0b141a]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={panel.image}
@@ -74,11 +74,7 @@ export default function TrustPanels() {
                   height={panel.h}
                   loading="lazy"
                   decoding="async"
-                  className="w-full"
-                />
-                <div
-                  className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white to-transparent"
-                  aria-hidden="true"
+                  className="block w-full"
                 />
               </div>
             </motion.li>

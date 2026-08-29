@@ -10,7 +10,12 @@ export default function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative h-[104vh] min-h-[640px] flex flex-col overflow-hidden"
+      /* 104vh meant a full screen and a bit before anything else could be
+         seen. 72% of this traffic is mobile and nearly all of it searched a
+         term the domain matches, so it arrives wanting the plans — the hero
+         should introduce them, not stand in front of them. Full height is
+         kept from `lg` up, where it costs nothing. */
+      className="relative flex min-h-[560px] flex-col overflow-hidden py-16 sm:py-20 lg:h-[104vh] lg:min-h-[640px] lg:py-0"
     >
       {/* ── Deep premium gradient background ── */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#0a0118] via-[#1a0a3e] to-[#0c1445]" />

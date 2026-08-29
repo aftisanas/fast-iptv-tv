@@ -42,8 +42,8 @@ export const TRUST_PANELS: TrustPanel[] = [
   {
     id: "setup",
     image: "/reviews/trust-setup.webp",
-    w: 720,
-    h: 1193,
+    w: 760,
+    h: 809,
     label: "Set-up, walked through step by step",
     caption:
       "A Firestick install guided over WhatsApp until the picture was on. “That was easier then I thought.”",
@@ -51,8 +51,8 @@ export const TRUST_PANELS: TrustPanel[] = [
   {
     id: "order",
     image: "/reviews/trust-order.webp",
-    w: 720,
-    h: 1193,
+    w: 760,
+    h: 809,
     label: "We check in after the order",
     caption:
       "Access details go out by email, then we follow up to confirm everything is working before we leave you alone.",
@@ -60,8 +60,8 @@ export const TRUST_PANELS: TrustPanel[] = [
   {
     id: "referral",
     image: "/reviews/trust-referral.webp",
-    w: 720,
-    h: 1193,
+    w: 760,
+    h: 809,
     label: "Bought once, came back for a second",
     caption:
       "A customer who first bought the service for a friend, returning to buy his own — on a Samsung TV rather than a Firestick.",

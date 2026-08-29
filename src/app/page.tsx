@@ -11,6 +11,7 @@ import TrustPanels from "@/components/TrustPanels";
 import FAQSection from "@/components/FAQSection";
 import TrustSection from "@/components/TrustSection";
 import CTASection from "@/components/CTASection";
+import StickyBuyBar from "@/components/StickyBuyBar";
 import { FAQ_ITEMS, LAST_UPDATED, PRICING_PLANS, SITE_NAME, SITE_URL } from "@/lib/constants";
 
 export const metadata: Metadata = {
@@ -222,6 +223,7 @@ export default function HomePage() {
       <FAQSection />
       <TrustSection />
       <CTASection />
+      <StickyBuyBar />
 
       {/* JSON-LD Structured Data — single @graph */}
       <script

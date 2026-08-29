@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { Check, Shield, CreditCard, Star, Crown, Gem, Award, Medal } from "lucide-react";
 import { CHECKOUT_MODE, PAYMENT_MARKS, PRICING_PLANS, TRUST_COPY } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { track } from "@/lib/analytics";
 import OrderSummaryModal from "./OrderSummaryModal";
 
 type PricingPlan = (typeof PRICING_PLANS)[number];
@@ -88,6 +89,12 @@ export default function PricingSection() {
   const [selectedPlan, setSelectedPlan] = useState<PricingPlan | null>(null);
 
   const handleChoosePlan = (plan: PricingPlan) => {
+    track("plan_selected", {
+      plan: plan.name,
+      planId: plan.id,
+      price: plan.price,
+      source: "pricing_section",
+    });
     if (CHECKOUT_MODE === "hub") {
       router.push(`/checkout?plan=${plan.id}`);
       return;
@@ -287,7 +294,13 @@ export default function PricingSection() {
         >
           <ul className="flex flex-wrap items-center justify-center gap-2.5">
             {PAYMENT_MARKS.map((mark) => (
-              <li key={mark.id}>
+              /* The marks are white artwork on transparency, so they need a
+                 dark chip to sit on — on the section's white ground they are
+                 invisible. */
+              <li
+                key={mark.id}
+                className="flex h-8 items-center justify-center rounded-md border border-slate-700/50 bg-slate-800 px-2.5"
+              >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={`/trust/${mark.id}.webp`}
@@ -296,7 +309,7 @@ export default function PricingSection() {
                   height={32}
                   loading="lazy"
                   decoding="async"
-                  className="h-8 w-auto rounded border border-gray-200/70 bg-white"
+                  className="h-4 w-auto"
                 />
               </li>
             ))}
