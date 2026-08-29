@@ -75,7 +75,7 @@ export default function HeroSection() {
           transition={{ duration: 0.7, delay: 0.1 }}
           className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-bold tracking-tight leading-[1.1] mb-2 text-white"
         >
-          Fast IPTV — UK Subscription With 60-Second Activation
+          Fast IPTV — Subscription With 60-Second Activation
         </motion.h1>
 
         {/* Subtitle */}
