@@ -30,6 +30,8 @@ import {
 import { callCheckoutHub } from "@/lib/checkout";
 import { track } from "@/lib/analytics";
 import { toAccessLabel } from "@/lib/utils";
+import { getCountries, isValidPhoneNumber } from "libphonenumber-js";
+import type { CountryCode } from "libphonenumber-js";
 
 type Plan = (typeof PRICING_PLANS)[number];
 
@@ -51,9 +53,57 @@ function isDeliverableEmail(email: string): boolean {
   if (BLOCKED_TLDS.has(tld)) return false;
   return true;
 }
-// Deliberately loose. Strip formatting (spaces, dashes, brackets, dots) and
-// require an optional leading + followed by 7-15 digits. E.164-ish, not strict.
-const PHONE_RE = /^\+?\d{7,15}$/;
+/**
+ * Traffic countries first, then everywhere else. Ordering only affects how
+ * quickly the common cases short-circuit — the set is every country the
+ * library knows.
+ */
+const PRIORITY_COUNTRIES = [
+  "GB", "IE", "DE", "FR", "AT", "ES", "PT", "IT",
+  "NL", "TR", "US", "AE", "SA", "MA", "DZ", "BR",
+] as const;
+
+const PHONE_COUNTRIES: CountryCode[] = [
+  ...PRIORITY_COUNTRIES,
+  ...getCountries().filter(
+    (c) => !(PRIORITY_COUNTRIES as readonly string[]).includes(c)
+  ),
+];
+
+/**
+ * Applied only to a number the buyer actually typed — the field is optional.
+ *
+ * 55% of this site's traffic is outside the UK, and people type their number
+ * the way they do at home, without a country code. Validating against a single
+ * default country rejected every one of those, so a number is accepted if it
+ * is valid anywhere: written with a leading + it is checked internationally,
+ * and written in national form it is checked against all 245 numbering plans.
+ *
+ * The trade that buys: some numbering plans (Germany and Austria especially)
+ * allow long, loosely-structured subscriber numbers, so a random-looking
+ * string of digits can be a structurally valid number somewhere. Accepting
+ * every country's format means accepting that. Only a single repeated digit
+ * is filtered, since that is nobody's phone number.
+ */
+function isContactablePhone(raw: string): boolean {
+  const value = raw.trim();
+  if (!value) return false;
+
+  if (/^\+?(\d)\1*$/.test(value.replace(/[\s\-().]/g, ""))) return false;
+
+  try {
+    if (value.startsWith("+")) return isValidPhoneNumber(value);
+    return PHONE_COUNTRIES.some((country) => {
+      try {
+        return isValidPhoneNumber(value, country);
+      } catch {
+        return false;
+      }
+    });
+  } catch {
+    return false;
+  }
+}
 const CURRENCY = "£";
 // Local wa.me fallback used when the hub is unreachable (network error,
 // non-200, unparseable). The click handler appends `?text=…`, so no query
@@ -108,6 +158,9 @@ function CheckoutForPlan({ plan }: { plan: Plan }) {
   const [promoNotice, setPromoNotice] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  // Field errors stay quiet until the buyer actually tries to continue, so an
+  // empty form does not greet every arrival with red text.
+  const [showErrors, setShowErrors] = useState(false);
 
   useEffect(() => {
     track("checkout_viewed", { plan: plan.name, price: plan.price });
@@ -197,10 +250,10 @@ function CheckoutForPlan({ plan }: { plan: Plan }) {
   const emailValid = isDeliverableEmail(trimmedEmail);
   // Jointly required — either field alone can satisfy it, so mononyms work.
   const nameValid = (firstName.trim() + lastName.trim()).length >= 2;
-  // Optional: empty is valid. If non-empty, must look like a phone number
-  // after stripping common formatting characters.
-  const phoneStrippedForCheck = trimmedPhone.replace(/[\s\-().]/g, "");
-  const phoneValid = trimmedPhone === "" || PHONE_RE.test(phoneStrippedForCheck);
+  // Optional. The buyer is heading to WhatsApp anyway, so we already have a
+  // way to reach them; making this required would only add friction. But a
+  // number that IS given has to be a real one, or it is worse than blank.
+  const phoneValid = trimmedPhone === "" || isContactablePhone(trimmedPhone);
   const formValid = emailValid && nameValid && phoneValid;
 
   const switchToWhatsapp = (whatsappUrl: string) => {
@@ -209,7 +262,11 @@ function CheckoutForPlan({ plan }: { plan: Plan }) {
 
   const handleBuyNow = async () => {
     if (availability.state !== "available") return;
-    if (!formValid || submitting) return;
+    if (submitting) return;
+    if (!formValid) {
+      setShowErrors(true);
+      return;
+    }
 
     setSubmitting(true);
     setSubmitError(null);
@@ -276,6 +333,14 @@ function CheckoutForPlan({ plan }: { plan: Plan }) {
 
   const handleWhatsappClick = () => {
     if (availability.state !== "unavailable") return;
+    // Same bar as the card path. This used to be ungated, so a buyer could
+    // reach WhatsApp with an empty form and the hub recorded a diversion with
+    // no email and no number — an order that existed but could not be
+    // followed up.
+    if (!formValid) {
+      setShowErrors(true);
+      return;
+    }
 
     logDiversion({
       planName: plan.name,
@@ -294,6 +359,8 @@ function CheckoutForPlan({ plan }: { plan: Plan }) {
       extraConnections,
       total,
       currency: CURRENCY,
+      name: trimmedName,
+      email: trimmedEmail,
     });
 
     const { whatsappUrl } = availability;
@@ -615,7 +682,14 @@ function CheckoutForPlan({ plan }: { plan: Plan }) {
                 </div>
               </div>
 
-              {/* Phone number — optional. */}
+              {showErrors && !nameValid && (
+                <p className="-mt-2 text-[11px] leading-relaxed text-red-600">
+                  Please enter your name.
+                </p>
+              )}
+
+              {/* Phone number — optional. Email is the required field, because
+                  that is where the credentials are sent from the hub. */}
               <div>
                 <label
                   htmlFor="checkout-phone"
@@ -632,14 +706,15 @@ function CheckoutForPlan({ plan }: { plan: Plan }) {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   disabled={submitting}
-                  placeholder="+44 7XXX XXXXXX"
-                  aria-invalid={!phoneValid}
+                  placeholder="07XXX XXXXXX"
+                  aria-invalid={showErrors && !phoneValid}
                   aria-describedby="checkout-phone-help"
                   className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-foreground placeholder:text-muted/60 transition-colors focus:border-violet-400 focus:outline-2 focus:outline-violet-600 focus:outline-offset-1 disabled:cursor-not-allowed disabled:bg-gray-50"
                 />
-                {!phoneValid && (
+                {showErrors && !phoneValid && (
                   <p className="mt-1.5 text-[11px] leading-relaxed text-red-600">
-                    That doesn&apos;t look like a valid phone number. Please check and try again, or leave it blank.
+                    That doesn&apos;t look like a real phone number. Please
+                    check it, or leave it blank.
                   </p>
                 )}
                 <p
@@ -668,13 +743,15 @@ function CheckoutForPlan({ plan }: { plan: Plan }) {
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={submitting}
                   placeholder="you@example.com"
-                  aria-invalid={trimmedEmail !== "" && !emailValid}
+                  aria-invalid={showErrors && !emailValid}
                   aria-describedby="checkout-email-help"
                   className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-foreground placeholder:text-muted/60 transition-colors focus:border-violet-400 focus:outline-2 focus:outline-violet-600 focus:outline-offset-1 disabled:cursor-not-allowed disabled:bg-gray-50"
                 />
-                {trimmedEmail !== "" && !emailValid && (
+                {showErrors && !emailValid && (
                   <p className="mt-1.5 text-[11px] leading-relaxed text-red-600">
-                    Please enter a valid email address
+                    {trimmedEmail === ""
+                      ? "Please enter your email address — your login details are sent here."
+                      : "Please enter a valid email address."}
                   </p>
                 )}
                 <p
@@ -705,6 +782,13 @@ function CheckoutForPlan({ plan }: { plan: Plan }) {
                 onBuyNow={handleBuyNow}
                 onWhatsapp={handleWhatsappClick}
               />
+
+              {showErrors && !formValid && (
+                <p className="text-center text-xs font-medium text-red-600" role="alert">
+                  Please complete the highlighted fields above — we need a
+                  working email address to send your login details to.
+                </p>
+              )}
 
               {/* The subtitle has to match the route the buyer is actually
                   about to take. `CHECKOUT_COPY.buttonSubtitle` describes the
@@ -797,14 +881,17 @@ function CtaArea({
   }
 
   if (availability.state === "available") {
-    const canSubmit = formValid && !submitting;
+    // Deliberately not disabled on an invalid form: a dead button explains
+    // nothing. The click is allowed through so the handler can reveal which
+    // field is missing.
     return (
       <button
         type="button"
         onClick={onBuyNow}
-        disabled={!canSubmit}
+        disabled={submitting}
+        aria-disabled={!formValid}
         aria-label={`Buy now for ${CURRENCY}${total.toFixed(2)}`}
-        className="flex w-full items-center justify-center gap-2.5 rounded-xl bg-green-500 px-6 py-3.5 text-sm font-bold tracking-wide text-white transition-all hover:bg-green-600 hover:shadow-lg hover:shadow-green-500/30 active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-green-700 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:bg-green-500 disabled:hover:shadow-none"
+        className={"flex w-full items-center justify-center gap-2.5 rounded-xl bg-green-500 px-6 py-3.5 text-sm font-bold tracking-wide text-white transition-all hover:bg-green-600 hover:shadow-lg hover:shadow-green-500/30 active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-green-700 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:bg-green-500 disabled:hover:shadow-none" + (formValid ? "" : " opacity-60")}
       >
         {submitting ? (
           <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
@@ -822,8 +909,9 @@ function CtaArea({
       <button
         type="button"
         onClick={onWhatsapp}
+        aria-disabled={!formValid}
         aria-label="Continue on WhatsApp"
-        className="flex w-full items-center justify-center gap-2.5 rounded-xl bg-green-500 px-6 py-3.5 text-sm font-bold tracking-wide text-white transition-all hover:bg-green-600 hover:shadow-lg hover:shadow-green-500/30 active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-green-700 focus-visible:outline-offset-2"
+        className={"flex w-full items-center justify-center gap-2.5 rounded-xl bg-green-500 px-6 py-3.5 text-sm font-bold tracking-wide text-white transition-all hover:bg-green-600 hover:shadow-lg hover:shadow-green-500/30 active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-green-700 focus-visible:outline-offset-2" + (formValid ? "" : " opacity-60")}
       >
         <MessageCircle className="h-4 w-4" aria-hidden="true" />
         Continue on WhatsApp

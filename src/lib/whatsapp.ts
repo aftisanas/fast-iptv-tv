@@ -28,6 +28,9 @@ export interface WhatsappFallbackMessage {
   extraConnections: number;
   total: number;
   currency: string;
+  /** Carried into the message so the chat can be matched to the hub record. */
+  name?: string;
+  email?: string;
 }
 
 export function buildWhatsappMessage({
@@ -36,8 +39,15 @@ export function buildWhatsappMessage({
   extraConnections,
   total,
   currency,
+  name,
+  email,
 }: WhatsappFallbackMessage): string {
   const parts = [`Hi, I'd like to complete my ${planName} order.`];
+
+  // The buyer may message from a different number than they typed, so the
+  // email is what ties this conversation to the order logged on the hub.
+  if (name) parts.push(`Name: ${name}.`);
+  if (email) parts.push(`Email: ${email}.`);
 
   const addons: string[] = [];
   if (proxyOn) addons.push("Proxy Protection");
