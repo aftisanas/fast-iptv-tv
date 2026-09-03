@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { PRICING_PLANS } from "@/lib/constants";
 import { track } from "@/lib/analytics";
+import { useCurrency } from "./CurrencyProvider";
+import { formatMoney, priceIn } from "@/lib/pricing";
 
 /**
  * Mobile only. Pricing is the fifth section down, and 72% of this traffic
@@ -16,6 +18,7 @@ import { track } from "@/lib/analytics";
  * you to what you are already looking at is just clutter.
  */
 export default function StickyBuyBar() {
+  const { currency, table } = useCurrency();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -44,13 +47,20 @@ export default function StickyBuyBar() {
     };
   }, []);
 
-  // The cheapest per-month figure across the range, so the bar leads with the
-  // lowest true number rather than the entry plan's headline price.
-  const from = Math.min(
-    ...PRICING_PLANS.map((p) => {
+  // The cheapest per-month figure across the range, in the visitor's currency,
+  // so the bar leads with the lowest true number rather than the entry plan's
+  // headline price.
+  const cheapest = PRICING_PLANS.reduce<{ perMonth: number; currency: typeof currency }>(
+    (best, p) => {
+      const live = priceIn(table.plans[p.id]?.price ?? { GBP: p.price }, currency);
       const months = parseInt(p.name, 10);
-      return Number.isFinite(months) && months > 0 ? p.price / months : p.price;
-    })
+      const perMonth =
+        Number.isFinite(months) && months > 0 ? live.amount / months : live.amount;
+      return perMonth < best.perMonth
+        ? { perMonth, currency: live.currency }
+        : best;
+    },
+    { perMonth: Infinity, currency }
   );
 
   return (
@@ -63,13 +73,13 @@ export default function StickyBuyBar() {
       <a
         href="#pricing"
         tabIndex={visible ? undefined : -1}
-        onClick={() => track("plan_selected", { source: "sticky_bar" })}
+        onClick={() => track("plan_selected", { source: "sticky_bar", currency })}
         className="flex items-center justify-between gap-3 rounded-xl bg-gradient-to-r from-violet-600 to-cyan-500 px-5 py-3.5 text-white focus-visible:outline-2 focus-visible:outline-violet-700 focus-visible:outline-offset-2"
       >
         <span className="flex flex-col leading-tight">
           <span className="text-sm font-bold">See plans &amp; pricing</span>
           <span className="text-[11px] font-medium text-white/85">
-            From £{from.toFixed(2)}/month · 30-day money-back
+            From {formatMoney(cheapest.perMonth, cheapest.currency)}/month · 30-day money-back
           </span>
         </span>
         <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />

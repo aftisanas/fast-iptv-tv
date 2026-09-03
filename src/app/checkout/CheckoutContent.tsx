@@ -30,6 +30,8 @@ import {
 import { callCheckoutHub } from "@/lib/checkout";
 import { track } from "@/lib/analytics";
 import { toAccessLabel } from "@/lib/utils";
+import { useCurrency } from "@/components/CurrencyProvider";
+import { CURRENCY_SYMBOL, formatMoney, resolvePlanPrices } from "@/lib/pricing";
 import { getCountries, isValidPhoneNumber } from "libphonenumber-js";
 import type { CountryCode } from "libphonenumber-js";
 
@@ -104,7 +106,6 @@ function isContactablePhone(raw: string): boolean {
     return false;
   }
 }
-const CURRENCY = "£";
 // Local wa.me fallback used when the hub is unreachable (network error,
 // non-200, unparseable). The click handler appends `?text=…`, so no query
 // string is baked in here.
@@ -112,8 +113,6 @@ const LOCAL_WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
 
 /** How long the availability probe gets before we stop waiting on it. */
 const AVAILABILITY_TIMEOUT_MS = 2500;
-
-const formatPrice = (value: number) => `${CURRENCY}${value.toFixed(2)}`;
 
 const parseDurationMonths = (label: string): number | null => {
   const match = label.match(/^(\d+)[-\s]?Months?/i);
@@ -147,6 +146,34 @@ export default function CheckoutContent() {
 }
 
 function CheckoutForPlan({ plan }: { plan: Plan }) {
+  const { currency: wantedCurrency, country, resolved: currencyResolved, table } = useCurrency();
+
+  // All three prices resolve together — see resolvePlanPrices. `resolvedCurrency`
+  // is what we can actually quote, which is not always what we wanted.
+  const live = resolvePlanPrices(
+    table,
+    plan.id,
+    {
+      price: plan.price,
+      proxyPrice: plan.proxyPrice,
+      extraConnectionPrice: plan.extraConnectionPrice,
+    },
+    wantedCurrency
+  );
+  const resolvedCurrency = live.currency;
+  const CURRENCY = CURRENCY_SYMBOL[resolvedCurrency];
+  const formatPrice = (value: number) => formatMoney(value, resolvedCurrency);
+
+  /**
+   * Set when the hub comes back with a different total than the page showed.
+   * The page's prices are baked at build time; Shopify's are live. When they
+   * disagree the buyer sees the real number and confirms it — redirecting
+   * silently is how "advertised ≠ charged" happens.
+   */
+  const [priceCorrection, setPriceCorrection] = useState<
+    { amount: number; currency: string; checkoutUrl: string } | null
+  >(null);
+
   const [availability, setAvailability] = useState<Availability>({ state: "checking" });
   const [proxyOn, setProxyOn] = useState(false);
   const [extraConnections, setExtraConnections] = useState(0);
@@ -162,9 +189,19 @@ function CheckoutForPlan({ plan }: { plan: Plan }) {
   // empty form does not greet every arrival with red text.
   const [showErrors, setShowErrors] = useState(false);
 
+  // Fire once, but only after the currency has resolved — otherwise every
+  // non-UK view is recorded in sterling, which is the number we are trying to
+  // stop being wrong about.
+  const viewTracked = useRef(false);
   useEffect(() => {
-    track("checkout_viewed", { plan: plan.name, price: plan.price });
-  }, [plan.name, plan.price]);
+    if (viewTracked.current || !currencyResolved) return;
+    viewTracked.current = true;
+    track("checkout_viewed", {
+      plan: plan.name,
+      price: live.price,
+      currency: resolvedCurrency,
+    });
+  }, [currencyResolved, plan.name, live.price, resolvedCurrency]);
 
   useEffect(() => {
     let cancelled = false;
@@ -225,18 +262,18 @@ function CheckoutForPlan({ plan }: { plan: Plan }) {
   }, [plan.name, plan.price]);
 
   const total = calculateOrderTotal({
-    planPrice: plan.price,
+    planPrice: live.price,
     proxyEnabled: proxyOn,
-    proxyPrice: plan.proxyPrice,
+    proxyPrice: live.proxyPrice,
     extraConnections,
-    extraConnectionPrice: plan.extraConnectionPrice,
+    extraConnectionPrice: live.extraConnectionPrice,
   });
 
-  const extraConnectionsSubtotal = extraConnections * plan.extraConnectionPrice;
+  const extraConnectionsSubtotal = extraConnections * live.extraConnectionPrice;
   const durationMonths = parseDurationMonths(plan.name);
-  const proxyPerMonth = durationMonths ? plan.proxyPrice / durationMonths : null;
+  const proxyPerMonth = durationMonths ? live.proxyPrice / durationMonths : null;
   const extraPerMonthPerConn = durationMonths
-    ? plan.extraConnectionPrice / durationMonths
+    ? live.extraConnectionPrice / durationMonths
     : null;
   const extraPerMonthTotal =
     durationMonths && extraConnections > 0
@@ -270,7 +307,14 @@ function CheckoutForPlan({ plan }: { plan: Plan }) {
 
     setSubmitting(true);
     setSubmitError(null);
-    track("order_submitted", { plan: plan.name, total, proxy: proxyOn, extraConnections });
+    track("order_submitted", {
+      plan: plan.name,
+      total,
+      currency: resolvedCurrency,
+      country: country ?? undefined,
+      proxy: proxyOn,
+      extraConnections,
+    });
 
     try {
       const response = await callCheckoutHub({
@@ -281,10 +325,51 @@ function CheckoutForPlan({ plan }: { plan: Plan }) {
         phone: trimmedPhone || undefined,
         proxyEnabled: proxyOn,
         extraConnections,
+        countryCode: country ?? undefined,
       });
 
       if (response.kind === "shopify") {
-        track("checkout_handoff", { plan: plan.name, total, orderId: response.orderId });
+        /**
+         * The page's prices were baked at build time; Shopify's are live. If
+         * they disagree, the buyer sees the real number and confirms it rather
+         * than being redirected to a surprise.
+         *
+         * A GBP answer is treated as "verify", not "trust": when the hub falls
+         * back to a cart permalink it cannot read the cart's cost and reports
+         * the sterling list price, while Shopify still charges by market. That
+         * is the one path where the response can understate.
+         */
+        const hubCents = response.amountCents;
+        const hubCurrency = response.currency;
+        const shownCents = Math.round(total * 100);
+        const disagrees =
+          typeof hubCents === "number" &&
+          typeof hubCurrency === "string" &&
+          (hubCents !== shownCents || hubCurrency !== resolvedCurrency);
+
+        if (disagrees) {
+          track("checkout_price_mismatch", {
+            plan: plan.name,
+            shown: shownCents,
+            shownCurrency: resolvedCurrency,
+            charged: hubCents,
+            chargedCurrency: hubCurrency,
+          });
+          setPriceCorrection({
+            amount: hubCents / 100,
+            currency: hubCurrency,
+            checkoutUrl: response.checkoutUrl,
+          });
+          setSubmitting(false);
+          return;
+        }
+
+        track("checkout_handoff", {
+          plan: plan.name,
+          total,
+          currency: resolvedCurrency,
+          orderId: response.orderId,
+        });
         window.location.href = response.checkoutUrl;
         return;
       }
@@ -424,7 +509,7 @@ function CheckoutForPlan({ plan }: { plan: Plan }) {
             </h1>
             <div className="mt-3 flex items-baseline gap-3">
               <span className="text-3xl font-extrabold text-white">
-                {formatPrice(plan.price)}
+                {formatPrice(live.price)}
               </span>
               <span className="text-xs font-semibold tracking-[0.15em] text-gray-300">
                 ONE-TIME PAYMENT
@@ -449,9 +534,9 @@ function CheckoutForPlan({ plan }: { plan: Plan }) {
               </h2>
 
               <div className="space-y-3 text-sm">
-                <SummaryRow label={toAccessLabel(plan.name)} value={formatPrice(plan.price)} />
+                <SummaryRow label={toAccessLabel(plan.name)} value={formatPrice(live.price)} />
                 {proxyOn && (
-                  <SummaryRow label="Proxy Protection" value={`+${formatPrice(plan.proxyPrice)}`} />
+                  <SummaryRow label="Proxy Protection" value={`+${formatPrice(live.proxyPrice)}`} />
                 )}
                 {extraConnections > 0 && (
                   <SummaryRow
@@ -533,7 +618,7 @@ function CheckoutForPlan({ plan }: { plan: Plan }) {
                     <div className="text-xs font-bold text-accent">
                       {extraPerMonthPerConn !== null
                         ? `+${formatPrice(extraPerMonthPerConn)}/month`
-                        : `+${formatPrice(plan.extraConnectionPrice)}`}
+                        : `+${formatPrice(live.extraConnectionPrice)}`}
                     </div>
                     <div className="flex items-center gap-2">
                       <button
@@ -567,7 +652,7 @@ function CheckoutForPlan({ plan }: { plan: Plan }) {
 
                 {extraConnections > 0 && (
                   <div className="mt-2.5 text-xs text-muted pt-2 border-t border-gray-100">
-                    {extraConnections} × {formatPrice(plan.extraConnectionPrice)} ={" "}
+                    {extraConnections} × {formatPrice(live.extraConnectionPrice)} ={" "}
                     <span className="font-semibold text-foreground">
                       {formatPrice(extraConnectionsSubtotal)}
                     </span>
@@ -604,7 +689,7 @@ function CheckoutForPlan({ plan }: { plan: Plan }) {
                     <div className="text-xs font-bold text-accent">
                       {proxyPerMonth !== null
                         ? `+${formatPrice(proxyPerMonth)}/month`
-                        : `+${formatPrice(plan.proxyPrice)}`}
+                        : `+${formatPrice(live.proxyPrice)}`}
                     </div>
                     <button
                       type="button"
@@ -774,7 +859,54 @@ function CheckoutForPlan({ plan }: { plan: Plan }) {
                 </div>
               )}
 
+              {/* Shown only when the live total differs from the one on the
+                  page. The buyer is told the real number and chooses — nobody
+                  is sent to a checkout quoting a different price than they
+                  agreed to. */}
+              {priceCorrection && (
+                <div
+                  role="alert"
+                  className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-4 text-xs text-amber-900"
+                >
+                  <p className="mb-1 font-bold">
+                    The total for this order is{" "}
+                    {CURRENCY_SYMBOL[priceCorrection.currency as keyof typeof CURRENCY_SYMBOL] ??
+                      ""}
+                    {priceCorrection.amount.toFixed(2)}
+                  </p>
+                  <p className="mb-3 leading-relaxed">
+                    That differs from the {formatPrice(total)} shown above.
+                    The amount here is the one you will be charged.
+                  </p>
+                  <div className="flex flex-col gap-2 sm:flex-row">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        track("checkout_handoff", {
+                          plan: plan.name,
+                          total: priceCorrection.amount,
+                          currency: priceCorrection.currency,
+                          corrected: true,
+                        });
+                        window.location.href = priceCorrection.checkoutUrl;
+                      }}
+                      className="rounded-lg bg-amber-600 px-4 py-2.5 text-xs font-bold text-white transition-colors hover:bg-amber-700 focus-visible:outline-2 focus-visible:outline-amber-800 focus-visible:outline-offset-2"
+                    >
+                      Continue at this price
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setPriceCorrection(null)}
+                      className="rounded-lg border border-amber-300 bg-white px-4 py-2.5 text-xs font-semibold text-amber-900 transition-colors hover:bg-amber-100 focus-visible:outline-2 focus-visible:outline-amber-800 focus-visible:outline-offset-2"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              )}
+
               <CtaArea
+                currencySymbol={CURRENCY}
                 availability={availability}
                 formValid={formValid}
                 submitting={submitting}
@@ -827,7 +959,7 @@ function CheckoutForPlan({ plan }: { plan: Plan }) {
                 {TRUST_COPY.oneTime}
               </p>
               <p className="text-center text-xs text-muted">
-                {TRUST_COPY.currency}
+                {TRUST_COPY.currencyNote(resolvedCurrency)}
               </p>
 
               <div className="flex items-center justify-center gap-2 text-xs text-muted">
@@ -856,6 +988,7 @@ function CtaArea({
   formValid,
   submitting,
   total,
+  currencySymbol,
   onBuyNow,
   onWhatsapp,
 }: {
@@ -863,9 +996,12 @@ function CtaArea({
   formValid: boolean;
   submitting: boolean;
   total: number;
+  /** Resolved on the parent — this component must never assume sterling. */
+  currencySymbol: string;
   onBuyNow: () => void;
   onWhatsapp: () => void;
 }) {
+  const CURRENCY = currencySymbol;
   if (availability.state === "checking") {
     return (
       <button

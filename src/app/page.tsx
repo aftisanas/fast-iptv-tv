@@ -6,6 +6,7 @@ import FeaturesSection from "@/components/FeaturesSection";
 import PricingSection from "@/components/PricingSection";
 import DevicesSection from "@/components/DevicesSection";
 import ChannelsSection from "@/components/ChannelsSection";
+import { getPricingTable } from "@/lib/pricing";
 // import TestimonialsSection from "@/components/TestimonialsSection"; // Temporarily disabled — awaiting real testimonials
 import TrustPanels from "@/components/TrustPanels";
 import FAQSection from "@/components/FAQSection";
@@ -48,7 +49,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function HomePage() {
+export default async function HomePage() {
   const organizationId = `${SITE_URL}/#organization`;
   const websiteId = `${SITE_URL}/#website`;
   const serviceId = `${SITE_URL}/#service`;
@@ -57,9 +58,50 @@ export default function HomePage() {
   const faqId = `${SITE_URL}/#faq`;
   const logoUrl = `${SITE_URL}/fast-iptv.webp`;
 
-  const prices = PRICING_PLANS.map((p) => p.price);
-  const lowPrice = Math.min(...prices).toFixed(2);
-  const highPrice = Math.max(...prices).toFixed(2);
+  /**
+   * The page shows one currency, chosen per visitor, but the product is
+   * genuinely sold in all of them. So the markup declares every currency
+   * rather than the one that happened to render — which keeps it truthful for
+   * whichever price a visitor sees, and avoids a structured-data mismatch
+   * without pinning the page to sterling.
+   */
+  const pricingTable = await getPricingTable();
+  const currencies = pricingTable.currencies;
+
+  const planOffers = PRICING_PLANS.flatMap((plan) =>
+    currencies.flatMap((cur) => {
+      const amount = pricingTable.plans[plan.id]?.price?.[cur];
+      if (typeof amount !== "number") return [];
+      return [
+        {
+          "@type": "Offer",
+          name: `${plan.name} Plan`,
+          price: amount.toFixed(2),
+          priceCurrency: cur,
+          url: `${SITE_URL}/#pricing`,
+          availability: "https://schema.org/InStock",
+        },
+      ];
+    })
+  );
+
+  const aggregateOffers = currencies.flatMap((cur) => {
+    const amounts = PRICING_PLANS.map(
+      (p) => pricingTable.plans[p.id]?.price?.[cur]
+    ).filter((n): n is number => typeof n === "number");
+    if (amounts.length === 0) return [];
+    return [
+      {
+        "@type": "AggregateOffer",
+        lowPrice: Math.min(...amounts).toFixed(2),
+        highPrice: Math.max(...amounts).toFixed(2),
+        priceCurrency: cur,
+        offerCount: amounts.length,
+        availability: "https://schema.org/InStock",
+        url: `${SITE_URL}/#pricing`,
+      },
+    ];
+  });
 
   const graph = {
     "@context": "https://schema.org",
@@ -97,14 +139,7 @@ export default function HomePage() {
         hasOfferCatalog: {
           "@type": "OfferCatalog",
           name: "Fast IPTV UK Plans",
-          itemListElement: PRICING_PLANS.map((plan) => ({
-            "@type": "Offer",
-            name: `${plan.name} Plan`,
-            price: plan.price.toFixed(2),
-            priceCurrency: "GBP",
-            url: `${SITE_URL}/#pricing`,
-            availability: "https://schema.org/InStock",
-          })),
+          itemListElement: planOffers,
         },
       },
       {
@@ -115,15 +150,7 @@ export default function HomePage() {
         description:
           "Fast IPTV UK subscription with 37,000 live channels, native 4K UHD, low-latency live sport playback, secure proxy option and extra connection options.",
         image: logoUrl,
-        offers: {
-          "@type": "AggregateOffer",
-          lowPrice,
-          highPrice,
-          priceCurrency: "GBP",
-          offerCount: PRICING_PLANS.length,
-          availability: "https://schema.org/InStock",
-          url: `${SITE_URL}/#pricing`,
-        },
+        offers: aggregateOffers,
         // No `aggregateRating` here on purpose. One used to sit at 3.9 from 12
         // reviews with no reviews anywhere on the page to support it — both a
         // structured-data violation and, under the UK DMCC Act 2024, an

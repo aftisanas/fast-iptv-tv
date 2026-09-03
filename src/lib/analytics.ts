@@ -25,7 +25,12 @@ export type AnalyticsEvent =
   /** The buyer submitted the form and we called the hub. */
   | "order_submitted"
   /** The hub returned a Shopify URL and we are handing the buyer over. */
-  | "checkout_handoff";
+  | "checkout_handoff"
+  /**
+   * The page advertised one total and the hub reported another. Should be
+   * rare; if it is not, the build-time prices are drifting from Shopify.
+   */
+  | "checkout_price_mismatch";
 
 type Payload = Record<string, string | number | boolean | undefined>;
 
