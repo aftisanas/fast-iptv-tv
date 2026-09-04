@@ -72,7 +72,15 @@ export async function callCheckoutHub(
   }
 
   if (!data.checkoutUrl || !data.orderId) {
-    throw new Error("Checkout hub response missing checkoutUrl or orderId");
+    /**
+     * Observed in production when a store is inside its post-sale cooldown:
+     * the hub answers 200 with neither a checkoutUrl nor storesUnavailable.
+     * Throwing here made a routine, expected state look like an outage in the
+     * logs. It is a degradation, so it is reported as one — the caller already
+     * knows how to fall back to WhatsApp and record the lead.
+     */
+    console.warn("[checkout] hub returned no checkoutUrl; treating as unavailable");
+    return { kind: "whatsapp", whatsappUrl: data.whatsappUrl ?? "" };
   }
 
   return {

@@ -40,7 +40,26 @@ type Plan = (typeof PRICING_PLANS)[number];
 type Availability =
   | { state: "checking" }
   | { state: "available" }
-  | { state: "unavailable"; whatsappUrl: string };
+  | { state: "unavailable"; whatsappUrl: string; reason?: string };
+
+/**
+ * Why card checkout is not on offer, in the buyer's terms.
+ *
+ * They arrived intending to pay by card and are being handed a WhatsApp
+ * button; saying nothing about that is exactly the kind of unexplained
+ * detour that reads as a scam. NO_CAPACITY is the routine one — a store
+ * takes a sale, then pauses before the next.
+ */
+function unavailableMessage(reason?: string): string {
+  switch (reason) {
+    case "NO_CAPACITY":
+      return "Card checkout is busy right now. You can still order on WhatsApp — we'll send a payment link and your login details straight after.";
+    case "UNKNOWN_PLAN":
+      return "We couldn't load this plan for card checkout. Order on WhatsApp and we'll set it up for you.";
+    default:
+      return "Card checkout isn't available for this plan at the moment. You can complete your order on WhatsApp instead.";
+  }
+}
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 // Reserved / non-deliverable TLDs the hub (Shopify) rejects. Kept lowercase;
@@ -232,7 +251,7 @@ function CheckoutForPlan({ plan }: { plan: Plan }) {
     fetch(url, { signal: controller.signal })
       .then(async (res) => {
         if (!res.ok) throw new Error(`status ${res.status}`);
-        return res.json() as Promise<{ available?: boolean; whatsappUrl?: string }>;
+        return res.json() as Promise<{ available?: boolean; whatsappUrl?: string; reason?: string }>;
       })
       .then((data) => {
         if (cancelled) return;
@@ -242,10 +261,14 @@ function CheckoutForPlan({ plan }: { plan: Plan }) {
         }
         // An explicit `available: false` is the one answer we trust, because
         // only the hub knows whether its stores are actually accepting orders.
-        track("checkout_degraded", { plan: plan.name, reason: "hub_reported_unavailable" });
+        track("checkout_degraded", {
+          plan: plan.name,
+          reason: data.reason ?? "hub_reported_unavailable",
+        });
         setAvailability({
           state: "unavailable",
           whatsappUrl: data.whatsappUrl || LOCAL_WHATSAPP_URL,
+          reason: data.reason,
         });
       })
       .catch((err: unknown) => {
@@ -929,7 +952,9 @@ function CheckoutForPlan({ plan }: { plan: Plan }) {
               <div className="text-center text-xs text-muted">
                 {availability.state === "available"
                   ? TRUST_COPY.handoff
-                  : CHECKOUT_COPY.buttonSubtitle}
+                  : availability.state === "unavailable"
+                    ? unavailableMessage(availability.reason)
+                    : CHECKOUT_COPY.buttonSubtitle}
               </div>
 
               {/* Card marks sit at the decision point, not just in the footer. */}
