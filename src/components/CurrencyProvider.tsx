@@ -25,6 +25,23 @@ import type { CurrencyCode, PricingTable } from "@/lib/pricing";
 
 const STORAGE_KEY = "fi.country";
 
+/**
+ * `?country=FR` forces a country, ahead of both storage and detection.
+ *
+ * Auto-detection needs Cloudflare's /cdn-cgi/trace, which does not exist on
+ * localhost — so without this there is no way to see a euro price before
+ * deploying, and no way to check a specific market once deployed. The choice
+ * persists like a detected one, so it survives the click through to checkout.
+ */
+function readCountryParam(): string | null {
+  try {
+    const value = new URLSearchParams(window.location.search).get("country");
+    return value && /^[A-Za-z]{2}$/.test(value) ? value.toUpperCase() : null;
+  } catch {
+    return null;
+  }
+}
+
 type CurrencyState = {
   currency: CurrencyCode;
   country: string | null;
@@ -76,7 +93,9 @@ export function CurrencyProvider({
     // Reading a client-only store on mount and committing it is exactly what
     // this effect is for; the lint rule cannot tell that apart from a
     // render-loop. One update, no cascade.
-    const stored = readStoredCountry();
+    const forced = readCountryParam();
+    const stored = forced ?? readStoredCountry();
+    if (forced) persist(forced);
     if (stored) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setCountryState(stored);
