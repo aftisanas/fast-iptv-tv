@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react";
 import { PRICING_PLANS } from "@/lib/constants";
 import { track } from "@/lib/analytics";
 import { useCurrency } from "./CurrencyProvider";
-import { formatMoney, priceIn } from "@/lib/pricing";
+import { cheapestPerMonth, formatMoney } from "@/lib/pricing";
 
 /**
  * Mobile only. Pricing is the fifth section down, and 72% of this traffic
@@ -47,21 +47,7 @@ export default function StickyBuyBar() {
     };
   }, []);
 
-  // The cheapest per-month figure across the range, in the visitor's currency,
-  // so the bar leads with the lowest true number rather than the entry plan's
-  // headline price.
-  const cheapest = PRICING_PLANS.reduce<{ perMonth: number; currency: typeof currency }>(
-    (best, p) => {
-      const live = priceIn(table.plans[p.id]?.price ?? { GBP: p.price }, currency);
-      const months = parseInt(p.name, 10);
-      const perMonth =
-        Number.isFinite(months) && months > 0 ? live.amount / months : live.amount;
-      return perMonth < best.perMonth
-        ? { perMonth, currency: live.currency }
-        : best;
-    },
-    { perMonth: Infinity, currency }
-  );
+  const cheapest = cheapestPerMonth(table, PRICING_PLANS, currency);
 
   return (
     <div
@@ -79,7 +65,7 @@ export default function StickyBuyBar() {
         <span className="flex flex-col leading-tight">
           <span className="text-sm font-bold">See plans &amp; pricing</span>
           <span className="text-[11px] font-medium text-white/85">
-            From {formatMoney(cheapest.perMonth, cheapest.currency)}/month · 30-day money-back
+            From {formatMoney(cheapest.amount, cheapest.currency)}/month · 30-day money-back
           </span>
         </span>
         <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />

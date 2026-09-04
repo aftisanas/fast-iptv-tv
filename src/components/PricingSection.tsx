@@ -243,7 +243,19 @@ export default function PricingSection() {
 
                   {/* Features */}
                   <ul className="space-y-2.5 mb-6">
-                    {plan.features.map((feature) => (
+                    {plan.features.map((rawFeature) => {
+                      // The proxy bullet carries a {proxyFrom} token so the
+                      // add-on price inside the card follows the same currency
+                      // as the headline price above it.
+                      const proxy = priceIn(
+                        table.plans[plan.id]?.proxyPrice ?? { GBP: plan.proxyPrice },
+                        currency
+                      );
+                      const feature = rawFeature.replace(
+                        "{proxyFrom}",
+                        formatMoney(proxy.amount, proxy.currency)
+                      );
+                      return (
                       <li key={feature} className="flex items-start gap-2.5">
                         <div className={cn(
                           "mt-0.5 flex h-4.5 w-4.5 items-center justify-center rounded-full shrink-0",
@@ -253,7 +265,8 @@ export default function PricingSection() {
                         </div>
                         <span className="text-sm text-gray-600">{feature}</span>
                       </li>
-                    ))}
+                      );
+                    })}
                   </ul>
 
                   {/* CTA Button */}

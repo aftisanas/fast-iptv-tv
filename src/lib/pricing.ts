@@ -197,3 +197,31 @@ export function resolvePlanPrices(
   }
   return { currency: "GBP", ...fallback };
 }
+
+/**
+ * The lowest effective monthly price across the range, in the visitor's
+ * currency — the "from £X/mo" figure.
+ *
+ * Shared so the hero and the sticky bar cannot disagree. They did: the hero
+ * quoted the 12-month rate and the bar quoted the 24-month, which are
+ * different numbers for the same claim.
+ */
+export function cheapestPerMonth(
+  table: PricingTable,
+  plans: readonly { id: string; name: string; price: number }[],
+  currency: CurrencyCode
+): { amount: number; currency: CurrencyCode } {
+  let best: { amount: number; currency: CurrencyCode } | null = null;
+
+  for (const plan of plans) {
+    const live = priceIn(table.plans[plan.id]?.price ?? { GBP: plan.price }, currency);
+    const months = parseInt(plan.name, 10);
+    const perMonth =
+      Number.isFinite(months) && months > 0 ? live.amount / months : live.amount;
+    if (!best || perMonth < best.amount) {
+      best = { amount: perMonth, currency: live.currency };
+    }
+  }
+
+  return best ?? { amount: 0, currency: "GBP" };
+}
