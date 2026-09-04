@@ -46,8 +46,16 @@ export const TRUST_COPY = {
    * Shop Pay, which saves cards by design.
    */
   oneTime: "One-time payment — no subscription, nothing renews automatically.",
-  /** Non-UK visitors are 55% of traffic. Say the billing currency up front. */
-  currency: "Priced and charged in GBP. Your bank converts at its own rate.",
+  /**
+   * Non-UK visitors are 55% of traffic. Before multi-currency this said the
+   * price was GBP-only, which was true and reassuring. Now the reassuring
+   * thing is the opposite: the price shown is the price charged, no bank
+   * conversion in between. GBP visitors keep the simpler statement.
+   */
+  currencyNote: (currency: string) =>
+    currency === "GBP"
+      ? "Priced and charged in GBP."
+      : `Priced and charged in ${currency} — the price you see is the price you pay.`,
   guarantee: "30-day money-back guarantee",
 } as const;
 
@@ -181,7 +189,7 @@ export const PRICING_PLANS = [
       "HD, Full HD and native 4K UHD streaming",
       "Extra connection options available as add-ons",
       "24/7 dedicated UK support",
-      "Secure Proxy add-on available (from £4.75/term)",
+      "Secure Proxy add-on available ({proxyFrom} for this term)",
       "30-day money-back guarantee",
       "60-second activation by email",
     ],
@@ -210,7 +218,7 @@ export const PRICING_PLANS = [
       "HD, Full HD and native 4K UHD streaming",
       "Extra connection options available as add-ons",
       "24/7 dedicated UK support",
-      "Secure Proxy add-on available (from £4.75/term)",
+      "Secure Proxy add-on available ({proxyFrom} for this term)",
       "30-day money-back guarantee",
       "60-second activation by email",
     ],
@@ -239,7 +247,7 @@ export const PRICING_PLANS = [
       "HD, Full HD and native 4K UHD streaming",
       "Extra connection options available as add-ons",
       "24/7 dedicated UK support",
-      "Secure Proxy add-on available (from £4.75/term)",
+      "Secure Proxy add-on available ({proxyFrom} for this term)",
       "30-day money-back guarantee",
       "60-second activation by email",
     ],
@@ -268,7 +276,7 @@ export const PRICING_PLANS = [
       "HD, Full HD and native 4K UHD streaming",
       "Extra connection options available as add-ons",
       "24/7 dedicated UK support",
-      "Secure Proxy add-on available (from £4.75/term)",
+      "Secure Proxy add-on available ({proxyFrom} for this term)",
       "30-day money-back guarantee",
       "60-second activation by email",
     ],

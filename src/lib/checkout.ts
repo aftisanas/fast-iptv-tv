@@ -1,7 +1,18 @@
 import { CHECKOUT_HUB_URL } from "./constants";
 
 export type CheckoutResponse =
-  | { kind: "shopify"; checkoutUrl: string; orderId: string }
+  | {
+      kind: "shopify";
+      checkoutUrl: string;
+      orderId: string;
+      /**
+       * What Shopify will actually charge, read back from the cart by the hub
+       * rather than assumed. This is the number the page must reconcile
+       * against before sending anyone to pay.
+       */
+      amountCents?: number;
+      currency?: string;
+    }
   | { kind: "whatsapp"; whatsappUrl: string };
 
 export interface CheckoutHubParams {
@@ -12,6 +23,8 @@ export interface CheckoutHubParams {
   phone?: string;
   proxyEnabled: boolean;
   extraConnections: number;
+  /** ISO-3166 alpha-2. Absent means the hub falls back to CF-IPCountry. */
+  countryCode?: string;
 }
 
 interface HubApiResponse {
@@ -19,12 +32,14 @@ interface HubApiResponse {
   whatsappUrl?: string;
   checkoutUrl?: string;
   orderId?: string;
+  amountCents?: number;
+  currency?: string;
 }
 
 export async function callCheckoutHub(
   params: CheckoutHubParams
 ): Promise<CheckoutResponse> {
-  const { planName, siteSlug, email, name, phone, proxyEnabled, extraConnections } = params;
+  const { planName, siteSlug, email, name, phone, proxyEnabled, extraConnections, countryCode } = params;
 
   const res = await fetch(`${CHECKOUT_HUB_URL}/api/checkout`, {
     method: "POST",
@@ -35,6 +50,7 @@ export async function callCheckoutHub(
       email,
       name,
       phone,
+      ...(countryCode ? { countryCode } : {}),
       addons: {
         proxyProtection: proxyEnabled,
         extraConnections,
@@ -59,5 +75,11 @@ export async function callCheckoutHub(
     throw new Error("Checkout hub response missing checkoutUrl or orderId");
   }
 
-  return { kind: "shopify", checkoutUrl: data.checkoutUrl, orderId: data.orderId };
+  return {
+    kind: "shopify",
+    checkoutUrl: data.checkoutUrl,
+    orderId: data.orderId,
+    amountCents: data.amountCents,
+    currency: data.currency,
+  };
 }

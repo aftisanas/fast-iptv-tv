@@ -5,8 +5,18 @@ import Image from "next/image";
 import { Mail } from "lucide-react";
 import { NAV_LINKS, LEGAL_LINKS, GUIDES_LINKS, SITE_NAME, CONTACT_EMAIL } from "@/lib/constants";
 import SectionLink from "@/components/SectionLink";
+import { useCurrency } from "@/components/CurrencyProvider";
+import { PRICING_PLANS } from "@/lib/constants";
+import { formatMoney, priceIn } from "@/lib/pricing";
 
 export default function Footer() {
+  const { currency, table } = useCurrency();
+  const entry = PRICING_PLANS[0];
+  const entryPrice = priceIn(
+    table.plans[entry.id]?.price ?? { GBP: entry.price },
+    currency
+  );
+
   return (
     /* pb-24 on mobile clears the fixed StickyBuyBar, which would otherwise sit
        on top of the last row of footer links. */
@@ -32,7 +42,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-sm text-muted leading-relaxed mb-6">
-              A UK-focused fast IPTV subscription with 37,000 live channels, 4K streaming, 60-second activation and a secure proxy option — from £25.99.
+              A UK-focused fast IPTV subscription with 37,000 live channels, 4K streaming, 60-second activation and a secure proxy option — from {formatMoney(entryPrice.amount, entryPrice.currency)}.
             </p>
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-sm text-muted">

@@ -3,8 +3,11 @@
 import { motion } from "framer-motion";
 import { Shield, Wifi, Lock, ServerCog } from "lucide-react";
 import Link from "next/link";
+import { useCurrency } from "@/components/CurrencyProvider";
+import { PRICING_PLANS } from "@/lib/constants";
+import { formatMoney, priceIn } from "@/lib/pricing";
 
-const trustItems = [
+const trustItems = (proxyFrom: string) => [
   {
     icon: Shield,
     title: "30-Day Money-Back Guarantee On Every IPTV Subscription",
@@ -21,7 +24,7 @@ const trustItems = [
     icon: Lock,
     title: "Secure Proxy Add-On — Optional Privacy Layer",
     description:
-      "An optional Secure Proxy add-on encrypts your stream traffic and reduces ISP-side filtering. Available at checkout from £4.75 per term.",
+      `An optional Secure Proxy add-on encrypts your stream traffic and reduces ISP-side filtering. Available at checkout from ${proxyFrom} per term.`,
   },
   {
     icon: ServerCog,
@@ -32,6 +35,20 @@ const trustItems = [
 ];
 
 export default function TrustSection() {
+  const { currency, table } = useCurrency();
+  // Cheapest proxy add-on across the range, in the visitor's currency.
+  const proxyFrom = PRICING_PLANS.reduce<{ amount: number; currency: typeof currency }>(
+    (best, plan) => {
+      const live = priceIn(
+        table.plans[plan.id]?.proxyPrice ?? { GBP: plan.proxyPrice },
+        currency
+      );
+      return live.amount < best.amount ? live : best;
+    },
+    { amount: Infinity, currency }
+  );
+  const items = trustItems(formatMoney(proxyFrom.amount, proxyFrom.currency));
+
   return (
     <section className="relative py-11 lg:py-16">
       <div className="absolute inset-0 section-gradient-2" />
@@ -59,7 +76,7 @@ export default function TrustSection() {
         </motion.div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {trustItems.map((item, i) => (
+          {items.map((item, i) => (
             <motion.div
               key={item.title}
               initial={{ opacity: 0, y: 20 }}

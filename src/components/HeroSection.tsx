@@ -5,8 +5,16 @@ import { Play, MessageCircle, ChevronRight } from "lucide-react";
 import ParticleBackground from "./ParticleBackground";
 import PromoBanner from "./PromoBanner";
 import SectionLink from "./SectionLink";
+import { useCurrency } from "./CurrencyProvider";
+import { PRICING_PLANS } from "@/lib/constants";
+import { cheapestPerMonth, formatMoney } from "@/lib/pricing";
 
 export default function HeroSection() {
+  const { currency, table } = useCurrency();
+  // Same helper as the sticky bar, so the two cannot quote different "from"
+  // prices for the same range — which they previously did.
+  const from = cheapestPerMonth(table, PRICING_PLANS, currency);
+
   return (
     <section
       id="hero"
@@ -114,7 +122,7 @@ export default function HeroSection() {
             className="group relative flex items-center gap-2.5 rounded-2xl bg-gradient-to-r from-violet-600 via-purple-600 to-cyan-500 px-7 py-3.5 text-sm sm:text-base font-semibold text-white shadow-lg shadow-purple-900/40 transition-all hover:shadow-2xl hover:shadow-purple-500/40 active:scale-[0.98] w-full sm:w-auto justify-center"
           >
             <Play className="h-5 w-5 fill-current" />
-            <span>Get Fast IPTV Now — From £4.17/mo</span>
+            <span>Get Fast IPTV Now — From {formatMoney(from.amount, from.currency)}/mo</span>
             <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             <div className="absolute inset-0 rounded-2xl bg-white/10 opacity-0 transition-opacity group-hover:opacity-100" />
           </SectionLink>

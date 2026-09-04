@@ -7,6 +7,8 @@ import { Check, Shield, CreditCard, Star, Crown, Gem, Award, Medal } from "lucid
 import { CHECKOUT_MODE, PAYMENT_MARKS, PRICING_PLANS, TRUST_COPY } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { track } from "@/lib/analytics";
+import { useCurrency } from "./CurrencyProvider";
+import { formatMoney, priceIn } from "@/lib/pricing";
 import OrderSummaryModal from "./OrderSummaryModal";
 
 type PricingPlan = (typeof PRICING_PLANS)[number];
@@ -85,14 +87,17 @@ const tierMeta: Record<string, {
 
 export default function PricingSection() {
   const router = useRouter();
+  const { currency, table } = useCurrency();
   const [hoveredPlan, setHoveredPlan] = useState<string | null>(null);
   const [selectedPlan, setSelectedPlan] = useState<PricingPlan | null>(null);
 
   const handleChoosePlan = (plan: PricingPlan) => {
+    const live = priceIn(table.plans[plan.id]?.price ?? { GBP: plan.price }, currency);
     track("plan_selected", {
       plan: plan.name,
       planId: plan.id,
-      price: plan.price,
+      price: live.amount,
+      currency: live.currency,
       source: "pricing_section",
     });
     if (CHECKOUT_MODE === "hub") {
@@ -204,16 +209,25 @@ export default function PricingSection() {
                     <p className="text-sm text-muted">{plan.name}</p>
                   </div>
 
-                  {/* Price */}
+                  {/* Price — in the visitor's currency, with the struck-through
+                      "was" scaled from the same ratio so a euro price never sits
+                      beside a sterling one. */}
                   <div className="mb-6">
                     <div className="flex items-baseline gap-2">
-                      <span className="text-sm text-muted/60 line-through">
-                        £{plan.originalPrice.toFixed(2)}
+                      <span className="text-sm text-muted/60 line-through tabular-nums">
+                        {(() => {
+                          const live = priceIn(table.plans[plan.id]?.price ?? { GBP: plan.price }, currency);
+                          const ratio = plan.originalPrice / plan.price;
+                          return formatMoney(live.amount * ratio, live.currency);
+                        })()}
                       </span>
                     </div>
                     <div className="flex items-baseline gap-1 mt-1">
-                      <span className="text-4xl font-extrabold text-foreground">
-                        £{plan.price.toFixed(2)}
+                      <span className="text-4xl font-extrabold text-foreground tabular-nums">
+                        {(() => {
+                          const live = priceIn(table.plans[plan.id]?.price ?? { GBP: plan.price }, currency);
+                          return formatMoney(live.amount, live.currency);
+                        })()}
                       </span>
                     </div>
                     <p className="text-xs text-muted mt-1.5">One-time payment · {plan.subtitle}</p>
@@ -229,7 +243,19 @@ export default function PricingSection() {
 
                   {/* Features */}
                   <ul className="space-y-2.5 mb-6">
-                    {plan.features.map((feature) => (
+                    {plan.features.map((rawFeature) => {
+                      // The proxy bullet carries a {proxyFrom} token so the
+                      // add-on price inside the card follows the same currency
+                      // as the headline price above it.
+                      const proxy = priceIn(
+                        table.plans[plan.id]?.proxyPrice ?? { GBP: plan.proxyPrice },
+                        currency
+                      );
+                      const feature = rawFeature.replace(
+                        "{proxyFrom}",
+                        formatMoney(proxy.amount, proxy.currency)
+                      );
+                      return (
                       <li key={feature} className="flex items-start gap-2.5">
                         <div className={cn(
                           "mt-0.5 flex h-4.5 w-4.5 items-center justify-center rounded-full shrink-0",
@@ -239,7 +265,8 @@ export default function PricingSection() {
                         </div>
                         <span className="text-sm text-gray-600">{feature}</span>
                       </li>
-                    ))}
+                      );
+                    })}
                   </ul>
 
                   {/* CTA Button */}
@@ -318,7 +345,7 @@ export default function PricingSection() {
             {TRUST_COPY.handoff}
           </p>
           <p className="text-center text-xs font-medium text-muted">
-            {TRUST_COPY.oneTime} {TRUST_COPY.currency}
+            {TRUST_COPY.oneTime} {TRUST_COPY.currencyNote(currency)}
           </p>
         </motion.div>
       </div>

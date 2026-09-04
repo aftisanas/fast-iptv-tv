@@ -4,6 +4,8 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { SITE_URL } from "@/lib/constants";
+import { CurrencyProvider } from "@/components/CurrencyProvider";
+import { getPricingTable } from "@/lib/pricing";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -95,11 +97,19 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default function RootLayout({
+/**
+ * Prices are fetched once here, at build time, and handed to the client
+ * provider. Every surface that shows a price — pricing section, sticky bar,
+ * checkout — then reads the same table and the same resolved currency, so they
+ * cannot disagree with each other.
+ */
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pricingTable = await getPricingTable();
+
   return (
     <html
       lang="en-GB"
@@ -112,9 +122,11 @@ export default function RootLayout({
         >
           Skip to main content
         </a>
-        <Navbar />
-        <main id="main" className="flex-1">{children}</main>
-        <Footer />
+        <CurrencyProvider table={pricingTable}>
+          <Navbar />
+          <main id="main" className="flex-1">{children}</main>
+          <Footer />
+        </CurrencyProvider>
       </body>
     </html>
   );
