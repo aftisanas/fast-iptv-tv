@@ -64,7 +64,7 @@ export default function StickyBuyBar() {
       >
         <span className="flex flex-col leading-tight">
           <span className="text-sm font-bold">See plans &amp; pricing</span>
-          <span className="text-[11px] font-medium text-white/85">
+          <span className="text-[11px] font-medium text-white/85 tabular-nums">
             From {formatMoney(cheapest.amount, cheapest.currency)}/month · 30-day money-back
           </span>
         </span>

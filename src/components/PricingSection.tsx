@@ -214,7 +214,7 @@ export default function PricingSection() {
                       beside a sterling one. */}
                   <div className="mb-6">
                     <div className="flex items-baseline gap-2">
-                      <span className="text-sm text-muted/60 line-through">
+                      <span className="text-sm text-muted/60 line-through tabular-nums">
                         {(() => {
                           const live = priceIn(table.plans[plan.id]?.price ?? { GBP: plan.price }, currency);
                           const ratio = plan.originalPrice / plan.price;
@@ -223,7 +223,7 @@ export default function PricingSection() {
                       </span>
                     </div>
                     <div className="flex items-baseline gap-1 mt-1">
-                      <span className="text-4xl font-extrabold text-foreground">
+                      <span className="text-4xl font-extrabold text-foreground tabular-nums">
                         {(() => {
                           const live = priceIn(table.plans[plan.id]?.price ?? { GBP: plan.price }, currency);
                           return formatMoney(live.amount, live.currency);
